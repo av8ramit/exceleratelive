@@ -244,7 +244,7 @@ def download_test(request):
 
 def simple_report(request):
     if len(console.user.tests_taken) == 0:
-        return
+        return HttpResponse('Please take tests before opening reports. Go back to return to dashboard.')
     else:
         console.process_commands("simple_report")
         return render(request, 'web/' + request.user.username + '/simple_report.html')
@@ -252,7 +252,7 @@ def simple_report(request):
 
 def advanced_report(request):
     if len(console.user.tests_taken) == 0:
-        return
+        return HttpResponse('Please take tests before opening reports. Go back to return to dashboard.')
     else:
         console.process_commands("advanced_report")
         return render(request, 'web/' + request.user.username + '/advanced_report.html')
