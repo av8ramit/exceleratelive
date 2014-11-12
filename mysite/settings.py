@@ -10,9 +10,17 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import dj_database_url
-DATABASES['default'] =  dj_database_url.config()
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
+if os.environ.get('DATABASE_URL'):
+    DATABASES['default'] =  dj_database_url.config()
+
 
 
 # Quick-start development settings - unsuitable for production
@@ -26,7 +34,7 @@ DEBUG = True
 
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates'), os.path.join(BASE_DIR, 'Users'),]
 
