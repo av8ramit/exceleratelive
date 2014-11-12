@@ -243,11 +243,17 @@ def download_test(request):
     return HttpResponse('File did not open')
 
 def simple_report(request):
-    console.process_commands("simple_report")
-    return render(request, 'web/' + request.user.username + '/simple_report.html')
+    if len(console.user.tests_taken) == 0:
+        return
+    else:
+        console.process_commands("simple_report")
+        return render(request, 'web/' + request.user.username + '/simple_report.html')
 
 
 def advanced_report(request):
-    console.process_commands("advanced_report")
-    return render(request, 'web/' + request.user.username + '/advanced_report.html')
+    if len(console.user.tests_taken) == 0:
+        return
+    else:
+        console.process_commands("advanced_report")
+        return render(request, 'web/' + request.user.username + '/advanced_report.html')
 
