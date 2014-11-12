@@ -1,0 +1,275 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="../../../HTML/style.css" />
+<title>Reading Score Report</title>
+<link class="include" rel="stylesheet" type="text/css" href="../../../Graphs/examples/../jquery.jqplot.min.css" />
+<link type="text/css" rel="stylesheet" href="../../../Graphs/examples/syntaxhighlighter/styles/shCoreDefault.min.css" />
+<link type="text/css" rel="stylesheet" href="../../../Graphs/examples/syntaxhighlighter/styles/shThemejqPlot.min.css" />
+<script class="include" type="text/javascript" src="../../../Graphs/jquery.min.js"></script>
+</head>
+<body>
+<div id="page">
+<div id="header">
+<img src="../../../HTML/EliteLogo.png" width="35%" alt="Excelerate" />
+</div>
+</div>
+<div id="content">
+<div id="container">
+<div id="main">
+<div id="menu">
+<h2 style="text-align:center;">Reading Analytics Report: 130175600</h2>
+</div>
+<div id="text">
+<h1>Reading Analytics</h1>
+<hr color="#BBBBBB" size="2" width="100%">
+<br><div id="chart1" style="height:300px; width:490px;"></div>
+<script class="code" type="text/javascript">
+$(document).ready(function(){
+var line1 = [['2014-6-23', 390], ['2014-6-24', 380], ['2014-6-30', 420], ['2014-7-8', 400], ['2014-7-14', 480], ['2014-7-28', 650], ['2014-8-4', 470]];
+var plot1 = $.jqplot('chart1', [line1], {
+animate: true,
+animateReplot:true,
+title:'Reading Score Performance',
+seriesDefaults: {
+showMarker:true,
+pointLabels: { show: true, location: 's', labels: ['GE30', 'GE30', 'RC06', 'GE31', 'GZ01', 'RI07', 'GE33'] } 
+},
+highlighter:{ show: true, sizeAdjust: 7.5},
+axes:{
+xaxis:{label:'Date of Test Taken',renderer:$.jqplot.DateAxisRenderer,},
+yaxis:{label:'Score',labelRenderer: $.jqplot.CanvasAxisLabelRenderer,}
+},
+cursor: { show: true, zoom: true, looseZoom: true, showTooltip: false },
+series:[{lineWidth:1, rendererOptions:{animation:{speed:4000}}}],
+});
+});
+</script>
+<p>This is your performance in the Reading section of the last 7 tests you have taken. The more comprehensive analysis of questions correct in each type is found below.</p><h1>Question Type Analytics</h1>
+<hr color="#BBBBBB" size="2" width="100%">
+<br><div id="chart2" style="height:300px; width:490px;"></div>
+<script class="code" type="text/javascript">
+$(document).ready(function(){
+var line1 = [['2014-6-24', 32.0], ['2014-6-30', 31.57894736842105], ['2014-7-8', 36.84210526315789], ['2014-7-14', 52.63157894736842], ['2014-7-28', 89.47368421052632], ['2014-8-4', 52.63157894736842]];
+var plot1 = $.jqplot('chart2', [line1], {
+animate: true,
+animateReplot:true,
+title:'Sentence Completion',
+seriesDefaults: {
+showMarker:true,
+pointLabels: { show: true, location: 's', labels: ['GE30', 'RC06', 'GE31', 'GZ01', 'RI07', 'GE33'] } 
+},
+highlighter:{ show: true, sizeAdjust: 7.5},
+axes:{
+xaxis:{label:'Date of Test Taken',renderer:$.jqplot.DateAxisRenderer,},
+yaxis:{label:'Percent Correct',labelRenderer: $.jqplot.CanvasAxisLabelRenderer,tickOptions: {formatString: "%'d%"}}
+},
+cursor: { show: true, zoom: true, looseZoom: true, showTooltip: false },
+series:[{lineWidth:1, rendererOptions:{animation:{speed:4000}}}],
+});
+});
+</script>
+<p><b><font color = "red">Sentence Completion</b> Total: 120 | Correct: 58 | Missed: 60 | Blank: 2</font></p><p>
+Uh oh, you need some work in this category. You have missed an average of 50% of the total questions in this category.
+</p><hr color="#4169EF" size="1" width="90%">
+<br><div id="chart3" style="height:300px; width:490px;"></div>
+<script class="code" type="text/javascript">
+$(document).ready(function(){
+var line1 = [['2014-6-24', 30.76923076923077], ['2014-6-30', 0.0], ['2014-7-8', 33.33333333333333], ['2014-7-14', 50.0], ['2014-7-28', 100.0], ['2014-8-4', 50.0]];
+var plot1 = $.jqplot('chart3', [line1], {
+animate: true,
+animateReplot:true,
+title:'Main Idea',
+seriesDefaults: {
+showMarker:true,
+pointLabels: { show: true, location: 's', labels: ['GE30', 'RC06', 'GE31', 'GZ01', 'RI07', 'GE33'] } 
+},
+highlighter:{ show: true, sizeAdjust: 7.5},
+axes:{
+xaxis:{label:'Date of Test Taken',renderer:$.jqplot.DateAxisRenderer,},
+yaxis:{label:'Percent Correct',labelRenderer: $.jqplot.CanvasAxisLabelRenderer,tickOptions: {formatString: "%'d%"}}
+},
+cursor: { show: true, zoom: true, looseZoom: true, showTooltip: false },
+series:[{lineWidth:1, rendererOptions:{animation:{speed:4000}}}],
+});
+});
+</script>
+<p><b><font color = "red">Main Idea</b> Total: 25 | Correct: 10 | Missed: 14 | Blank: 1</font></p><p>
+Here is a great place to improve and score higher. You have missed an average of 56% of the total questions in this category.
+</p><hr color="#4169EF" size="1" width="90%">
+<br><div id="chart4" style="height:300px; width:490px;"></div>
+<script class="code" type="text/javascript">
+$(document).ready(function(){
+var line1 = [['2014-6-24', 40.0], ['2014-6-30', 37.5], ['2014-7-8', 40.0], ['2014-7-14', 41.66666666666667], ['2014-7-28', 100.0], ['2014-8-4', 41.66666666666667]];
+var plot1 = $.jqplot('chart4', [line1], {
+animate: true,
+animateReplot:true,
+title:'Direct Comprehension',
+seriesDefaults: {
+showMarker:true,
+pointLabels: { show: true, location: 's', labels: ['GE30', 'RC06', 'GE31', 'GZ01', 'RI07', 'GE33'] } 
+},
+highlighter:{ show: true, sizeAdjust: 7.5},
+axes:{
+xaxis:{label:'Date of Test Taken',renderer:$.jqplot.DateAxisRenderer,},
+yaxis:{label:'Percent Correct',labelRenderer: $.jqplot.CanvasAxisLabelRenderer,tickOptions: {formatString: "%'d%"}}
+},
+cursor: { show: true, zoom: true, looseZoom: true, showTooltip: false },
+series:[{lineWidth:1, rendererOptions:{animation:{speed:4000}}}],
+});
+});
+</script>
+<p><b><font color = "red">Direct Comprehension</b> Total: 82 | Correct: 37 | Missed: 42 | Blank: 3</font></p><p>
+You need some improvement here. You have missed an average of 51% of the total questions in this category.
+</p><hr color="#4169EF" size="1" width="90%">
+<br><div id="chart5" style="height:300px; width:490px;"></div>
+<script class="code" type="text/javascript">
+$(document).ready(function(){
+var line1 = [['2014-6-24', 25.0], ['2014-6-30', 0.0], ['2014-7-8', 33.33333333333333], ['2014-7-14', 62.5], ['2014-7-28', 85.71428571428571], ['2014-8-4', 33.33333333333333]];
+var plot1 = $.jqplot('chart5', [line1], {
+animate: true,
+animateReplot:true,
+title:'Purpose/Rhetorical Strategy',
+seriesDefaults: {
+showMarker:true,
+pointLabels: { show: true, location: 's', labels: ['GE30', 'RC06', 'GE31', 'GZ01', 'RI07', 'GE33'] } 
+},
+highlighter:{ show: true, sizeAdjust: 7.5},
+axes:{
+xaxis:{label:'Date of Test Taken',renderer:$.jqplot.DateAxisRenderer,},
+yaxis:{label:'Percent Correct',labelRenderer: $.jqplot.CanvasAxisLabelRenderer,tickOptions: {formatString: "%'d%"}}
+},
+cursor: { show: true, zoom: true, looseZoom: true, showTooltip: false },
+series:[{lineWidth:1, rendererOptions:{animation:{speed:4000}}}],
+});
+});
+</script>
+<p><b><font color = "red">Purpose/Rhetorical Strategy</b> Total: 44 | Correct: 19 | Missed: 23 | Blank: 2</font></p><p>
+Unfortunately, you are not as strong in this area. You have missed an average of 52% of the total questions in this category.
+</p><hr color="#4169EF" size="1" width="90%">
+<br><div id="chart6" style="height:300px; width:490px;"></div>
+<script class="code" type="text/javascript">
+$(document).ready(function(){
+var line1 = [['2014-6-30', 58.82352941176471], ['2014-7-8', 41.66666666666667], ['2014-7-14', 54.54545454545454], ['2014-7-28', 64.28571428571429], ['2014-8-4', 12.5]];
+var plot1 = $.jqplot('chart6', [line1], {
+animate: true,
+animateReplot:true,
+title:'Inference',
+seriesDefaults: {
+showMarker:true,
+pointLabels: { show: true, location: 's', labels: ['RC06', 'GE31', 'GZ01', 'RI07', 'GE33'] } 
+},
+highlighter:{ show: true, sizeAdjust: 7.5},
+axes:{
+xaxis:{label:'Date of Test Taken',renderer:$.jqplot.DateAxisRenderer,},
+yaxis:{label:'Percent Correct',labelRenderer: $.jqplot.CanvasAxisLabelRenderer,tickOptions: {formatString: "%'d%"}}
+},
+cursor: { show: true, zoom: true, looseZoom: true, showTooltip: false },
+series:[{lineWidth:1, rendererOptions:{animation:{speed:4000}}}],
+});
+});
+</script>
+<p><b><font color = "red">Inference</b> Total: 62 | Correct: 31 | Missed: 27 | Blank: 4</font></p><p>
+Try focussing more in this area to increase your score. You have missed an average of 43% of the total questions in this category.
+</p><hr color="#4169EF" size="1" width="90%">
+<br><div id="chart7" style="height:300px; width:490px;"></div>
+<script class="code" type="text/javascript">
+$(document).ready(function(){
+var line1 = [['2014-6-30', 33.33333333333333], ['2014-7-8', 37.5], ['2014-7-14', 50.0], ['2014-7-28', 50.0], ['2014-8-4', 20.0]];
+var plot1 = $.jqplot('chart7', [line1], {
+animate: true,
+animateReplot:true,
+title:'Comparison',
+seriesDefaults: {
+showMarker:true,
+pointLabels: { show: true, location: 's', labels: ['RC06', 'GE31', 'GZ01', 'RI07', 'GE33'] } 
+},
+highlighter:{ show: true, sizeAdjust: 7.5},
+axes:{
+xaxis:{label:'Date of Test Taken',renderer:$.jqplot.DateAxisRenderer,},
+yaxis:{label:'Percent Correct',labelRenderer: $.jqplot.CanvasAxisLabelRenderer,tickOptions: {formatString: "%'d%"}}
+},
+cursor: { show: true, zoom: true, looseZoom: true, showTooltip: false },
+series:[{lineWidth:1, rendererOptions:{animation:{speed:4000}}}],
+});
+});
+</script>
+<p><b><font color = "red">Comparison</b> Total: 33 | Correct: 13 | Missed: 19 | Blank: 1</font></p><p>
+Try focussing more in this area to increase your score. You have missed an average of 57% of the total questions in this category.
+</p><hr color="#4169EF" size="1" width="90%">
+<br><div id="chart8" style="height:300px; width:490px;"></div>
+<script class="code" type="text/javascript">
+$(document).ready(function(){
+var line1 = [['2014-6-30', 0.0], ['2014-7-8', 0.0], ['2014-7-14', 0.0], ['2014-7-28', 100.0], ['2014-8-4', 20.0]];
+var plot1 = $.jqplot('chart8', [line1], {
+animate: true,
+animateReplot:true,
+title:'Tone/Style',
+seriesDefaults: {
+showMarker:true,
+pointLabels: { show: true, location: 's', labels: ['RC06', 'GE31', 'GZ01', 'RI07', 'GE33'] } 
+},
+highlighter:{ show: true, sizeAdjust: 7.5},
+axes:{
+xaxis:{label:'Date of Test Taken',renderer:$.jqplot.DateAxisRenderer,},
+yaxis:{label:'Percent Correct',labelRenderer: $.jqplot.CanvasAxisLabelRenderer,tickOptions: {formatString: "%'d%"}}
+},
+cursor: { show: true, zoom: true, looseZoom: true, showTooltip: false },
+series:[{lineWidth:1, rendererOptions:{animation:{speed:4000}}}],
+});
+});
+</script>
+<p><b><font color = "red">Tone/Style</b> Total: 16 | Correct: 8 | Missed: 7 | Blank: 1</font></p><p>
+Uh oh, you need some work in this category. You have missed an average of 43% of the total questions in this category.
+</p><hr color="#4169EF" size="1" width="90%">
+<br><div id="chart9" style="height:300px; width:490px;"></div>
+<script class="code" type="text/javascript">
+$(document).ready(function(){
+var line1 = [['2014-6-30', 50.0], ['2014-7-8', 40.0], ['2014-7-14', 75.0], ['2014-7-28', 100.0], ['2014-8-4', 100.0]];
+var plot1 = $.jqplot('chart9', [line1], {
+animate: true,
+animateReplot:true,
+title:'Vocabulary in Context',
+seriesDefaults: {
+showMarker:true,
+pointLabels: { show: true, location: 's', labels: ['RC06', 'GE31', 'GZ01', 'RI07', 'GE33'] } 
+},
+highlighter:{ show: true, sizeAdjust: 7.5},
+axes:{
+xaxis:{label:'Date of Test Taken',renderer:$.jqplot.DateAxisRenderer,},
+yaxis:{label:'Percent Correct',labelRenderer: $.jqplot.CanvasAxisLabelRenderer,tickOptions: {formatString: "%'d%"}}
+},
+cursor: { show: true, zoom: true, looseZoom: true, showTooltip: false },
+series:[{lineWidth:1, rendererOptions:{animation:{speed:4000}}}],
+});
+});
+</script>
+<p><b><font color = "blue">Vocabulary in Context</b> Total: 20 | Correct: 15 | Missed: 5 | Blank: 0</font></p><p>
+Improve in these areas once you have finished working on your more poor areas. You have gotten an average of 75% correct which is acceptable but could use improvement.
+</p><hr color="#4169EF" size="1" width="90%">
+<br>
+</div>
+</div>
+</div>
+<div class="clear"></div>
+<div id="footer">
+<p><a>130175600 Reading  Report</a></p>
+</div>
+</div>
+<script class="include" type="text/javascript" src="../../../Graphs/examples/../jquery.jqplot.min.js"></script>
+<script type="text/javascript" src="../../../Graphs/examples/syntaxhighlighter/scripts/shCore.min.js"></script>
+<script type="text/javascript" src="../../../Graphs/examples/syntaxhighlighter/scripts/shBrushJScript.min.js"></script>
+<script type="text/javascript" src="../../../Graphs/examples/syntaxhighlighter/scripts/shBrushXml.min.js"></script>
+<script class="include" language="javascript" type="text/javascript" src="../../../Graphs/examples/../plugins/jqplot.barRenderer.min.js"></script>
+<script class="include" language="javascript" type="text/javascript" src="../../../Graphs/examples/../plugins/jqplot.categoryAxisRenderer.min.js"></script>
+<script class="include" language="javascript" type="text/javascript" src="../../../Graphs/examples/../plugins/jqplot.pointLabels.min.js"></script>
+<script class="include" language="javascript" type="text/javascript" src="../../../Graphs/examples/../plugins/jqplot.dateAxisRenderer.min.js"></script>
+<script class="include" type="text/javascript" src="../../../Graphs/examples/../plugins/jqplot.canvasTextRenderer.min.js"></script>
+<script class="include" type="text/javascript" src="../../../Graphs/examples/../plugins/jqplot.canvasAxisLabelRenderer.min.js"></script>
+<script type="text/javascript" src="../../../Graphs/examples/../plugins/jqplot.highlighter.min.js"></script>
+<script type="text/javascript" src="../../../Graphs/examples/../plugins/jqplot.cursor.min.js"></script>
+<script type="text/javascript" src="../../../Graphs/examples/../plugins/jqplot.dateAxisRenderer.min.js"></script>
+<script type="text/javascript" src="../../../Graphs/examples/../plugins/jqplot.enhancedLegendRenderer.min.js"></script>
+</body>
+</html>
+

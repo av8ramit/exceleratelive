@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}"/>
+<title>Simple Score Report</title>
+<link class="include" rel="stylesheet" type="text/css" href="{% static 'examples/../jquery.jqplot.min.css' %}"/>
+<link type="text/css" rel="stylesheet" href="{% static 'examples/syntaxhighlighter/styles/shCoreDefault.min.css' %}"/>
+<link type="text/css" rel="stylesheet" href="{% static 'examples/syntaxhighlighter/styles/shThemejqPlot.min.css' %}"/>
+<script class="include" type="text/javascript" src="{% static 'jquery.min.js' %}""></script>
+</head>
+<body>
+<style>
+html,
+body {
+background-image: url("{% static 'mysite/css/images/overlay.svg' %}");background-size: 100%;
+}
+</style>
+<div id="page">
+<div id="header">
+<img src="{% static 'ml.png' %}" width="35%" alt="Excelerate" />
+</div>
+</div>
+<div id="content">
+<div id="container">
+<div id="main">
+<div id="menu">
+<h2 style="text-align:center;">Simple Report: klin</h2>
+</div>
+<div id="text">
+<h1>Qualitative Performance</h1>
+<p><b>Overall Aptitude:</b><font color = "red"> Poor</font></p>
+<p><b>Writing Performance:</b><font color = "red"> Poor</font></p>
+<p><b>Reading Performance:</b><font color = "red"> Poor</font></p>
+<p><b>Math Performance:</b><font color = "red"> Poor</font></p>
+<p><i>Here are the details regarding the scores. Average scores are between 550 to 670. All scores above average are recorded as proficient and all scores below are noted as poor. Unknown scores have no records.</i></p>
+<hr color="#BBBBBB" size="2" width="100%">
+<h1>Average Results</h1>
+<p><b>Total Score:</b><font color = "red">  681/2400</font></p>
+<p><b>Average Writing Score:</b><font color = "red">  226/800</font></p>
+<p><b>Average Reading Score:</b><font color = "red">  250/800</font></p>
+<p><b>Average Math Score:</b><font color = "red">  205/800</font></p>
+<p><b>Tests Taken:</b> 6</p>
+<hr color="#BBBBBB" size="2" width="100%">
+<h1>Previous Test History</h1>
+<div id="chart1" style="height:300px; width:490px;"></div>
+<script class="code" type="text/javascript">
+$(document).ready(function(){
+var line1 = [['2014-10-03', 740], ['2014-11-11', 670], ['2014-11-11', 670], ['2014-11-11', 670], ['2014-11-11', 670], ['2014-11-11', 670]];
+var labels = ['Your Performance', 'Class Average'];
+var plot1 = $.jqplot('chart1', [line1], {
+animate: true,
+animateReplot:true,
+title:'Overall Score Performance',
+seriesDefaults: {
+showMarker:true,
+pointLabels: { show: true, location: 's', labels: ['GE29', 'RC06', 'RC06', 'RC06', 'RC06', 'RC06'] } 
+},
+legend: {
+show: true,
+renderer: $.jqplot.EnhancedLegendRenderer,
+rendererOptions: {
+numberRows: 2
+},
+placement: 'insideGrid',
+labels: labels,
+location: 'se'
+},
+highlighter:{ show: true, sizeAdjust: 7.5},
+axes:{
+xaxis:{label:'Date of Test Taken',renderer:$.jqplot.DateAxisRenderer,},
+yaxis:{min:0, max:2400,label:'Score',labelRenderer: $.jqplot.CanvasAxisLabelRenderer,}
+},
+cursor: { show: true, zoom: true, looseZoom: true, showTooltip: false },
+series:[{lineWidth:1, rendererOptions:{animation:{speed:4000}}}],
+});
+});
+</script>
+<br><hr color="#BBBBBB" size="2" width="100%">
+<h1>Quick Advice</h1>
+<h3><i>Reading Highlights:</i></h3>
+<p>Your strongest reading section is Sentence Completion as you are scoring 0% in these questions.<h3><i>Writing Highlights:</i></h3>
+<p>Your strongest writing section is Sentence Revision as you are scoring 0% in these questions.<h3><i>Math Highlights:</i></h3>
+<p>Your strongest math section is Numbers and Operations as you are scoring 0% in these questions.<br>
+</div>
+</div>
+</div>
+<div class="clear"></div>
+<div id="footer">
+<p><a>klin Simple Report</a></p>
+</div>
+</div>
+<script class="include" type="text/javascript" src="{% static 'examples/../jquery.jqplot.min.js' %}""> </script>
+<script type="text/javascript" src="{% static 'examples/syntaxhighlighter/scripts/shCore.min.js' %}""> </script>
+<script type="text/javascript" src="{% static 'examples/syntaxhighlighter/scripts/shBrushJScript.min.js' %}""> </script>
+<script type="text/javascript" src="{% static 'examples/syntaxhighlighter/scripts/shBrushXml.min.js' %}""> </script>
+<script class="include" language="javascript" type="text/javascript" src="{% static 'examples/../plugins/jqplot.barRenderer.min.js' %}""> </script>
+<script class="include" language="javascript" type="text/javascript" src="{% static 'examples/../plugins/jqplot.categoryAxisRenderer.min.js' %}""> </script>
+<script class="include" language="javascript" type="text/javascript" src="{% static 'examples/../plugins/jqplot.pointLabels.min.js' %}""> </script>
+<script class="include" language="javascript" type="text/javascript" src="{% static 'examples/../plugins/jqplot.dateAxisRenderer.min.js' %}""> </script>
+<script class="include" type="text/javascript" src="{% static 'examples/../plugins/jqplot.canvasTextRenderer.min.js' %}""> </script>
+<script class="include" type="text/javascript" src="{% static 'examples/../plugins/jqplot.canvasAxisLabelRenderer.min.js' %}""> </script>
+<script type="text/javascript" src="{% static 'examples/../plugins/jqplot.highlighter.min.js' %}""> </script>
+<script type="text/javascript" src="{% static 'examples/../plugins/jqplot.cursor.min.js' %}""> </script>
+<script type="text/javascript" src="{% static 'examples/../plugins/jqplot.dateAxisRenderer.min.js' %}""> </script>
+<script type="text/javascript" src="{% static 'examples/../plugins/jqplot.enhancedLegendRenderer.min.js' %}""> </script>
+</body>
+</html>
+

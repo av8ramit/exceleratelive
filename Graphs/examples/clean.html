@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+
+    <title>Data Point labels</title>
+
+    <link class="include" rel="stylesheet" type="text/css" href="../../Graphs/examples/../jquery.jqplot.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../Graphs/examples/examples.min.css" />
+    <link type="text/css" rel="stylesheet" href="../../Graphs/examples/syntaxhighlighter/styles/shCoreDefault.min.css" />
+    <link type="text/css" rel="stylesheet" href="../../Graphs/examples/syntaxhighlighter/styles/shThemejqPlot.min.css" />
+  
+    <!--[if lt IE 9]><script language="javascript" type="text/javascript" src="../../Graphs/examples/../excanvas.js"></script><![endif]-->
+    <script class="include" type="text/javascript" src="../../Graphs/jquery.min.js"></script>
+    
+   
+</head>
+<body>
+
+  
+<style type="text/css">
+#chart3 .jqplot-point-label {
+  border: 1.5px solid #aaaaaa;
+  padding: 1px 3px;
+  background-color: #eeccdd;
+}
+</style>
+
+<!-- Example scripts go here -->
+
+
+<div id="chart1" style="height:300px; width:500px;"></div>
+
+<style type="text/css">
+#chart3 .jqplot-point-label {
+  border: 1.5px solid #aaaaaa;
+  padding: 1px 3px;
+  background-color: #eeccdd;
+}
+</style>
+</pre>
+
+
+<script class="code" type="text/javascript">
+$(document).ready(function(){
+  var line1 = [1400, 2300, 41, 44, 40, 47, 53, 67];
+  var plot1 = $.jqplot('chart1', [line1], {
+      title: 'Chart with Point Labels', 
+      seriesDefaults: { 
+        showMarker:false,
+        pointLabels: { show:true } 
+      }
+  });
+});
+</script>
+
+
+
+
+
+<!-- End example scripts -->
+
+<!-- Don't touch this! -->
+
+
+    <script class="include" type="text/javascript" src="../../Graphs/examples/../jquery.jqplot.min.js"></script>
+    <script type="text/javascript" src="../../Graphs/examples/syntaxhighlighter/scripts/shCore.min.js"></script>
+    <script type="text/javascript" src="../../Graphs/examples/syntaxhighlighter/scripts/shBrushJScript.min.js"></script>
+    <script type="text/javascript" src="../../Graphs/examples/syntaxhighlighter/scripts/shBrushXml.min.js"></script>
+<!-- End Don't touch this! -->
+
+<!-- Additional plugins go here -->
+    <script class="include" language="javascript" type="text/javascript" src="../../Graphs/examples/../plugins/jqplot.barRenderer.min.js"></script>
+    <script class="include" language="javascript" type="text/javascript" src="../../Graphs/examples/../plugins/jqplot.categoryAxisRenderer.min.js"></script>
+    <script class="include" language="javascript" type="text/javascript" src="../../Graphs/examples/../plugins/jqplot.pointLabels.min.js"></script>
+
+<!-- End additional plugins -->
+
+
+
+</body>
+
+
+</html>

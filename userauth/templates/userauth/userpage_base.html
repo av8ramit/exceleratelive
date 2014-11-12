@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% load staticfiles %}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="#"> <!-- TODO: add favicon -->
+
+    <title>Excelerate User Page</title>
+
+    {% load staticfiles %}
+    <!-- Bootstrap core CSS -->
+    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <!-- Bootstrap js -->
+    <script src="{% static 'mysite/js/bootstrap.min.js' %}"></script>
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="http://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <!--script>
+      function to_report() {
+        window.location.href="Users/web/klin/simple_report.html";
+      }
+    </script-->
+
+  </head>
+
+  <body>
+
+    <style> 
+
+      html,
+      body {
+        margin:0;
+        padding:0;
+        height:100%;
+/*        background-color: #333;
+        color: #fff;*/
+        background-image: url("{% static 'mysite/css/images/overlay.svg' %}");
+        background-size: 100%;
+      }
+      #wrapper {
+        min-height:100%;
+        position:relative;
+      }
+      #head {
+        padding-top: 30px;
+        padding-left:10px;
+        padding-right:10px;
+        text-align: center;
+      }
+      #mainbody {
+        padding-top: 100px;
+        padding-left:10px;
+        padding-right:10px;
+        padding-bottom:100px;   /* Height of the footer element */
+      }
+      #foot {
+        width:100%;
+        height:100px;
+        position:absolute;
+        bottom:0;
+        left:0;
+        text-align: center;
+      }
+
+
+    </style>
+
+
+
+      <div id="wrapper">
+
+        <div id="head">
+          <a href="" target="_blank"><img class="img" width="200" src="{% static 'ml.png' %} "></a>
+          <h1>Welcome</h1>
+        </div> <!-- end of head -->
+
+        <div id="mainbody" class="inner cover">
+          <center>
+
+            <font color="black">
+              <h3>{% block fname %}fname{% endblock fname %} {%block lname %}lname{% endblock lname %}</h3>
+              <p>{% block username %}username{% endblock username %}</p>
+              <p>{% block school %}school{% endblock school %}</p>
+              <p>{% block studentid %}studentid{% endblock studentid %}</p>
+              <p>{% block extester %}{% endblock extester %}</p><!-- Function call test -->
+            </font>
+
+            <form role='form' action="{% url 'login:formtest2' %}" method='post'>{% csrf_token %}
+              <input hidden type="text" name="cmd" id="cmd" value="save">
+              <button class="btn btn-sm btn-success" type="submit" id="submit">Save</button>
+            </form><br>
+            <form role='form' action="{% url 'login:formtest2' %}" method='post'>{% csrf_token %}
+              <input hidden type="text" name="cmd" id="cmd" value="simple_report">
+              <button class="btn btn-sm btn-success" type="submit" id="submit">Simple Report</button>
+            </form><br>
+            <form role='form' action="{% url 'login:formtest2' %}" method='post'>{% csrf_token %}
+              <input hidden type="text" name="cmd" id="cmd" value="advanced_report">
+              <button class="btn btn-sm btn-success" type="submit" id="submit">Advance Report</button>
+            </form><br>
+            <form role='form' action="{% url 'login:formtest2' %}" method='post'>{% csrf_token %}
+              <input hidden type="text" name="cmd" id="cmd" value="section_report">
+              <button class="btn btn-sm btn-success" type="submit" id="submit">Section Report</button>
+            </form>
+            <br>
+            <form method="post" action="{% url 'login:upload' %}" name="submit" enctype="multipart/form-data">{% csrf_token %}
+              <input type="file" class="btn btn-sm btn-success" name="file"><br />
+              <input type="submit" class="btn btn-sm btn-success" id="submit" name="submit" value="Grade File">
+            </form>
+            <br>
+            
+
+            <form action="{% url 'login:downloadtest' %}" method="post">{% csrf_token %}
+              <div class="dropdown">
+                <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+                  Answer Sheets
+                  <span class="caret"></span>
+                </button>
+                  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                  {% for item in test_list %}
+                    <li roll="presentation"><button class="btn btn-large btn-block" role="menuitem" name="test" id="test" value="{{ item }}">{{ item }}</button></li>
+                  {% endfor %}
+                  </ul>
+              </div>
+            </form>
+            
+            </center>
+
+
+
+        </div> <!-- end of mainbody -->
+        <br>
+
+        <div id="foot">
+           <footer>
+            <center>
+              <p><FONT size="3">Score reports and Analysis Provided by <a href="http://www.exceleratetestprep.com/">Excelerate Test Prep &copy;</a>.</p>
+                <a href="http://www.exceleratetestprep.com/#!about/cgvz">About Us</a> |
+                <a href="http://www.exceleratetestprep.com/#!support/c3vn">Contact Us</a> |
+                <a href="http://www.exceleratetestprep.com/#!services/c1739">Services</a>
+              <p><FONT size="2" >Excelerate Test Prep © 2014</FONT></p>
+            </center>
+          </footer>
+        </div><!-- end of foot -->
+
+      </div> <!-- end of wrapper -->
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+  </body>
+</html>

@@ -1,0 +1,30 @@
+{% extends "userauth/UserDashboard.html" %}
+{% load i18n %}
+
+{% block fname %}
+{{ user.first_name }}
+{% endblock fname %} 
+
+{%block lname %}
+{{ user.last_name }}
+{% endblock lname %}
+
+{%block test_list %}
+{{ test_list }}
+{% endblock test_list %}
+
+{% block username %}
+{{ user.username }}
+{% endblock username %}
+
+{% block school %}
+{{ user.school_name }}
+{% endblock school %}
+
+{% block studentid %}
+{{ user.student_id }}
+{% endblock studentid %}
+
+{% block extester %}
+{{ response }}{{ message }}
+{% endblock extester %}

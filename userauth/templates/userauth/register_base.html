@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% load staticfiles %}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="#">
+
+    <title>Register for ExcelerateLive</title>
+    
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'dashboard/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="http://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+
+    <style> 
+
+      html,
+      body {
+        margin:0;
+        padding:0;
+        height:100%;
+/*        background-color: #333;
+        color: #000;*/
+        background-image: url("{% static 'mysite/css/images/overlay.svg' %}");
+        background-size: 100%;
+      }
+      #wrapper {
+        min-height:100%;
+        position:relative;
+      }
+      #head {
+        padding-top: 30px;
+        padding-left:10px;
+        padding-right:10px;
+        text-align: center;
+      }
+      #mainbody {
+        padding-top: 100px;
+        padding-left:10px;
+        padding-right:10px;
+        padding-bottom:100px;   /* Height of the footer element */
+      }
+      #foot {
+        width:100%;
+        height:100px;
+        position:absolute;
+        bottom:0;
+        left:0;
+        text-align: center;
+      }
+
+
+    </style>
+
+
+
+      <div id="wrapper">
+
+        <div id="head">
+          <h2 class="lead" style="color:#000">Please register with your given ID number</h2>
+        </div> <!-- end of head -->
+
+        <div id="formarea">
+          <center>
+            <p><FONT color="red">{% block errormsg %}{% endblock %}</FONT></p>
+            <form role="form" action="{% url 'login:send' %}" method="post">{% csrf_token %}
+              <table>
+                <tr>
+                  <td align="left"><label style="color:#000" for="fname">First Name: &nbsp;&nbsp;</label></td>
+                  <td align="right"><input required type="text" name="fname" id="fname" value="{% block fname %}{% endblock %}" placeholder="First Name"></td><br>
+                </tr>
+                <tr>
+                  <td align="left"><label style="color:#000" for="lname">Last Name:  &nbsp;&nbsp;</label></td>
+                  <td align="right"><input required type="text" name="lname" id="lname" value="{% block lname %}{% endblock %}" placeholder="Last Name"><br></td>
+                </tr>
+                <tr>
+                  <td align="left"><label style="color:#000" for="school">School Name:  &nbsp;&nbsp;</label></td>
+                  <td align="right"><input required type="text" name="school" id="school" value="{% block school %}{% endblock %}" placeholder="School Name"></td><br>
+                </tr>
+                <tr>
+                  <td align="left"><label style="color:#000" for="email">E-mail:  &nbsp;&nbsp;</label></td>
+                  <td align="right"><input required type="email" name="email" id="email" value="{% block email %}{% endblock %}" placeholder="E-mail"><br></td>
+                </tr>
+                <tr>
+                  <td align="left"><label style="color:#000" for="studentid">Student ID:  &nbsp;&nbsp;</label></td>
+                  <td align="right"><input required type="text" name="studentid" id="studentid" value="{% block studentid %}{% endblock %}" placeholder="Elite Student ID"><br></td>
+                </tr>
+                <tr>
+                  <td align="left"><label style="color:#000" for="username">Username:  &nbsp;&nbsp;</label></td>
+                  <td align="right"><input required type="text" name="username" id="username" value="{% block username %}{% endblock %}" placeholder="Username"><br></td>
+                </tr>
+                <tr>
+                  <td align="left"><label style="color:#000" for="password">Password:  &nbsp;&nbsp;</label></td>
+                  <td align="right"><input required type="password" name="password" id="password" value="{% block password %}{% endblock %}" placeholder="Password"><br></td>
+                </tr>          
+                <tr>
+                  <td align="left"><label style="color:#000" for="retypepassword">Confirm Password: &nbsp;&nbsp;</label></td>
+                  <td align="right"><input required type="password" name="retypepassword" id="retypepassword" value="{% block retypepassword %}{% endblock %}" placeholder="Confirm Password" onblur="confirmPass()"/><br></tr>
+                </tr>
+              </table>
+              <br><button style="text-align:center" class="btn btn-sm btn-success" type="submit" id="submit">Register</button>
+            </form>
+            <br><p><font color="#000">Go back to <a href="{% url 'login:front' %}">login</a> page</font></p>
+          </center>
+        </div> <!-- end of formarea -->
+        <br>
+        
+        <div id="foot">
+           <footer>
+            <center>
+              <p><FONT size="3" color="#000">Score reports and Analysis Provided by <a href="http://www.exceleratetestprep.com/">Excelerate Test Prep &copy;</a>.</p>
+                <a href="http://www.exceleratetestprep.com/#!about/cgvz">About Us</a> |
+                <a href="http://www.exceleratetestprep.com/#!support/c3vn">Contact Us</a> |
+                <a href="http://www.exceleratetestprep.com/#!services/c1739">Services</a>
+              <p><FONT color="#000" size="2" >Excelerate Test Prep © 2014</FONT></p>
+            </center>
+          </footer>
+        </div><!-- end of foot -->
+
+      </div> <!-- end of wrapper -->
+
+
+
+      <script>
+      function confirmPass() {
+        var pass = document.getElementById("password")
+        var rePass = document.getElementById("retypepassword")
+        if(pass.value !== rePass.value) {
+            document.getElementById("message").innerHTML = "passwords do not match!";
+            // document.getElementById("submit").disabled=true;
+        }
+      }
+      </script> 
+
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-52731728-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+  </body>
+</html>
