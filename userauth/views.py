@@ -208,6 +208,8 @@ def upload_file(request):
         # form = UploadFileForm(request.POST, request.FILES)
         form = UploadFileForm(data, request.FILES)
         if form.is_valid():
+            console.process_commands("load_class web")
+            console.process_commands("load_student " + request.user)
             handle_uploaded_file(request.user, request.FILES['file'])
             console.process_commands('grade ' + request.FILES['file'].name)
             console.process_commands('save')
@@ -231,6 +233,8 @@ def download_test(request):
     if request.POST:
         test_number = request.POST.get('test')
         cmd = "answer_sheet " + test_number
+        console.process_commands("load_class web")
+        console.process_commands("load_student " + request.user)
         console.process_commands(cmd)
     with open('Users/web/' + request.user.username + '/' + test_number + '.csv', 'rb') as f:
         response = HttpResponse(content_type='text/csv')
@@ -243,6 +247,8 @@ def download_test(request):
     return HttpResponse('File did not open')
 
 def simple_report(request):
+    console.process_commands("load_class web")
+    console.process_commands("load_student " + request.user)
     if len(console.user.tests_taken) == 0:
         return HttpResponse('Please take tests before opening reports. Go back to return to dashboard.')
     else:
@@ -251,6 +257,8 @@ def simple_report(request):
 
 
 def advanced_report(request):
+    console.process_commands("load_class web")
+    console.process_commands("load_student " + request.user)
     if len(console.user.tests_taken) == 0:
         return HttpResponse('Please take tests before opening reports. Go back to return to dashboard.')
     else:
