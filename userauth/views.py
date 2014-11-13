@@ -208,6 +208,7 @@ def upload_file(request):
         # form = UploadFileForm(request.POST, request.FILES)
         form = UploadFileForm(data, request.FILES)
         if form.is_valid():
+            console = Console()
             console.process_commands("load_class web")
             console.process_commands("load_student " + request.user.username)
             handle_uploaded_file(request.user, request.FILES['file'])
