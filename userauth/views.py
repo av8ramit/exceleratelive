@@ -15,7 +15,6 @@ import csv
 
 import re
 
-console = Console()
 
 def home(request):
     """
@@ -231,6 +230,7 @@ def download_file(request):
 
 def download_test(request):
     if request.POST:
+        console = Console()
         test_number = request.POST.get('test')
         cmd = "answer_sheet " + test_number
         console.process_commands("load_class web")
@@ -247,8 +247,10 @@ def download_test(request):
     return HttpResponse('File did not open')
 
 def simple_report(request):
+    console = Console()
     console.process_commands("load_class web")
     console.process_commands("load_student " + request.user.username)
+    print("Error:" + console.user.name)
     if len(console.user.tests_taken) == 0:
         return HttpResponse('Please take tests before opening reports. Go back to return to dashboard.')
     else:
@@ -257,6 +259,7 @@ def simple_report(request):
 
 
 def advanced_report(request):
+    console = Console()
     console.process_commands("load_class web")
     console.process_commands("load_student " + request.user.username)
     if len(console.user.tests_taken) == 0:
