@@ -116,6 +116,7 @@ def send(request):
                                     school_name=school, email=email,
                                     student_id=studentid)
         user.save()
+        console = Console()
         console.process_commands("load_class web")
         console.process_commands("new_student " + u_name)
         return render(request, 'userauth/postregister_base.html', {'username':u_name})
@@ -179,6 +180,7 @@ def formtest2(request):
         user = request.user
         print('printing school name')
         print(user.school_name)
+        console = Console()
         try:
             console.process_commands(str(cmd))
             if (cmd == 'simple_report'):
