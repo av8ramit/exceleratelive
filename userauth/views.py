@@ -254,7 +254,6 @@ def simple_report(request):
     console = Console()
     console.process_commands("load_class web")
     console.process_commands("load_student " + request.user.username)
-    print("Error:" + console.user.name)
     if len(console.user.tests_taken) == 0:
         return HttpResponse('Please take tests before opening reports. Go back to return to dashboard.')
     else:
