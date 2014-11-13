@@ -148,6 +148,7 @@ def login_user(request):
             # the password verified
             if user.is_active:
                 login(request, user) #use this for sessions (built in)
+                console = Console()
                 console.process_commands("load_class web")
                 print (console.error)
                 console.process_commands("load_student " + u_name)
