@@ -10,6 +10,8 @@ date_of_expiration = '12/15/2014'
 
 def date_converter(datestring):
   datestring = datestring.split('/')
+  if len(datestring[2]) == 2:
+    datestring[2] = '20' + datestring[2]
   return (datestring[2] + '-' + datestring[0] + '-' + datestring[1])
 
 def datetime_converter(datestring):

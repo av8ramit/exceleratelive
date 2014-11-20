@@ -25,7 +25,7 @@ class Graph(object):
         #lines.append('<link rel="stylesheet" type="text/css" href="../../Graphs/examples/examples.min.css" />' + endl)
         lines.append('<link type="text/css" rel="stylesheet" href=' + '"' + "{% static 'examples/syntaxhighlighter/styles/shCoreDefault.min.css' %}" + '"/>' + endl)
         lines.append('<link type="text/css" rel="stylesheet" href=' + '"' + "{% static 'examples/syntaxhighlighter/styles/shThemejqPlot.min.css' %}" + '"/>' + endl)
-        lines.append('<script class="include" type="text/javascript" src=' + '"' + "{% static 'jquery.min.js' %}" + '""></script>' + endl)
+        lines.append('<script class="include" type="text/javascript" src=' + '"' + "{% static 'jquery.min.js' %}" + '"></script>' + endl)
         return lines
 
 
