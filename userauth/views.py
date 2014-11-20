@@ -6,6 +6,7 @@ from django.contrib.auth import authenticate, login
 from django.core.context_processors import csrf
 from Library.Console import *
 from Library.Values import *
+from Library.AWSConnector import *
 
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
@@ -119,6 +120,9 @@ def send(request):
         console = Console()
         console.process_commands("load_class web")
         console.process_commands("new_student " + u_name)
+        bucket = call_bucket()
+        k = get_key(bucket, u_name)
+        k.set_contents_from_filename(user_filename(u_name, 'web'))
         return render(request, 'userauth/postregister_base.html', {'username':u_name})
     else:
         return HttpResponse("Sorry something went wrong")
@@ -149,6 +153,12 @@ def login_user(request):
             # the password verified
             if user.is_active:
                 login(request, user) #use this for sessions (built in)
+                #S3 Load
+                if not (file_exists(user_directory(u_name, 'web'))):
+                    bucket = call_bucket()
+                    key = get_key(bucket, u_name)
+                    mkdir(user_directory(u_name, 'web'))
+                    key.get_contents_to_filename(user_filename(u_name, 'web'))
                 console = Console()
                 console.process_commands("load_class web")
                 print (console.error)
@@ -216,6 +226,9 @@ def upload_file(request):
             handle_uploaded_file(request.user, request.FILES['file'])
             console.process_commands('grade ' + request.FILES['file'].name)
             console.process_commands('save')
+            bucket = call_bucket()
+            k = get_key(bucket, request.user.username)
+            k.set_contents_from_filename(user_filename(request.user.username, 'web'))
             return render(request, 'web/' + request.user.username + '/grade.html')
         else:
             form = UploadFileForm()

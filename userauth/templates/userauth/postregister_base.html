@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    {% load staticfiles %}
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -8,9 +9,8 @@
     <meta name="author" content="">
     <link rel="icon" href="#"> <!-- TODO: add favicon -->
 
-    <title>Thank you for registering</title>
+    <title>ExcelerateLive Score Report Login</title>
 
-    {% load staticfiles %}
     <!-- Bootstrap core CSS -->
     <link href="{% static 'dashboard/css/bootstrap.min.css' %}" rel="stylesheet">
 
@@ -33,15 +33,15 @@
         margin:0;
         padding:0;
         height:100%;
-/*        background-color: #333;
-        color: #fff;*/
-        text-shadow: 0 1px 3px rgba(0,0,0,.5);
+        color: #000;
+        background-image: url("{% static 'mysite/css/images/overlay-pattern.png' %}"), url("{% static 'mysite/css/images/overlay.svg' %}");
+        background-position: top left, center center;
+        background-repeat: repeat, no-repeat;
+        background-size: auto, cover;
       }
       #wrapper {
         min-height:100%;
         position:relative;
-        -webkit-box-shadow: inset 0 0 100px rgba(0,0,0,.5);
-        box-shadow: inset 0 0 100px rgba(0,0,0,.5);
       }
       #head {
         padding-top: 30px;
@@ -49,7 +49,7 @@
         padding-right:10px;
         text-align: center;
       }
-      #mainbody {
+      #formarea {
         padding-top: 100px;
         padding-left:10px;
         padding-right:10px;
@@ -64,14 +64,6 @@
         text-align: center;
       }
 
-      .submitlink {
-      background-color: transparent;
-      text-decoration: underline;
-      border: none;
-      color: blue;
-      cursor: pointer;
-      }
-
 
     </style>
 
@@ -80,28 +72,54 @@
       <div id="wrapper">
 
         <div id="head">
-          Thank you for registering!
-          <form action="{% url 'login:front' %}" method="POST"> {% csrf_token %}
-            <input hidden name="username" id="username" value="{{ username }}">
-            <p> return to <input type='submit' class="submitlink" value="login">page</p>
-          </form>
+          <!-- empty for now -->
         </div> <!-- end of head -->
 
-        <div id="mainbody" class="inner cover">
+        <div id="formarea" class="inner cover">
           <center>
+            <a href="" target="_blank"><img class="img" width="200" src="{% static 'ml.png' %} "></a>
+            <!-- <h1 class="cover-heading">Score Report Login</h1> -->
+            <p class="lead">Thank you for registering with Excelerate. Please log in to continue.</p><br>
+            <form class="form-inline" role="form" action="{% url 'login:auth' %}" method="post"> {% csrf_token %}
+              <div class="form-group">
+                <label class="sr-only" for="username">username</label>
+                <input required style="color:black" type="text" id="username" name="username" value='{% block username %}{% endblock %}' placeholder="Username"><br><br>
+                <label class="sr-only" for="password">password</label>
+                <input required style="color:black" type="password" id="password" name ="password" placeholder="Password"><br><br>
+                <input type="checkbox" id=" remember-me" name="remember-me" value="remember-me"> Remember me &nbsp;
+                <input type="submit" value="Login" class="btn btn-primary"><br><br>
+              </div>
+            </form>
+            <p><FONT color="red">{% block errormsg%}{% endblock %}</FONT></p>
+            Don't have a Username? <a href="{% url 'login:register' %}"><font color="#007be6">Register</font></a> now<!-- Link to register -->
           </center>
-        </div> <!-- end of mainbody -->
+        </div> <!-- end of formarea -->
         <br>
 
         <div id="foot">
            <footer>
             <center>
-          
+              <p><FONT size="3" color="#000">Score reports and Analysis Provided by <a href="http://www.exceleratetestprep.com/">Excelerate Test Prep &copy;</a>.</p>
+                <a href="http://www.exceleratetestprep.com/#!about/cgvz">About Us</a> |
+                <a href="http://www.exceleratetestprep.com/#!support/c3vn">Contact Us</a> |
+                <a href="http://www.exceleratetestprep.com/#!services/c1739">Services</a>
+              <p><FONT color="#000" size="2" >Excelerate Test Prep © 2014</FONT></p>
             </center>
           </footer>
         </div><!-- end of foot -->
 
       </div> <!-- end of wrapper -->
+
+      <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-52731728-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
