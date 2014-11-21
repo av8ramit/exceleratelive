@@ -225,6 +225,8 @@ def upload_file(request):
             console.process_commands("load_student " + request.user.username)
             handle_uploaded_file(request.user, request.FILES['file'])
             console.process_commands('grade ' + request.FILES['file'].name)
+            if console.error != None:
+                print console.error
             console.process_commands('save')
             bucket = call_bucket()
             k = get_key(bucket, request.user.username)

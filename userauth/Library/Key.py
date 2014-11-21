@@ -104,7 +104,7 @@ class Test(object):
                     report.get_summary(current_type).add_answered()
                 #range answer
                 elif answer_key.get_question(j).range == 'Y': #missed grid answers are counted as blanks
-                    assert ((attempt) not in 'ABCDE')
+                    #assert ((attempt) not in 'ABCDE')
                     report.get_summary(current_type).add_blank()
                     report.get_summary(current_type).incorrect_questions.append((answer_key.get_question(j).get_id(),'?'))
                 elif '(' in answer and ')' in answer:
