@@ -196,7 +196,7 @@ def formtest2(request):
             if (cmd == 'simple_report'):
                 return render(request, 'web/' + user.username + '/simple_report.html')
             if (cmd == 'advanced_report'):
-                return render(request, 'web/' + user.username + '/advanced_report.html')
+                return render(request, 'web/' + user.username + '/advanced_report.html')        
             if console.error != None:
                 response = console.error
             else:
@@ -284,3 +284,32 @@ def advanced_report(request):
         console.process_commands("advanced_report")
         return render(request, 'web/' + request.user.username + '/advanced_report.html')
 
+def math_report(request):
+    console = Console()
+    console.process_commands("load_class web")
+    console.process_commands("load_student " + request.user.username)
+    if len(console.user.tests_taken) == 0:
+        return HttpResponse('Please take tests before opening reports. Go back to return to dashboard.')
+    else:
+        console.process_commands("section_report")
+        return render(request, 'web/' + request.user.username + '/math_report.html')    
+
+def writing_report(request):
+    console = Console()
+    console.process_commands("load_class web")
+    console.process_commands("load_student " + request.user.username)
+    if len(console.user.tests_taken) == 0:
+        return HttpResponse('Please take tests before opening reports. Go back to return to dashboard.')
+    else:
+        console.process_commands("section_report")
+        return render(request, 'web/' + request.user.username + '/writing_report.html')  
+
+def reading_report(request):
+    console = Console()
+    console.process_commands("load_class web")
+    console.process_commands("load_student " + request.user.username)
+    if len(console.user.tests_taken) == 0:
+        return HttpResponse('Please take tests before opening reports. Go back to return to dashboard.')
+    else:
+        console.process_commands("section_report")
+        return render(request, 'web/' + request.user.username + '/reading_report.html')  

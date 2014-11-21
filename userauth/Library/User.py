@@ -390,6 +390,7 @@ class User(object):
         lines.append('<html xmlns="http://www.w3.org/1999/xhtml">' + endl)
         lines.append('<head>')
         lines.append('<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />' + endl)
+        lines.append('{% load staticfiles %}' + endl)
         lines.append('<link rel="stylesheet" type="text/css" href=' + '"' + "{% static 'style.css' %}" + '"' + '/>' + endl)
         lines.append('<title>' + section_type_name + ' Score Report</title>' + endl)
         lines += g.head()
