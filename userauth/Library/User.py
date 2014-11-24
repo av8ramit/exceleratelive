@@ -306,6 +306,10 @@ class User(object):
         cram = self.cram()
         positivecram = self.positivecram()
         lines.append('<h1>Quick Advice</h1>' + endl)
+        #if a 2400 is scored
+        if(cram[READING_TYPE][0] == None and cram[WRITING_TYPE][0] == None and cram[MATH_TYPE][0] == None):
+            lines.append("<h2 style = " + ' " ' + "color: #348cb2" + ' " ' + "><i>Congratulations for getting a perfect multiple choice score on your most recent test!</i></h2>" + endl)
+            lines.append("<h3><i>Check in every once in a while and practice to maintain your amazing: " + str(self.tests_taken[-1].score_summary.total_score()) + "!</i></h3>" + endl)
 
         if (cram[READING_TYPE][0] != None):
             type_name = READING_TYPE_DICT[cram[READING_TYPE][0]]
@@ -314,7 +318,7 @@ class User(object):
             lines.append(paropen + "Your strongest reading section is " + best_type + " as you are scoring " + positivecram[READING_TYPE][1] + " in these questions.")
             if best_type != type_name:
                 lines.append(paropen + "Your weakest reading section is " + type_name + " as you are scoring " + cram[READING_TYPE][1] + " in these questions.")
-         
+             
         if (cram[WRITING_TYPE][0] != None):
             lines.append("<h3><i>Writing Highlights:</i></h3>" + endl)
             type_name = WRITING_TYPE_DICT[cram[WRITING_TYPE][0]]
