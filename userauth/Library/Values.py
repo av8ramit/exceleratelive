@@ -5,8 +5,8 @@ import random
 #License Information
 USER_LIMIT = 25
 #Year/Month/Day
-EXPIRATION_DATE = '2014/12/15'
-date_of_expiration = '12/15/2014'
+EXPIRATION_DATE = '2015/12/15'
+date_of_expiration = '12/15/2015'
 
 def date_converter(datestring):
   datestring = datestring.split('/')
