@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
-from Library.Console import *
-from Library.Values import *
+from userauth.Library.Console import *
+from userauth.Library.Values import *
 from django.core.context_processors import csrf
 
 c = Console()
