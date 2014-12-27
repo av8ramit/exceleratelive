@@ -167,8 +167,9 @@ def list_tests():
     for i in a:
         if valid_test_id(i):
             #print (i)
-            array.append(i)
-    return array
+            if "CB" in i:
+                array.append(i)
+    return ["CB1", "CB2", "CB3", "CB4", "CB5", "CB6", "CB7", "CB8", "CB9", "CB10"]
 
 def list_users(c):
     array = []

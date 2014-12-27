@@ -33,9 +33,9 @@
             <p style = "color: #FF8C00; font-weight: bold">Your Scores &nbsp;&bull;&nbsp; Your Performance &nbsp;&bull;&nbsp; Your Future</p>
             <nav>
               <ul>
-                <li style = "color: #348cb2"><img src="{% static 'mysite/css/images/AboutUs.png' %}" alt="About Us" height="90" width="90" onmouseout = "this.src = '{% static 'mysite/css/images/AboutUs.png' %}' " onmouseover = "this.src = '{% static 'mysite/css/images/A.png' %}'"></img></li>
-                <li style = "color: #348cb2"><img src="{% static 'mysite/css/images/HowItWorks.png' %}" alt="How It Works" height="90" width="90" onmouseout = "this.src = '{% static 'mysite/css/images/HowItWorks.png' %}' " onmouseover = "this.src = '{% static 'mysite/css/images/B.png' %}'"></img></li>
-                <li style = "color: #348cb2"><img src="{% static 'mysite/css/images/WhyItWorks.png' %}" alt="Why It Works" height="90" width="90" onmouseout = "this.src = '{% static 'mysite/css/images/WhyItWorks.png' %}' " onmouseover = "this.src = '{% static 'mysite/css/images/C.png' %}'"></img></li>
+                <li style = "color: #348cb2"><a href="http://www.exceleratetestprep.com/"><img src="{% static 'mysite/css/images/AboutUs.png' %}" alt="About Us" height="90" width="90" onmouseout = "this.src = '{% static 'mysite/css/images/AboutUs.png' %}' " onmouseover = "this.src = '{% static 'mysite/css/images/A.png' %}'"></img></a></li>
+                <li style = "color: #348cb2"><a href="{% url 'howitworks' %}"><img src="{% static 'mysite/css/images/HowItWorks.png' %}" alt="How It Works" height="90" width="90" onmouseout = "this.src = '{% static 'mysite/css/images/HowItWorks.png' %}' " onmouseover = "this.src = '{% static 'mysite/css/images/B.png' %}'"></img></a></li>
+                <li style = "color: #348cb2"><a href="{% url 'whyitworks' %}"><img src="{% static 'mysite/css/images/WhyItWorks.png' %}" alt="Why It Works" height="90" width="90" onmouseout = "this.src = '{% static 'mysite/css/images/WhyItWorks.png' %}' " onmouseover = "this.src = '{% static 'mysite/css/images/C.png' %}'"></img></a></li>
                 <li style = "color: #348cb2"><a href="{% url 'login:register' %}"><img src="{% static 'mysite/css/images/SignUp.png' %}" alt="Sign Up" height="90" width="90" onmouseout = "this.src = '{% static 'mysite/css/images/SignUp.png' %}' " onmouseover = "this.src = '{% static 'mysite/css/images/D.png' %}'"></img></a></li>
                 <li style = "color: #348cb2" ><a href="{% url 'login:front' %}"><img src="{% static 'mysite/css/images/Login.png' %}" alt="Login" height="90" width="90" onmouseout = "this.src = '{% static 'mysite/css/images/Login.png' %}' " onmouseover = "this.src = '{% static 'mysite/css/images/E.png' %}'"></img></a></li>
               </ul>
@@ -43,8 +43,8 @@
           </header>
 
         <!-- Footer -->
-        <div id="foot">
-           <footer>
+        <div id="homefoot">
+           <homefooter>
             <center>
               <p><FONT size="3" color="#FF8C00">Score reports and Analysis Provided by <a href="http://www.exceleratetestprep.com/">Excelerate Test Prep &copy;</a>.</p>
                 <a href="http://www.exceleratetestprep.com/#!about/cgvz">About Us</a> |
@@ -52,7 +52,7 @@
                 <a href="http://www.exceleratetestprep.com/#!services/c1739">Services</a>
               <p><FONT color="#FF8C00" size="2" >Excelerate Test Prep © 2014</FONT></p>
             </center>
-          </footer>
+          </homefooter>
         </div><!-- end of foot -->
         
       </div>

@@ -10,6 +10,14 @@ def index(request):
 	#return render(request, 'mysite/index_base.html')
 	return render(request, 'mysite/index.html')
 
+def howitworks(request):
+	#return render(request, 'mysite/index_base.html')
+	return render(request, 'mysite/howitworks.html')
+
+def whyitworks(request):
+	#return render(request, 'mysite/index_base.html')
+	return render(request, 'mysite/whyitworks.html')
+
 def extest(request):
 	"""
 	Test to see if we can call the console and new_class command from console.py in the Library
