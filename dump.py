@@ -1,13 +1,14 @@
 import os 
 import sqlite3
+import dj_database_url
 
 all_rows = []
 endl = '\n'
 
 def terminal():
 	global all_rows
-	directory = os.path.dirname(__file__)
-	db = os.path.join(directory, 'db.sqlite3')
+	#directory = os.path.dirname(__file__)
+	db = dj_database_url.config()
 	conn = sqlite3.connect(db)
 	c = conn.cursor()
 	c.execute('SELECT last_login, email, username, first_name, last_name, school_name, student_id FROM {tn}'.format(tn = 'userauth_student'))
