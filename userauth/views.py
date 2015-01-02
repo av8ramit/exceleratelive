@@ -226,12 +226,14 @@ def upload_file(request):
             handle_uploaded_file(request.user, request.FILES['file'])
             console.process_commands('grade ' + request.FILES['file'].name)
             if console.error != None:
-                print console.error
-            console.process_commands('save')
-            bucket = call_bucket()
-            k = get_key(bucket, request.user.username)
-            k.set_contents_from_filename(user_filename(request.user.username, 'web'))
-            return render(request, 'web/' + request.user.username + '/grade.html')
+                #print console.error
+                return HttpResponse('There was an issue grading your CSV file. Please ensure you followed the instructions on our "How it Works" page and try again. Click <a href="javascript:history.go(-1)">here</a> return to the dashboard page.')
+            else:
+                console.process_commands('save')
+                bucket = call_bucket()
+                k = get_key(bucket, request.user.username)
+                k.set_contents_from_filename(user_filename(request.user.username, 'web'))
+                return render(request, 'web/' + request.user.username + '/grade.html')
         else:
             form = UploadFileForm()
         return response
@@ -270,7 +272,7 @@ def simple_report(request):
     console.process_commands("load_class web")
     console.process_commands("load_student " + request.user.username)
     if len(console.user.tests_taken) == 0:
-        return HttpResponse('Please take tests before opening reports. Go back to return to dashboard.')
+        return HttpResponse('Please take tests before opening reports. Click <a href="javascript:history.go(-1)">here</a> return to the dashboard page.')
     else:
         console.process_commands("simple_report")
         return render(request, 'web/' + request.user.username + '/simple_report.html')
@@ -281,7 +283,7 @@ def advanced_report(request):
     console.process_commands("load_class web")
     console.process_commands("load_student " + request.user.username)
     if len(console.user.tests_taken) == 0:
-        return HttpResponse('Please take tests before opening reports. Go back to return to dashboard.')
+        return HttpResponse('Please take tests before opening reports. Click <a href="javascript:history.go(-1)">here</a> return to the dashboard page.')
     else:
         console.process_commands("advanced_report")
         return render(request, 'web/' + request.user.username + '/advanced_report.html')
@@ -291,7 +293,7 @@ def math_report(request):
     console.process_commands("load_class web")
     console.process_commands("load_student " + request.user.username)
     if len(console.user.tests_taken) == 0:
-        return HttpResponse('Please take tests before opening reports. Go back to return to dashboard.')
+        return HttpResponse('Please take tests before opening reports. Click <a href="javascript:history.go(-1)">here</a> return to the dashboard page.')
     else:
         console.process_commands("section_report")
         return render(request, 'web/' + request.user.username + '/math_report.html')    
@@ -301,7 +303,7 @@ def writing_report(request):
     console.process_commands("load_class web")
     console.process_commands("load_student " + request.user.username)
     if len(console.user.tests_taken) == 0:
-        return HttpResponse('Please take tests before opening reports. Go back to return to dashboard.')
+        return HttpResponse('Please take tests before opening reports. Click <a href="javascript:history.go(-1)">here</a> return to the dashboard page.')
     else:
         console.process_commands("section_report")
         return render(request, 'web/' + request.user.username + '/writing_report.html')  
@@ -311,7 +313,7 @@ def reading_report(request):
     console.process_commands("load_class web")
     console.process_commands("load_student " + request.user.username)
     if len(console.user.tests_taken) == 0:
-        return HttpResponse('Please take tests before opening reports. Go back to return to dashboard.')
+        return HttpResponse('Please take tests before opening reports. Click <a href="javascript:history.go(-1)">here</a> return to the dashboard page.')
     else:
         console.process_commands("section_report")
         return render(request, 'web/' + request.user.username + '/reading_report.html')  

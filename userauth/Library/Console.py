@@ -29,6 +29,7 @@ class Console(object):
         return user_input.split(SPACE)
 
     def process_commands(self, user_input):
+        self.error = None
         if (empty(user_input)):
             return True
 

@@ -103,7 +103,7 @@ class Test(object):
                 elif attempt == answer:
                     report.get_summary(current_type).add_answered()
                 #range answer
-                elif answer_key.get_question(j).range == 'Y': #missed grid answers are counted as blanks
+                elif answer_key.get_question(j).range == 'Y' and '(' not in answer and ')' not in answer: #missed grid answers are counted as blanks
                     #assert ((attempt) not in 'ABCDE')
                     report.get_summary(current_type).add_blank()
                     report.get_summary(current_type).incorrect_questions.append((answer_key.get_question(j).get_id(),'?'))
@@ -118,7 +118,7 @@ class Test(object):
                         if a <= upper_limit and a >= lower_limit:
                             report.get_summary(current_type).add_answered()
                         else:
-                            report.get_summary(current_type).add_miss()
+                            report.get_summary(current_type).add_blank()
                             report.get_summary(current_type).incorrect_questions.append((answer_key.get_question(j).get_id(),attempt))
                     except:
                         report.get_summary(current_type).add_blank()

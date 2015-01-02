@@ -72,7 +72,7 @@
       <div id="wrapper">
 
         <div id="head">
-          <h2 class="lead" style="color:#000">Please register with your given ID number</h2>
+          <h2 class="lead" style="color:#000">Please register to create your own Excelerate Account</h2>
         </div> <!-- end of head -->
 
         <div id="formarea">
@@ -94,11 +94,11 @@
                 </tr>
                 <tr>
                   <td align="left"><label style="color:#000" for="email">E-mail:  &nbsp;&nbsp;</label></td>
-                  <td align="right"><input required type="email" name="email" id="email" value="{% block email %}{% endblock %}" placeholder="E-mail"><br></td>
+                  <td align="right"><input required type="email" name="email" id="email" value="{% block email %}{% endblock %}" placeholder="E-mail Address"><br></td>
                 </tr>
                 <tr>
-                  <td align="left"><label style="color:#000" for="studentid">Student ID:  &nbsp;&nbsp;</label></td>
-                  <td align="right"><input required type="text" name="studentid" id="studentid" value="{% block studentid %}{% endblock %}" placeholder="Elite Student ID"><br></td>
+                  <td align="left"><label style="color:#000" for="studentid">Academy Student ID:  &nbsp;&nbsp;</label></td>
+                  <td align="right"><input required type="text" name="studentid" id="studentid" value="{% block studentid %}{% endblock %}" placeholder="123 if Not Applicable"><br></td>
                 </tr>
                 <tr>
                   <td align="left"><label style="color:#000" for="username">Username:  &nbsp;&nbsp;</label></td>
@@ -113,7 +113,9 @@
                   <td align="right"><input required type="password" name="retypepassword" id="retypepassword" value="{% block retypepassword %}{% endblock %}" placeholder="Confirm Password" onblur="confirmPass()"/><br></tr>
                 </tr>
               </table>
-              <br><button style="text-align:center" class="btn btn-sm btn-success" type="submit" id="submit">Register</button>
+              <br>
+              <p><font size="2px" color="#000">By clicking register you are agreeing to our <a href="{% static 'termsandconditions.pdf' %}">Terms and Conditions</a>.</font></p>
+              <button style="text-align:center" class="btn btn-sm btn-success" type="submit" id="submit">Register</button>
             </form>
             <br><p><font color="#000">Go back to <a href="{% url 'login:front' %}">login</a> page</font></p>
           </center>
