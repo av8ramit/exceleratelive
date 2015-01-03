@@ -1,6 +1,7 @@
 import os 
 import sqlite3
 import dj_database_url
+import psycopg2
 
 all_rows = []
 endl = '\n'
@@ -9,7 +10,7 @@ def terminal():
 	global all_rows
 	#directory = os.path.dirname(__file__)
 	db = dj_database_url.config()
-	conn = sqlite3.connect(db)
+	conn = psycopg2.connect(db)
 	c = conn.cursor()
 	c.execute('SELECT last_login, email, username, first_name, last_name, school_name, student_id FROM {tn}'.format(tn = 'userauth_student'))
 	all_rows = c.fetchall()
