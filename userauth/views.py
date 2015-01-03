@@ -112,10 +112,16 @@ def send(request):
         #   error_message = "Please put a valid student id"
         #   context = #peace
 
-        user = Student.objects.create_user(username=u_name, password=p_word,
+        try:
+            user = Student.objects.create_user(username=u_name, password=p_word,
                                     first_name=fname, last_name=lname,
                                     school_name=school, email=email,
                                     student_id=studentid)
+        except:
+            error_message = "That username or email already exists. Please try and use another username."
+            return render(request, 'userauth/register.html', {
+                'username': u_name, 'fname':fname, 'lname':lname, 'school':school, 'email':email, 'studentid':studentid, 'errormsg':error_message
+                })
         user.save()
         console = Console()
         console.process_commands("load_class web")
