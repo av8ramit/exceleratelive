@@ -45,7 +45,7 @@
             			<!-- Brand and toggle get grouped for better mobile display -->
             	<div class="navbar-header">
                
-                	<a class="navbar-brand" href="http://www.exceleratetestprep.com/">Excelerate Test Prep Inc.</a>
+                	<a class="navbar-brand" href="{% url 'index' %}">Home</a>
            		</div>
            				 <!-- Top Menu Items -->
            		<ul class="nav navbar-right top-nav">
@@ -62,6 +62,7 @@
                     		</li!-->
                     		<li class="divider"></li>
                     		<li>
+                    			<a href="{% url 'howitworks' %}"><i class="fa fa-fw fa-power-off"></i> Directions</a>
                     			<a href="{% url 'login:front' %}"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
                     		</li>
                			</ul>
@@ -129,6 +130,7 @@
 		           <footer>
 		            <center>
 		              <p><FONT size="3" color="#FF8C00">Score reports and Analysis Provided by <a href="http://www.exceleratetestprep.com/">Excelerate Test Prep &copy;</a>.</p>
+		                <a href="{% url 'howitworks' %}">Directions</a> |
 		                <a href="http://www.exceleratetestprep.com/#!about/cgvz">About Us</a> |
 		                <a href="http://www.exceleratetestprep.com/#!support/c3vn">Contact Us</a> |
 		                <a href="http://www.exceleratetestprep.com/#!services/c1739">Services</a>
