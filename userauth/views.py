@@ -45,6 +45,11 @@ def fields_check(u_name, p_word, fname, lname, school, email, studentid):
         error_message += "Required field was left blank\n"
 
     names = [u_name, fname, lname]
+    for char in u_name:
+        if char in '/ !@#$%^&*(),.<>/?"{[}]|':
+            error_message = "Please refrain from using spaces or special characters in your username.\n"
+
+
     for name in names:
         if len(name) > 30:
             if name == u_name:
@@ -59,7 +64,7 @@ def fields_check(u_name, p_word, fname, lname, school, email, studentid):
         error_message += "School must be less than 50 characters\n"
     if studentid:
         if not str(studentid).isdigit():
-            error_message += "Please provide a numeric student id"
+            error_message += "Please provide a numeric student id\n"
 
     reg = re.compile(".+@.+\\..+")
     email_check = False
@@ -118,10 +123,11 @@ def send(request):
                                     school_name=school, email=email,
                                     student_id=studentid)
         except:
-            error_message = "That username or email already exists. Please try and use another username."
+            error_message = "Something went wrong. Most likely that username or email already exists. Please try and use another username."
             return render(request, 'userauth/register.html', {
                 'username': u_name, 'fname':fname, 'lname':lname, 'school':school, 'email':email, 'studentid':studentid, 'errormsg':error_message
                 })
+
         user.save()
         console = Console()
         console.process_commands("load_class web")
