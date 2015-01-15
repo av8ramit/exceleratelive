@@ -195,6 +195,39 @@ class Console(object):
             else:
                 self.error = ("Error: Invalid use of answer sheet command.")
                 return False
+        '''        
+        #Make CSV from Bubble Sheet data
+        if cmd == "make_bubble_sheet_csv":
+            if self.state != USER_STATE:
+                self.error = ("Error: Please load or create a user before creating answer sheets.")
+                return False
+            elif (len(cmd_vector) == 3 and not empty(cmd_vector[1])):
+                if valid_test_id(cmd_vector[1]):
+                    make_bubble_csv(self.user, cmd_vector[1], cmd_vector[2])
+                    return True
+                else:
+                    self.error = ("Error: Not a valid supported test_id.")
+                    return False
+            else:
+                self.error = ("Error: Invalid use of answer sheet command.")
+                return False
+        '''
+
+        #Make HTML Bubble Sheet
+        if cmd == "bubble_sheet":
+            if self.state != USER_STATE:
+                self.error = ("Error: Please load or create a user before creating answer sheets.")
+                return False
+            elif (len(cmd_vector) == 2 and not empty(cmd_vector[1])):
+                if valid_test_id(cmd_vector[1]):
+                    make_bubble_sheet(self.user, cmd_vector[1])
+                    return True
+                else:
+                    self.error = ("Error: Not a valid supported test_id.")
+                    return False
+            else:
+                self.error = ("Error: Invalid use of answer sheet command.")
+                return False
 
         #Grade
         if cmd == "grade":

@@ -7,7 +7,7 @@ from django.core.context_processors import csrf
 from Library.Console import *
 from Library.Values import *
 from Library.AWSConnector import *
-
+from operator import itemgetter
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 
@@ -159,6 +159,8 @@ def login_user(request):
     """
     u_name = p_word = ''
     if request.POST:
+        
+        
         u_name = request.POST.get('username')
         p_word = request.POST.get('password')
         remember = request.POST.get('remember-me', False)
@@ -223,6 +225,11 @@ def formtest2(request):
         response = 'Something wrong with post'
         return render(request, 'userauth/userpage.html', {'response':response, 'user':user})
 
+
+
+############### Bubble Sheet Form 
+
+
 def handle_uploaded_file(user, f):
     with open('Users/web/' + user.username + '/' + f.name, 'wb+') as dest:
         for chunk in f.chunks():
@@ -280,6 +287,68 @@ def download_test(request):
             writer.writerow(row)
         return response
     return HttpResponse('File did not open')
+
+#function to collect bubblesheet form data, manipulate it, and pass it to a csv answer sheet maker function, then grade test
+
+def grade_save_bubblesheet(request):
+    if request.POST:
+        '''
+        webdata = [] # hold form data
+        swebdata = []
+        bubbledata = []  # filtered form data
+        webdata = sorted(request.POST) # get all test form answers
+        swebdata = sorted(webdata, key = itemgetter(0,1))
+        print(str(webdata))
+        for item in webdata:   
+            bubbledata.append(request.POST.get(item))
+        '''    
+
+
+        filename = request.POST.get('test')
+    
+        lines = []
+        label_vector = "Number:,Answer:" + endl
+        lines.append(filename + " Answer Sheet" + endl)
+        lines.append("Name:," + request.user.username + endl)
+        lines.append("Date:," + datetime_converter(str(datetime.date.today())) + endl)
+        lines.append("Essay:,"+ str(request.POST.get('Essay')) + endl)
+        lines.append(label_vector)
+        with open(test_directory(filename) + DIR_SEP + KEYFILE, 'rU') as f:
+            reader = csv.reader(f)
+            for row in reader:
+                if row != KEY_VECTOR:
+                    lines.append("Section " + str(row[0]) + ":" + endl)
+                    for j in range(1,int(row[2]) + 1):
+                        lines.append(str(j) + "," + str(request.POST.get("Section " + str(row[0]) + "  Question " + str(j))))
+                        lines.append(endl)
+        FILE = open(user_directory(request.user.username, 'web') + DIR_SEP + filename + ".csv", "w")
+        FILE.writelines(lines)
+        FILE.close()
+        console = Console()
+        console.process_commands("load_class web")
+        console.process_commands("load_student " + request.user.username)
+        console.process_commands('grade ' + str(filename) + '.csv')
+        if console.error != None:
+
+            #print console.error
+            return HttpResponse('There was an issue grading your CSV file. Please ensure you followed the instructions on our "How it Works" page and try again. Click <a href="javascript:history.go(-1)">here</a> return to the bubblesheet page.')
+        else:
+
+            console.process_commands('save')
+            bucket = call_bucket()
+            k = get_key(bucket, request.user.username)
+            k.set_contents_from_filename(user_filename(request.user.username, 'web'))
+            return render(request, 'web/' + request.user.username + '/grade.html')
+
+def bubblesheet(request):
+    if request.POST:
+        console = Console()
+        test_number = request.POST.get('test')
+        cmd = "bubble_sheet " + test_number
+        console.process_commands("load_class web")
+        console.process_commands("load_student " + request.user.username)
+        console.process_commands(cmd)
+        return render(request, 'web/' + request.user.username + '/' + str(test_number)  + '.html')
 
 def simple_report(request):
     console = Console()

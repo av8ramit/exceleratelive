@@ -205,6 +205,263 @@ def make_answer_sheet(u, test_id):
     FILE.writelines(lines)
     FILE.close()
 
+## function that creates answer sheet csv with bubblesheet data from website
+'''
+def make_bubble_csv(u, test_id, bbldata):
+    filename = test_id
+    bubblesheetdata = []
+    bubble_True_or_False = bbldata
+    lines = []
+    dataindex = 0
+    label_vector = "Number:,Answer:" + endl
+    lines.append(test_id + " Answer Sheet" + endl)
+    lines.append("Name:," + u.name + endl)
+    lines.append("Date:," + datetime_converter(str(datetime.date.today())) + endl)
+    lines.append("Essay:,"+ str(bubblesheetdata.pop()) + endl)
+    lines.append(label_vector)
+    with open(test_directory(filename) + DIR_SEP + KEYFILE, 'rU') as f:
+        reader = csv.reader(f)
+        for row in reader:
+            if row != KEY_VECTOR:
+                lines.append("Section " + str(row[0]) + ":" + endl)
+                for j in range(1,int(row[2]) + 1):
+                    lines.append(str(j) + "," + str(bubblesheetdata.pop()))
+                    lines.append(endl)
+    FILE = open(user_directory(u.name, u.c) + DIR_SEP + test_id + ".csv", "w")
+    FILE.writelines(lines)
+    FILE.close()
+
+'''
+## function that creates HTML page Bubble Sheet to input answers
+def make_bubble_sheet(u, test_id):
+    filename = test_id
+    lines = []
+    
+    lines.append('<!DOCTYPE html>' + endl)
+    lines.append('<head>')
+    lines.append('<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />' + endl)
+    lines.append('{% load staticfiles %}' + endl)
+    lines.append('<link rel="stylesheet" type="text/css" href=' + '"' + "{% static 'style.css' %}" + '"' + '/>' + endl)
+    lines.append('<link rel="stylesheet" href=' + '"' + "{% static 'flipclock.css' %}" + '"' +'/>' + endl)
+    lines.append('<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>' + endl)
+    lines.append('<script src='+ '"' + "{% static 'flipclock.js' %}" + '"' +'></script>' +endl)
+    lines.append('<title>' + str(filename) +  '</title>' + endl)
+    lines.append('<br></br>')
+    lines.append('</head>' + endl)
+    lines.append('<body>' + endl)
+    lines.append('<style>' + endl)
+    lines.append('html,' + endl)
+    lines.append('body {' + endl)
+    lines.append('background-image: url("{% static' +  " 'mysite/css/images/overlay.svg' " +  '%}");')
+    lines.append('background-size: 100%;' + endl)
+    lines.append('}' + endl)
+    lines.append('</style>' + endl)  
+    lines.append('<div id="page">' + endl)
+    lines.append('<div id="header">' + endl)
+    lines.append('<img src=' + '"' + "{% static 'ml.png' %}" + '" alt="Excelerate" style="float: right; width: 35%; margin-right: 35%;"/>' +
+        '<a href="javascript:history.go(-1)"> <img src=' + '"' + "{% static 'back_rev.png' %}" + '" alt="Home" style="float: left; width: 15%; margin-left: 5%;""> </a>' + endl)
+    lines.append('<p style="clear: both;">' + endl)
+    lines.append('</div>' + endl)
+    lines.append('</div>' + endl)
+    lines.append('<div id="content">' + endl)
+    lines.append('<div id="container">' + endl)
+    lines.append('<div id="main">' + endl)
+    lines.append('<div id="menu">' + endl)
+    lines.append('<h2 style="text-align:center;">Bubble Answer Sheet</h2>' + endl)
+    lines.append('</div>' + endl)
+    lines.append('<div id="text">' + endl)
+    lines.append('<h1 style = "text-align: center;color: #FF8C00"> Test:  ' + str(filename) + ' </h1>' +endl) 
+    lines.append('<p style = "text-align: center;color: #348cb2"> Directions: Please set aside a 4 hour time slot to complete this practice exam.<br>Use the optional timers for each section to help you keep track and proctor your exam.</p>' + endl)
+    lines.append('<p style = "text-align: center;color: #348cb2">Either fill in the bubble answer sheet as you take the test with the built in timers for each section, or fill in the bubble sheet with answers from a test you have already taken.</p>' + endl)
+    lines.append('<p style = "text-align: center;color: #348cb2">Upon compleiton, click the "Submit and Grade Test" button at the end of the answer sheet.</p>' + endl)
+    lines.append('<p style = "text-align: center;color: #348cb2">Practice makes perfect, but also remember to take three, five-minute breaks! <br> Goodluck!</p>' + endl)
+    lines.append('<br/>'+ endl)
+    lines.append('<br/>'+ endl)
+    lines.append('<h3 style="text-align:center;color: #FF8C00">If you begin now, your estimated time of compleiton is:</h3>' + endl)
+    lines.append('<div class="clock" style="margin:1em;"></div>' + endl)
+    lines.append('<script type="text/javascript">' + endl)
+    lines.append('var clock;' + endl)
+    lines.append('$(document).ready(function() {' + endl)
+    lines.append('var date = new Date();' + endl)
+    lines.append('var hours = date.getHours();' + endl)
+    lines.append('var mins = date.getMinutes();' + endl)
+    lines.append('date.setHours(hours+3);' + endl)
+    lines.append('date.setMinutes(mins+35);' + endl)
+    lines.append('clock = $('+ "'" +'.clock' + "'" + ').FlipClock(date, {' + endl)
+    lines.append('clockFace: '+ "'" + 'TwelveHourClock' + "'" + endl)
+    lines.append('});' + endl)
+    lines.append('});' + endl)
+    lines.append('</script>' + endl)
+    lines.append('<br/>'+ endl)
+    lines.append('<br/>'+ endl)
+    lines.append('<form style = "text-align: center" role="form" ' + 'action=' + '"' + '{% url ' + "'" + 'login:grade_bubblesheet' + "'" + ' %}' +  '"' +  '" method="post">{% csrf_token %}' + endl)
+    lines.append('<input type = "hidden" name = "test" value=' + '"' + str(filename) + '"' +' />' + endl)
+    divclk = 1
+    with open(test_directory(filename) + DIR_SEP + KEYFILE, 'rU') as f:
+        reader = csv.reader(f)
+        for row in reader:
+            if row != KEY_VECTOR:
+                lines.append('<h2 style = "color: #FF8C00"> Section ' +  str(row[0])  +  ' : </h2>' + endl)
+                if(int(row[1]) == ESSAY_TYPE): # if essay type
+                    lines += make_section_cntdwnclock(25, divclk)
+                    divclk += 1
+                    lines.append('<br/>' + endl)
+                    lines.append('<br/>' + endl)
+                    lines.append('<label style = "color: #348cb2"> Enter Essay Score </label>' + endl)
+                    lines.append('<br/>' + endl)
+                    lines.append('<br/>' + endl)
+                    lines.append('&nbsp;&nbsp;&nbsp;&nbsp;' + endl)
+                    lines.append('<input type="text" name=' + '"' + 'Essay' + '"' +  'value="Score 2 to 12"/>' + endl)
+                    lines.append('<br/>' + endl)
+                if(int(row[2]) == 18 and int(row[1]) == READING_TYPE): #college board test 2 18 q reading section mistake clock
+                    lines += make_section_cntdwnclock(20, divclk)
+                    divclk += 1
+                if(int(row[2]) == 25): #college board test 2 25 q reading section mistake clock
+                    lines += make_section_cntdwnclock(25, divclk)
+                    divclk += 1
+                if(int(row[2]) == 18 and int(row[1]) == MATH_TYPE): # special section math 8 MC  10 grid-in s
+                    #math 18 question section timer 
+                    lines += make_section_cntdwnclock(25, divclk)
+                    divclk += 1
+                    for i in range(1,int(row[2]) + 1):  
+                        if(i <= 8): # Math MC
+                            lines+= make_bubble_question('Section ' +  str(row[0]) + '  Question ' + str(i), True)
+                        else: # Math Grid-In
+                            lines+= make_bubble_question('Section ' +  str(row[0]) + '  Question ' + str(i), False)
+                        if(i == 8):
+                            lines.append('<p style = "text-align: center;color: #348cb2"> Math Grid-In <br>Enter all fractions as decimal (example - 1/3 = 0.333)<br>Enter multiple answers as a range (example - ) (</p>')
+                else: #regular section math, reading, writing MC
+                    if (int(row[2])  == 16 or int(row[2]) == 19):  #16q and 19q section, 20 min timer
+                        lines += make_section_cntdwnclock(20, divclk)
+                        divclk += 1
+                    if(int(row[2]) == 35 or int(row[2]) == 24 or int(row[2]) == 20):
+                        lines += make_section_cntdwnclock(25, divclk)
+                        divclk += 1
+                    if(int(row[2]) == 14): 
+                        lines += make_section_cntdwnclock(10, divclk)
+                        divclk += 1
+
+                    for i in range(1,int(row[2]) + 1):
+
+                        lines+= make_bubble_question('Section ' +  str(row[0]) + '  Question ' + str(i), True) 
+
+    lines.append('<br>' + endl)
+    lines.append('<br>' + endl)
+    lines.append('<br>' + endl)
+    lines.append('<br>' + endl)                    
+    lines.append('<input onClick="return confirm(' + "'" + 'Ready to submit test?'  + "'" +');" type = "submit" name = "submit" value = "Submit and Grade Test" />' + endl)          
+    #Footer
+    lines.append('<br>' + endl)
+    lines.append('</div>' + endl)
+    lines.append('</div>' + endl)
+    lines.append('</div>' + endl)
+    lines.append('<div class="clear"></div>' + endl)
+    lines.append('<div id="footer">' + endl)
+    lines.append('</div>' + endl)
+    lines.append('</div>' + endl)
+    lines.append('</body>' + endl)
+    lines.append('</html>' + endl)
+    lines.append(endl)            
+    FILE = open(user_directory(u.name, u.c) + DIR_SEP + test_id + ".html", "w")
+    FILE.writelines(lines)
+    FILE.close()
+
+def make_bubble_question(question_number, bubble_True_or_False):
+    lines = []
+    qnum = question_number
+    bbltf = bubble_True_or_False
+    if(not bbltf):
+        #math grid in 
+        lines.append('<br/>' + endl)
+        lines.append('<label style = "color: #348cb2">' + str(qnum) + '</label>' + endl)
+        lines.append('<br/>' + endl)
+        lines.append('<br/>' + endl)
+        lines.append('&nbsp;&nbsp;&nbsp;&nbsp;' + endl)
+        lines.append('<input type="text" name=' + '"' + str(qnum) + '"' +  'value="?"/>' + endl)
+        lines.append('<br/>' + endl)
+        return(lines)
+
+    else:
+        # MC 
+        lines.append('<br/>' + endl)
+        lines.append('<label style = "color: #348cb2">' + str(qnum) + '</label>' + endl)
+        lines.append('<br/>' + endl)
+        lines.append('<br/>' + endl)
+        lines.append('&nbsp;&nbsp;&nbsp;&nbsp;' + endl)
+        lines.append('<input type="radio" name=' + '"' + str(qnum) + '"' +  'value="A"/>   A' + endl)
+        lines.append('&nbsp;&nbsp;&nbsp;&nbsp;' + endl)
+        lines.append('<input type="radio" name=' + '"' + str(qnum) + '"' +  'value="B"/>   B' + endl)
+        lines.append('&nbsp;&nbsp;&nbsp;&nbsp;' + endl)
+        lines.append('<input type="radio" name=' + '"' + str(qnum) + '"' +  'value="C"/>   C' + endl)
+        lines.append('&nbsp;&nbsp;&nbsp;&nbsp;' + endl)
+        lines.append('<input type="radio" name=' + '"' + str(qnum) + '"' +  'value="D"/>   D' + endl)
+        lines.append('&nbsp;&nbsp;&nbsp;&nbsp;' + endl)
+        lines.append('<input type="radio" name=' + '"' + str(qnum) + '"' +  'value="E"/>   E' + endl)
+        lines.append('&nbsp;&nbsp;&nbsp;&nbsp;' + endl)
+        lines.append('<input type="radio" name=' + '"' + str(qnum) + '"' +  'value="?" checked />BLANK' + endl)
+        lines.append('<br/>' + endl)
+        return(lines)
+
+#countdown clock for sections of the test 
+def make_section_cntdwnclock(time_minutes, index):
+    timevar = time_minutes * 60
+    divindex = index 
+    #countdown clock
+    lines = []
+    lines.append('<br>' + endl)
+    lines.append('<br>' + endl)
+    lines.append('<label style = "color: #348cb2">Optional timer: To help you keep track of time and/or to proctor your exam</label>' + endl)
+    lines.append('<br>' + endl)
+    lines.append('<br>' + endl)
+    lines.append('<div  style="text-align:right" class="clock' + str(divindex) + '"' + ' style="margin:1em;"></div>' + endl)
+    lines.append('<br>' + endl)
+    lines.append('<br>' + endl)
+    lines.append('<br>' + endl)
+    lines.append('<br>' + endl)
+    lines.append('<div style = "color: #348cb2" class="message' + str(divindex) + '"></div>' + endl)
+    lines.append('<button type = "button" class="start'  + str(divindex) + '">Start Section Timer</button>' + endl)
+    lines.append('&nbsp;&nbsp;&nbsp;&nbsp;' + endl)
+    lines.append('<button type = "button" class="stop'  + str(divindex) + '">Stop Section Timer</button>' + endl)
+    lines.append('&nbsp;&nbsp;&nbsp;&nbsp;' + endl)
+    lines.append('<button type = "button" class="reset'  + str(divindex) + '">Reset Section Timer</button>' + endl)
+    lines.append('&nbsp;&nbsp;&nbsp;&nbsp;' + endl)
+    lines.append('<script type="text/javascript">' + endl)
+    lines.append('var clock' + str(divindex) + ';' + endl)
+    lines.append('$(document).ready(function() {' + endl)
+    lines.append('clock' + str(divindex) + ' = $('+ "'" + '.clock' + str(divindex) + "'" + ').FlipClock( ' + str(timevar) + ', {' + endl)
+    lines.append('clockFace: ' + "'" + 'MinuteCounter' + "'" + ',' + endl)
+    lines.append('countdown: true,' + endl)
+    lines.append('autoStart: false,' + endl)
+    lines.append('callbacks: {' + endl)
+    lines.append('start'+ str(divindex) +': function() {' + endl)
+    lines.append('$('+ "'" +'.message' + str(divindex) + "'" + ').html(' + "'" + 'Being the section' + "'" + ')},' + endl)
+    lines.append('stop'+ str(divindex) +': function() {' + endl)
+    lines.append('$('+ "'" +'.message' + str(divindex) + "'" + ').html(' + "'" + 'The timer has been paused' + "'" + ')},' + endl)
+    lines.append('reset'+ str(divindex) +': function() {' + endl)
+    lines.append('$('+ "'" +'.message' + str(divindex) + "'" + ').html(' + "'" + 'Being the section!' + "'" + ');' + endl)
+    lines.append('}' + endl)
+    lines.append('}' + endl)
+    lines.append('});' + endl)
+    lines.append('$(' + "'" + '.start' + str(divindex)+ "'" +').click(function(e) {' + endl)
+    lines.append('clock' + str(divindex) + '.start();' + endl)
+    lines.append('});' + endl)
+    lines.append('$(' + "'" + '.stop' + str(divindex)+ "'" +').click(function(e) {' + endl)
+    lines.append('clock' + str(divindex) + '.stop();' + endl)
+    lines.append('});' + endl)
+    lines.append('$(' + "'" + '.reset' + str(divindex)+ "'" +').click(function(e) {' + endl)
+    lines.append('clock' + str(divindex) + '.stop();' + endl)
+    lines.append('clock' + str(divindex) + '.reset();' + endl)
+    lines.append('clock' + str(divindex) + '.start();' + endl)
+    lines.append('});' + endl)
+    lines.append('});' + endl)
+    lines.append('</script>' + endl)
+    lines.append('<br>' + endl)
+    lines.append('<br>' + endl)
+    return lines
+
+
+
+
 def parse_answers(filename):
     with open(filename, 'rU') as f:
         reader = csv.reader(f)

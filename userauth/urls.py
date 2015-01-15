@@ -10,12 +10,14 @@ urlpatterns = patterns('',
 		url(r'^formtest2/$', 'userauth.views.formtest2', name='formtest2'),
 		url(r'^upload/$', 'userauth.views.upload_file', name='upload'),
 		url(r'^download/$', 'userauth.views.download_file', name='download'),
-    	url(r'^downloadtest/$', 'userauth.views.download_test', name='downloadtest'),
+		url(r'^downloadtest/$', 'userauth.views.download_test', name='downloadtest'),
+    	url(r'^bubblesheet/$', 'userauth.views.bubblesheet', name='bubblesheet'),
     	url(r'^simple_report/$', 'userauth.views.simple_report', name='simple_report'),
       	url(r'^math_report/$', 'userauth.views.math_report', name='math_report'),
       	url(r'^writing_report/$', 'userauth.views.writing_report', name='writing_report'),
      	url(r'^reading_report/$', 'userauth.views.reading_report', name='reading_report'),
     	url(r'^advanced_report/$', 'userauth.views.advanced_report', name='advanced_report'),
+    	url(r'^grade_test/$', 'userauth.views.grade_save_bubblesheet', name = 'grade_bubblesheet')
 		# url(r'^sendregister/postregister/$', 'userauth.views.postregister', name='send_post'),
 		)
 
