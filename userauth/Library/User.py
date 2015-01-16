@@ -121,26 +121,31 @@ class User(object):
             if row != LABEL_VECTOR or row[0] == '':
                 number = int(row[NUMBER_INDEX])
                 difficulty = int(row[DIFFICULTY_INDEX])
-                qtype = row[TYPE_INDEX]
+                type_list = row[TYPE_INDEX].split(',')
+                main_type_list = return_main_types(type_list)
+                type_list += main_type_list
                 if index_exists(test.missed_questions_index, index) and index_exists(test.missed_questions_index[index], number):
                     attempt = test.missed_questions_index[index][number]
                     if attempt == '?':
-                        self.data.data[section_type].stats["L" + str(difficulty)].add_blank()
-                        self.data.data[section_type].stats[qtype].add_blank()
-                        test.data.data[section_type].stats["L" + str(difficulty)].add_blank()
-                        test.data.data[section_type].stats[qtype].add_blank()
+                        for qtype in type_list:
+                            self.data.data[section_type].stats["L" + str(difficulty)].add_blank()
+                            self.data.data[section_type].stats[qtype].add_blank()
+                            test.data.data[section_type].stats["L" + str(difficulty)].add_blank()
+                            test.data.data[section_type].stats[qtype].add_blank()
                         #complete data processing
                         #add the level and type blanks
                     else:
-                        self.data.data[section_type].stats["L" + str(difficulty)].add_miss()
-                        self.data.data[section_type].stats[qtype].add_miss()
-                        test.data.data[section_type].stats["L" + str(difficulty)].add_miss()
-                        test.data.data[section_type].stats[qtype].add_miss()
+                        for qtype in type_list:
+                            self.data.data[section_type].stats["L" + str(difficulty)].add_miss()
+                            self.data.data[section_type].stats[qtype].add_miss()
+                            test.data.data[section_type].stats["L" + str(difficulty)].add_miss()
+                            test.data.data[section_type].stats[qtype].add_miss()
                 else:
-                    self.data.data[section_type].stats["L" + str(difficulty)].add_correct()
-                    self.data.data[section_type].stats[qtype].add_correct()
-                    test.data.data[section_type].stats["L" + str(difficulty)].add_correct()
-                    test.data.data[section_type].stats[qtype].add_correct()
+                    for qtype in type_list:
+                        self.data.data[section_type].stats["L" + str(difficulty)].add_correct()
+                        self.data.data[section_type].stats[qtype].add_correct()
+                        test.data.data[section_type].stats["L" + str(difficulty)].add_correct()
+                        test.data.data[section_type].stats[qtype].add_correct()
 
         ifile.close()
 
@@ -177,7 +182,7 @@ class User(object):
             current_min = 1
             current_code = None
             percent = None
-            for i in range (1, len(section_type_dict(section_type)) + 1):
+            for i in range (1, MAIN_TYPE_SIZE_ARRAY[section_type] + 1):
                 code = letter + str(i)
                 qs = self.data.data[section_type].stats[code]
                 if qs.t != 0:
@@ -200,7 +205,7 @@ class User(object):
             current_max = -1
             current_code = None
             percent = None
-            for i in range (1, len(section_type_dict(section_type)) + 1):
+            for i in range (1, MAIN_TYPE_SIZE_ARRAY[section_type] + 1):
                 code = letter + str(i)
                 qs = self.data.data[section_type].stats[code]
                 new_point = div(qs.c, qs.t)
@@ -210,9 +215,6 @@ class User(object):
                     percent = percentage(new_point)
             output[section_type] = (current_code, percent)
         return output
-
-
-
 
 
     def simple_HTML(self):
@@ -244,13 +246,13 @@ class User(object):
         lines += g.head()
         lines.append('</head>' + endl)
         lines.append('<body>' + endl)
-        lines.append('<style>' + endl)
-        lines.append('html,' + endl)
-        lines.append('body {' + endl)
-        lines.append('background-image: url("{% static' +  " 'mysite/css/images/overlay.svg' " +  '%}");')
-        lines.append('background-size: 100%;' + endl)
-        lines.append('}' + endl)
-        lines.append('</style>' + endl)        
+        #lines.append('<style>' + endl)
+        #lines.append('html,' + endl)
+        #lines.append('body {' + endl)
+        #lines.append('background-image: url("{% static' +  " 'mysite/css/images/overlay.svg' " +  '%}");')
+        #lines.append('background-size: 100%;' + endl)
+        #lines.append('}' + endl)
+        #lines.append('</style>' + endl)        
         lines.append('<div id="page">' + endl)
         lines.append('<div id="header">' + endl)
         lines.append('<img src=' + '"' + "{% static 'ml.png' %}" + '" alt="Excelerate" style="float: right; width: 35%; margin-right: 35%;"/>' +
@@ -377,7 +379,7 @@ class User(object):
         g = Graph(section_type_name + " Score Performance", graph_index, s1, None, None, str(pointlabels))
         type_dict = section_type_dict(section_type)
         del pointlabels[:]
-        for i in range(1, len(type_dict) + 1):
+        for i in range (1, MAIN_TYPE_SIZE_ARRAY[section_type] + 1):
             key = section_type_name[0] + str(i)
             data = []
             graph_index += 1
@@ -398,11 +400,21 @@ class User(object):
         lines.append('<head>')
         lines.append('<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />' + endl)
         lines.append('{% load staticfiles %}' + endl)
+        lines.append('<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">' + endl)
         lines.append('<link rel="stylesheet" type="text/css" href=' + '"' + "{% static 'style.css' %}" + '"' + '/>' + endl)
+        lines.append('<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>' + endl)
+        lines.append('<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>' + endl)
         lines.append('<title>' + section_type_name + ' Score Report</title>' + endl)
         lines += g.head()
         lines.append('</head>' + endl)
         lines.append('<body>' + endl)
+        lines.append('<style>' + endl)
+        lines.append('html,' + endl)
+        lines.append('body {' + endl)
+        lines.append('background-image: url("{% static' +  " 'mysite/css/images/overlay.svg' " +  '%}");')
+        lines.append('background-size: 100%;' + endl)
+        lines.append('}' + endl)
+        lines.append('</style>' + endl)   
         lines.append('<div id="page">' + endl)
         lines.append('<div id="header">' + endl)
         lines.append('<img src=' + '"' + "{% static 'ml.png' %}" + '" alt="Excelerate" style="float: right; width: 35%; margin-right: 35%;"/>' +
@@ -431,16 +443,27 @@ class User(object):
 
 
         #Average Results
-        lines.append('<h1>Question Type Analytics</h1>' + endl)
-        lines.append('<hr color="#BBBBBB" size="2" width="100%">' + endl)
 
         #Print the type analysis as well
         i = 1
         for graph in graphs:
+            main_type = section_type_name[0] + str(i)
+            TYPE_DICT = section_type_dict(section_type)
+            lines.append('<h1>'+ TYPE_DICT[main_type] + ' Analytics</h1>' + endl)
+            lines.append('<hr color="#BBBBBB" size="2" width="100%">' + endl)
             lines += graph.html(True, True, False)
             lines.append('<p><b><font color = "' + self.data.data[section_type].stats[section_type_name[0] + str(i)].color() +'">' + type_dict[section_type_name[0] + str(i)] + "</b> " + str(self.data.data[section_type].stats[section_type_name[0]+str(i)]) + '</p>')
-            i+=1 
+            #lines.append("<h3>" + '<font color = "#000000">' + "<i>" + 'Category Subtype' + " Analytics:</i></h3>" + endl + endl)
+            lines.append('<div data-role="collapsible"> <h3><font color = "#093175">' + TYPE_DICT[main_type] + ' In-Depth Analytics</font></h3>')
+            lines.append(endl)
+            for subtype in SUB_TYPE_LIST[main_type]:
+                if self.data.data[section_type].stats[subtype].t != 0:
+                    lines.append('<p><b><font color = "' + self.data.data[section_type].stats[subtype].color() +'">' + TYPE_DICT[subtype] + '</b> ' + str(self.data.data[section_type].stats[subtype]) + '</p>')
+                    lines.append(endl)
+            lines.append('</div>' + endl)
             lines.append('<hr color="#4169EF" size="1" width="90%">' + endl)
+            lines.append("<br>" + endl)     
+            i+=1 
             #lines.append("<br>" + endl)
 
         #Footer
@@ -497,13 +520,23 @@ class User(object):
         #HTML opener
         lines.append('<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">' + endl)
         lines.append('<html xmlns="http://www.w3.org/1999/xhtml">' + endl)
+        lines.append('<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>' + endl)
+        lines.append('<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>' + endl)
         lines.append('<head>')
         lines.append('<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />' + endl)
         lines.append('{% load staticfiles %}' + endl)
+        lines.append('<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">' + endl)
         lines.append('<link rel="stylesheet" type="text/css" href=' + '"' + "{% static 'style.css' %}" + '"' + '/>' + endl)
         lines.append('<title>Advanced Score Report</title>' + endl)
         lines.append('</head>' + endl)
         lines.append('<body>' + endl)
+        lines.append('<style>' + endl)
+        lines.append('html,' + endl)
+        lines.append('body {' + endl)
+        lines.append('background-image: url("{% static' +  " 'mysite/css/images/overlay.svg' " +  '%}");')
+        lines.append('background-size: 100%;' + endl)
+        lines.append('}' + endl)
+        lines.append('</style>' + endl)   
         lines.append('<div id="page">' + endl)
         lines.append('<div id="header">' + endl)
         lines.append('<img src=' + '"' + "{% static 'ml.png' %}" + '" alt="Excelerate" style="float: right; width: 35%; margin-right: 35%;"/>' +
@@ -537,41 +570,68 @@ class User(object):
 
         #Section Analysis
         lines.append(endl)
-        lines.append("<h1>Section Performance Analysis</h1>" + endl)
+        lines.append("<h1>Writing Performance Analysis</h1>" + endl)
         lines.append('<p><font color = "#093175">Type: Total Questions | Questions Correct | Questions Missed | Questions Blank</font></p><br>' + endl)
         lines.append(endl)
 
         #Writing Analytics
-        lines.append("<h3><i>Writing Analytics:</i></h3>" + endl + endl)
         if writing_score_difference > 0:
             lines.append('You have gone from '+ str(writing_scores[0][1]) + ' points since your first practice test to ' + str(writing_scores[-1][1]) + ' points on your most recent test and improved your writing score by ' + str(writing_score_difference) + ' points' + endl)
-
         for i in range(1, WRITING_TYPES + 1):
-            if self.data.data[WRITING_TYPE].stats["W"+str(i)].t != 0:
-                lines.append('<p><b><font color = "' + self.data.data[WRITING_TYPE].stats["W"+str(i)].color() +'">' + WRITING_TYPE_DICT["W" + str(i)] + '</b> ' + str(self.data.data[WRITING_TYPE].stats["W"+str(i)]) + '</p>')
-                lines.append(endl)
-        lines.append('<hr color="#4169EF" size="1" width="90%">' + endl)
+            main_type = 'W' + str(i)
+            lines.append('<div data-role="collapsible">')
+            lines.append("<h2>" + '<font color = "#093175">' + "<i>" + WRITING_TYPE_DICT[main_type] + " Analytics</i></font></h2>" + endl + endl)
+            lines.append(endl)
+            for subtype in SUB_TYPE_LIST[main_type]:
+                if self.data.data[WRITING_TYPE].stats[subtype].t != 0:
+                    lines.append('<p><b><font color = "' + self.data.data[WRITING_TYPE].stats[subtype].color() +'">' + WRITING_TYPE_DICT[subtype] + '</b> ' + str(self.data.data[WRITING_TYPE].stats[subtype]) + '</p>')
+                    lines.append(endl)
+            lines.append('<hr color="#4169EF" size="1" width="90%">' + endl)
+            lines.append('</div>' + endl)
         lines.append("<br>" + endl)     
 
+        lines.append('<hr color="#BBBBBB" size="2" width="100%">' + endl)
+        lines.append("<h1>Reading Performance Analysis</h1>" + endl)
+        lines.append('<p><font color = "#093175">Type: Total Questions | Questions Correct | Questions Missed | Questions Blank</font></p><br>' + endl)
+        lines.append(endl)
+
         #Reading Analytics
-        lines.append("<h3><i>Reading Analytics:</i></h3>" + endl + endl)
         if reading_score_difference > 0:
             lines.append('You have gone from '+ str(reading_scores[0][1]) + ' points on your first practice test to ' + str(reading_scores[-1][1]) + ' points on your most recent test and improved your reading score by ' + str(reading_score_difference) + ' points' + endl)
         for i in range(1, READING_TYPES + 1):
-            if self.data.data[READING_TYPE].stats["R"+str(i)].t != 0:
-                lines.append('<p><b><font color = "' + self.data.data[READING_TYPE].stats["R"+str(i)].color() +'">' + READING_TYPE_DICT["R" + str(i)] + "</b> " + str(self.data.data[READING_TYPE].stats["R"+str(i)]) + '</p>')
-                lines.append(endl)  
-        lines.append('<hr color="#4169EF" size="1" width="90%">' + endl)
+            main_type = 'R' + str(i)
+            lines.append('<div data-role="collapsible">')
+            lines.append("<h2>" + '<font color = "#093175">' + "<i>" + READING_TYPE_DICT[main_type] + " Analytics</i></h2>" + endl + endl)
+            lines.append(endl)
+            for subtype in SUB_TYPE_LIST[main_type]:
+                if self.data.data[READING_TYPE].stats[subtype].t != 0:
+                    lines.append('<p><b><font color = "' + self.data.data[READING_TYPE].stats[subtype].color() +'">' + READING_TYPE_DICT[subtype] + '</b> ' + str(self.data.data[READING_TYPE].stats[subtype]) + '</p>')
+                    lines.append(endl)
+            lines.append('<hr color="#4169EF" size="1" width="90%">' + endl)
+            lines.append('</div>' + endl)
         lines.append("<br>" + endl)
 
+
+        lines.append('<hr color="#BBBBBB" size="2" width="100%">' + endl)
+        lines.append("<h1>Math Performance Analysis</h1>" + endl)
+        lines.append('<p><font color = "#093175">Type: Total Questions | Questions Correct | Questions Missed | Questions Blank</font></p><br>' + endl)
+        lines.append(endl)
+       
+
         #Math Analytics
-        lines.append("<h3><i>Math Analytics:</i></h3>" + endl + endl)
         if math_score_difference > 0:
             lines.append('You have gone from '+ str(math_scores[0][1]) + ' points on your first practice test to ' + str(math_scores[-1][1]) + ' points on your most recent test and improved your math score by ' + str(math_score_difference) + ' points' + endl)
         for i in range(1, MATH_TYPES + 1):
-            if self.data.data[MATH_TYPE].stats["M"+str(i)].t != 0:
-                lines.append('<p><b><font color = "' + self.data.data[MATH_TYPE].stats["M"+str(i)].color() +'">' + MATH_TYPE_DICT["M" + str(i)] + "</b> " + str(self.data.data[MATH_TYPE].stats["M"+str(i)]) + '</p>')
-                lines.append(endl)  
+            main_type = 'M' + str(i)
+            lines.append('<div data-role="collapsible">')
+            lines.append("<h2>" + '<font color = "#093175">' + "<i>" + MATH_TYPE_DICT[main_type] + " Analytics</i></h2>" + endl + endl)
+            lines.append(endl)
+            for subtype in SUB_TYPE_LIST[main_type]:
+                if self.data.data[MATH_TYPE].stats[subtype].t != 0:
+                    lines.append('<p><b><font color = "' + self.data.data[MATH_TYPE].stats[subtype].color() +'">' + MATH_TYPE_DICT[subtype] + '</b> ' + str(self.data.data[MATH_TYPE].stats[subtype]) + '</p>')
+                    lines.append(endl)
+            lines.append('<hr color="#4169EF" size="1" width="90%">' + endl)
+            lines.append('</div>' + endl)
         lines.append("<br>" + endl) 
         lines.append('<hr color="#BBBBBB" size="2" width="100%">' + endl)
 
@@ -903,7 +963,7 @@ class User(object):
         lines.append('<div id="page">' + endl)
         lines.append('<div id="header">' + endl)
         lines.append('<img src=' + '"' + "{% static 'ml.png' %}" + '" alt="Excelerate" style="float: right; width: 35%; margin-right: 35%;"/>' +
-            '<a href="javascript:history.go(-1)"> <img src=' + '"' + "{% static 'back_rev.png' %}" + '" alt="Home" style="float: left; width: 15%; margin-left: 5%;""> </a>' + endl)
+            '<a href="javascript:history.go(-2)"> <img src=' + '"' + "{% static 'back_rev.png' %}" + '" alt="Home" style="float: left; width: 15%; margin-left: 5%;""> </a>' + endl)
         lines.append('<p style="clear: both;">' + endl)
         lines.append('</div>' + endl)
         lines.append('</div>' + endl)

@@ -44,14 +44,21 @@ class Section_Data_Holder(object):
         if self.type == WRITING_TYPE:
             for i in range(1, WRITING_TYPES + 1):
                 self.stats["W" + str(i)] = Question_Stats()
+                for element in SUB_TYPE_LIST["W" + str(i)]:
+                    self.stats[element] = Question_Stats()
+
 
         if self.type == READING_TYPE:
             for i in range(1, READING_TYPES + 1):
                 self.stats["R" + str(i)] = Question_Stats()
+                for element in SUB_TYPE_LIST["R" + str(i)]:
+                    self.stats[element] = Question_Stats()               
 
         if self.type == MATH_TYPE:
             for i in range(1, MATH_TYPES + 1):
                 self.stats["M" + str(i)] = Question_Stats()
+                for element in SUB_TYPE_LIST["M" + str(i)]:
+                    self.stats[element] = Question_Stats()
 
 
     def __str__(self):
