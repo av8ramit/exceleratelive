@@ -271,10 +271,10 @@ def make_bubble_sheet(u, test_id):
     lines.append('</div>' + endl)
     lines.append('<div id="text">' + endl)
     lines.append('<h1 style = "text-align: center;color: #FF8C00"> Test:  ' + str(filename) + ' </h1>' +endl) 
-    lines.append('<p style = "text-align: center;color: #348cb2"> Directions: Please set aside a 4 hour time slot to complete this practice exam.<br>Use the optional timers for each section to help you keep track and proctor your exam.</p>' + endl)
-    lines.append('<p style = "text-align: center;color: #348cb2">Either fill in the bubble answer sheet as you take the test with the built in timers for each section, or fill in the bubble sheet with answers from a test you have already taken.</p>' + endl)
-    lines.append('<p style = "text-align: center;color: #348cb2">Upon completion, click the "Submit and Grade Test" button at the end of the answer sheet.</p>' + endl)
-    lines.append('<p style = "text-align: center;color: #348cb2">Practice makes perfect, but also remember to take three, five-minute breaks! <br> Goodluck!</p>' + endl)
+    lines.append('<p style = "text-align: justify;color: #348cb2"> &nbsp &nbsp &nbsp &nbsp Please set aside a 4 hour time slot to complete this practice exam. Use the optional timers for each section to help you keep track and proctor your exam. Either fill in the bubble answer sheet as you take the test with the built in timers for each section, or fill in the bubble sheet with answers from a test you have already taken. Upon completion, click the "Submit and Grade Test" button at the end of the answer sheet. Practice makes perfect, but also remember to take three, five-minute breaks! Goodluck!</p>' + endl)
+    #lines.append('<p style = "text-align: justify;color: #348cb2">Either fill in the bubble answer sheet as you take the test with the built in timers for each section, or fill in the bubble sheet with answers from a test you have already taken.</p>' + endl)
+    #lines.append('<p style = "text-align: justify;color: #348cb2">Upon completion, click the "Submit and Grade Test" button at the end of the answer sheet.</p>' + endl)
+    #lines.append('<p style = "text-align: justify;color: #348cb2">Practice makes perfect, but also remember to take three, five-minute breaks! <br> Goodluck!</p>' + endl)
     lines.append('<br/>'+ endl)
     lines.append('<br/>'+ endl)
     lines.append('<h3 style="text-align:center;color: #FF8C00">If you begin now, your estimated time of completion is:</h3>' + endl)
@@ -329,7 +329,7 @@ def make_bubble_sheet(u, test_id):
                         else: # Math Grid-In
                             lines+= make_bubble_question('Section ' +  str(row[0]) + '  Question ' + str(i), False)
                         if(i == 8):
-                            lines.append('<p style = "text-align: center;color: #348cb2"> Math Grid-In <br>Enter all fractions as decimal (example - 1/3 = 0.333)<br>Enter multiple answers as a range (example - ) (</p>')
+                            lines.append('<p style = "text-align: center;color: #348cb2"> <br>Math Grid-In <br>For the fill in math answer sheet when given a ratio answer leave it as a decimal and round up to at most 2 decimal places.</p>')
                 else: #regular section math, reading, writing MC
                     if (int(row[2])  == 16 or int(row[2]) == 19):  #16q and 19q section, 20 min timer
                         lines += make_section_cntdwnclock(20, divclk)
