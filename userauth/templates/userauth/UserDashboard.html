@@ -80,35 +80,28 @@
 
 					<div>
 						<nav>
-						
-								<h2 style = "color: #FF8C00" >1. Select a Test to Take</h2>
+							<h1> Welcome {% block fname %}fname{% endblock fname %} {% block lname %}lname{% endblock lname %} </h1><br>
+
+							<h2 style = "color: #FF8C00" >1. Select and Take a Test</h2>
 									
-                  <form action="{% url 'login:bubblesheet' %}" method="post">{% csrf_token %}
-                    <div class="dropdown">
-                      <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
-                        Answer Sheets
-                        <span class="caret"></span>
-                      </button>
-                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                        {% for item in test_list %}
-                          <li roll="presentation"><button class="btn btn-lg btn-block" role="menuitem" name="test" id="test" value="{{ item }}">{{ item }}</button></li>
-                        {% endfor %}
-                        </ul>
-                    </div>
-                  </form>
+			                  <form action="{% url 'login:bubblesheet' %}" method="post">{% csrf_token %}
+			                    <div class="dropdown">
+			                      <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+			                        Answer Sheets
+			                        <span class="caret"></span>
+			                      </button>
+			                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+			                        {% for item in test_list %}
+			                          <li roll="presentation"><button class="btn btn-lg btn-block" role="menuitem" name="test" id="test" value="{{ item }}">{{ item }}</button></li>
+			                        {% endfor %}
+			                        </ul>
+			                    </div>
+			                  </form>
 
 						</nav>
+
 						<nav>
-							<h2 style = "color: #FF8C00" >2. Upload a Test to Grade</h2>
-							<center>
-                <form method="post" action="{% url 'login:upload' %}" name="submit" enctype="multipart/form-data">{% csrf_token %}
-                  <input type="file" class="btn btn-sm btn-info" name="file"><br />
-                  <input type="submit" class="btn btn-sm btn-info" id="submit" name="submit" value="Grade File and Save">
-                </form>
-              </center>
-						</nav>
-						<nav>
-							<h2 style = "color: #FF8C00" >3. View Reports</h2>
+							<h2 style = "color: #FF8C00" >2. View Reports</h2>
 							<ul>
 								<li style = "color: #348cb2"><a href="{% url 'login:simple_report' %}"><img src="{% static 'dashboard/css/images/SimpleReport.png' %}" alt="Simple Report" height="90" width="90" onmouseout = "this.src = '{% static 'dashboard/css/images/SimpleReport.png' %}' " onmouseover = "this.src = '{% static 'dashboard/css/images/A.png' %}'"></img></a></li>
 								<li style = "color: #348cb2"><a href="{% url 'login:math_report' %}"><img src="{% static 'dashboard/css/images/MathReport.png' %}" alt="Section Reports" height="90" width="90"onmouseout = "this.src = '{% static 'dashboard/css/images/MathReport.png' %}' " onmouseover = "this.src = '{% static 'dashboard/css/images/B.png' %}'"></img></a></li>

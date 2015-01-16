@@ -248,7 +248,7 @@ def upload_file(request):
             console.process_commands('grade ' + request.FILES['file'].name)
             if console.error != None:
                 #print console.error
-                return HttpResponse('There was an issue grading your CSV file. Please ensure you followed the instructions on our "How it Works" page and try again. Click <a href="javascript:history.go(-1)">here</a> return to the dashboard page.')
+                return HttpResponse('There was an issue grading your CSV file. Your essay might not be a valid value. Please ensure you followed the instructions on our "How it Works" page and try again. Click <a href="javascript:history.go(-1)">here</a> return to the dashboard page.')
             else:
                 console.process_commands('save')
                 bucket = call_bucket()

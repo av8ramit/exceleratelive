@@ -398,7 +398,7 @@ def make_bubble_question(question_number, bubble_True_or_False):
         lines.append('&nbsp;&nbsp;&nbsp;&nbsp;' + endl)
         lines.append('<input type="radio" name=' + '"' + str(qnum) + '"' +  'value="E"/>   E' + endl)
         lines.append('&nbsp;&nbsp;&nbsp;&nbsp;' + endl)
-        lines.append('<input type="radio" name=' + '"' + str(qnum) + '"' +  'value="?" checked />BLANK' + endl)
+        lines.append('<input type="radio" name=' + '"' + str(qnum) + '"' +  'value="?" checked />   BLANK' + endl)
         lines.append('<br/>' + endl)
         return(lines)
 
