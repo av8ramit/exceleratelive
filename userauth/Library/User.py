@@ -585,7 +585,12 @@ class User(object):
             for subtype in SUB_TYPE_LIST[main_type]:
                 if self.data.data[WRITING_TYPE].stats[subtype].t != 0:
                     lines.append('<p><b><font color = "' + self.data.data[WRITING_TYPE].stats[subtype].color() +'">' + WRITING_TYPE_DICT[subtype] + '</b> ' + str(self.data.data[WRITING_TYPE].stats[subtype]) + '</p>')
-                    lines.append(endl)
+                    if subtype in WRITING_TIP_DICT.keys():
+                        lines.append('<div data-role="collapsible">')
+                        lines.append("<h2>" + '<font color = "#093175">' + "<i>Quick Tips</i></font></h2>" + endl)
+                        lines.append('<p><b>' + WRITING_TYPE_DICT[subtype] + ":</b> " + WRITING_TIP_DICT[subtype] + '</p>')
+                        lines.append('</div>')
+                        lines.append(endl)
             lines.append('<hr color="#4169EF" size="1" width="90%">' + endl)
             lines.append('</div>' + endl)
         lines.append("<br>" + endl)     
@@ -606,7 +611,12 @@ class User(object):
             for subtype in SUB_TYPE_LIST[main_type]:
                 if self.data.data[READING_TYPE].stats[subtype].t != 0:
                     lines.append('<p><b><font color = "' + self.data.data[READING_TYPE].stats[subtype].color() +'">' + READING_TYPE_DICT[subtype] + '</b> ' + str(self.data.data[READING_TYPE].stats[subtype]) + '</p>')
-                    lines.append(endl)
+                    if subtype in READING_TIP_DICT.keys():
+                        lines.append('<div data-role="collapsible">')
+                        lines.append("<h2>" + '<font color = "#093175">' + "<i>Quick Tips</i></font></h2>" + endl)
+                        lines.append('<p><b>' + READING_TYPE_DICT[subtype] + ":</b> " + READING_TIP_DICT[subtype] + '</p>')
+                        lines.append('</div>')
+                        lines.append(endl)
             lines.append('<hr color="#4169EF" size="1" width="90%">' + endl)
             lines.append('</div>' + endl)
         lines.append("<br>" + endl)
@@ -629,7 +639,12 @@ class User(object):
             for subtype in SUB_TYPE_LIST[main_type]:
                 if self.data.data[MATH_TYPE].stats[subtype].t != 0:
                     lines.append('<p><b><font color = "' + self.data.data[MATH_TYPE].stats[subtype].color() +'">' + MATH_TYPE_DICT[subtype] + '</b> ' + str(self.data.data[MATH_TYPE].stats[subtype]) + '</p>')
-                    lines.append(endl)
+                    if subtype in MATH_TIP_DICT.keys():
+                        lines.append('<div data-role="collapsible">')
+                        lines.append("<h2>" + '<font color = "#093175">' + "<i>Quick Tips</i></font></h2>" + endl)
+                        lines.append('<p><b>' + MATH_TYPE_DICT[subtype] + ":</b> " + MATH_TIP_DICT[subtype] + '</p>')
+                        lines.append('</div>')
+                        lines.append(endl)
             lines.append('<hr color="#4169EF" size="1" width="90%">' + endl)
             lines.append('</div>' + endl)
         lines.append("<br>" + endl) 

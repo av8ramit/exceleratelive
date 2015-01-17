@@ -131,33 +131,91 @@ WRITING_TYPE_33 = "W33"
 WRITING_TYPE_34 = "W34"
 
 WRITING_TYPE_DICT = {}
+WRITING_TIP_DICT = {}
 WRITING_TYPE_DICT[WRITING_TYPE_1] = "Sentence Revision"
+WRITING_TIP_DICT[WRITING_TYPE_1] = "Sentence Revision problems regards modifying underlined portions of sentences."
+
 WRITING_TYPE_DICT[WRITING_TYPE_11] = "Analogous Phrases"
+WRITING_TIP_DICT[WRITING_TYPE_11] = "Analogous Phrases refers to creating corresponding verb tenses in clauses and choosing appropriate pronouns to match the described noun."
+
 WRITING_TYPE_DICT[WRITING_TYPE_12] = "Conjunctions and Compound Sentences"
+WRITING_TIP_DICT[WRITING_TYPE_12] = "This category includes the use of 'and', 'but', 'or' and 'because'. It also includes semicolons, compound sentences, and creating sentences from fragments."
+
 WRITING_TYPE_DICT[WRITING_TYPE_13] = "Noun-Pronoun-Possessive Noun Agreement"
+WRITING_TIP_DICT[WRITING_TYPE_13] = "Subject nouns must refer to pronouns and possessive nouns accurately. In the event of confusion use proper nouns over vague pronouns."
+
 WRITING_TYPE_DICT[WRITING_TYPE_14] = "Indirect and Direct Objects"
+WRITING_TIP_DICT[WRITING_TYPE_14] = "This category refers to the subtle difference between direct objects (he, she, we) and indirect objects (him, her, us). This also includes passive voice avoidance where indirect objects are treated as the subject of a sentence."
+
 WRITING_TYPE_DICT[WRITING_TYPE_15] = "Noun Singular vs Plural Agreement"
+WRITING_TIP_DICT[WRITING_TYPE_15] = "Make sure nouns and verbs agree in plurality. In addition make sure nouns and pronouns agree in singular vs. plural."
+
 WRITING_TYPE_DICT[WRITING_TYPE_16] = "Verb Tense Agreement"
+WRITING_TIP_DICT[WRITING_TYPE_16] = "This category deals in verb tense matching the surrounding context. Choose from present, past, present progressive etc."
+
 WRITING_TYPE_DICT[WRITING_TYPE_17] = "Adjectives and Adverbs"
+WRITING_TIP_DICT[WRITING_TYPE_17] = "Adjectives are words that describe nouns whereas adverbs describe verbs. Most often in these questions the adverb is used to describe a noun or adjectives are used for verbs."
+
 WRITING_TYPE_DICT[WRITING_TYPE_18] = "Clauses and Prepositional Phrases"
+WRITING_TIP_DICT[WRITING_TYPE_18] = "This is perhaps the most difficult category. It involves prepositional phrases (from, in, out etc.), correlative conjunctions (either or vs. neither nor), gerunds, and the placement of clauses near the object they describe."
+
 WRITING_TYPE_DICT[WRITING_TYPE_19] = "No Error"
+WRITING_TIP_DICT[WRITING_TYPE_19] = "This is when there is no error in the original sentence. Lower performance in this question means multiple false positive scenarios."
 
 WRITING_TYPE_DICT[WRITING_TYPE_2] = "Spot the Error"
+WRITING_TIP_DICT[WRITING_TYPE_2] = "Spot the Error questions involve picking errors out of multiple underlined portions of a sentence."
+
 WRITING_TYPE_DICT[WRITING_TYPE_21] = "No Error"
+WRITING_TIP_DICT[WRITING_TYPE_21] = "This is when there is no error in the original sentence. Lower performance in this question means multiple false positive scenarios."
+
+
 WRITING_TYPE_DICT[WRITING_TYPE_22] = "Analogous Phrases"
+WRITING_TIP_DICT[WRITING_TYPE_22] = "Analogous Phrases refers to creating corresponding verb tenses in clauses and choosing appropriate pronouns to match the described noun."
+
 WRITING_TYPE_DICT[WRITING_TYPE_23] = "Conjunctions and Compound Sentences"
+WRITING_TIP_DICT[WRITING_TYPE_23] = "This category includes the use of 'and', 'but', 'or' and 'because'. It also includes semicolons, compound sentences, and creating sentences from fragments."
+
+
 WRITING_TYPE_DICT[WRITING_TYPE_24] = "Noun-Pronoun-Possessive Noun Agreement"
+WRITING_TIP_DICT[WRITING_TYPE_24] = "Subject nouns must refer to pronouns and possessive nouns accurately. In the event of confusion use proper nouns over vague pronouns."
+
+
 WRITING_TYPE_DICT[WRITING_TYPE_25] = "Indirect and Direct Objects"
+WRITING_TIP_DICT[WRITING_TYPE_25] = "This category refers to the subtle difference between direct objects (he, she, we) and indirect objects (him, her, us). This also includes passive voice avoidance where indirect objects are treated as the subject of a sentence."
+
+
 WRITING_TYPE_DICT[WRITING_TYPE_26] = "Noun Singular vs Plural Agreement"
+WRITING_TIP_DICT[WRITING_TYPE_26] = "Make sure nouns and verbs agree in plurality. In addition make sure nouns and pronouns agree in singular vs. plural."
+
+
 WRITING_TYPE_DICT[WRITING_TYPE_27] = "Verb Tense Agreement"
+WRITING_TIP_DICT[WRITING_TYPE_27] = "This category deals in verb tense matching the surrounding context. Choose from present, past, present progressive etc."
+
+
 WRITING_TYPE_DICT[WRITING_TYPE_28] = "Adjectives and Adverbs"
+WRITING_TIP_DICT[WRITING_TYPE_28] = "Adjectives are words that describe nouns whereas adverbs describe verbs. Most often in these questions the adverb is used to describe a noun or adjectives are used for verbs."
+
+
 WRITING_TYPE_DICT[WRITING_TYPE_29] = "Clauses and Prepositional Phrases"
+WRITING_TIP_DICT[WRITING_TYPE_29] = "This is perhaps the most difficult category. It involves prepositional phrases (from, in, out etc.), correlative conjunctions (either or vs. neither nor), gerunds, and the placement of clauses near the object they describe."
+
 
 WRITING_TYPE_DICT[WRITING_TYPE_3] = "Paragraph Revision"
+WRITING_TIP_DICT[WRITING_TYPE_3] = "Paragraph Revision questions involve one long paragraph which needs substantial revision grammatically."
+
+
 WRITING_TYPE_DICT[WRITING_TYPE_31] = "Best Reproduced Sentence"
+WRITING_TIP_DICT[WRITING_TYPE_31] = "A sentence excerpt from the passage will be provided and minor grammmar modifications will need to be made."
+
 WRITING_TYPE_DICT[WRITING_TYPE_32] = "Revise and Combine"
+WRITING_TIP_DICT[WRITING_TYPE_32] = "This involves using conjunctions to combine two sentences in the paragraph."
+
 WRITING_TYPE_DICT[WRITING_TYPE_33] = "Context Revision"
+WRITING_TIP_DICT[WRITING_TYPE_33] = "Context revision is using small adjustments such as reorganizing sentences or inserting transitional words to make the passage flow."
+
 WRITING_TYPE_DICT[WRITING_TYPE_34] = "Purpose of Context"
+WRITING_TIP_DICT[WRITING_TYPE_34] = "Purpose of Context questions are open-ended regarding passage purpose and the author's writing style."
+
 
 #MATH
 MATH_TYPES = 4
@@ -225,6 +283,7 @@ MATH_TYPE_46 = "M46"
 
 
 MATH_TYPE_DICT = {}
+MATH_TIP_DICT = {}
 MATH_TYPE_DICT[MATH_TYPE_1] = "Numbers and Operations"
 MATH_TYPE_DICT[MATH_TYPE_11] = "Integers"
 MATH_TYPE_DICT[MATH_TYPE_12] = "Fractions"
@@ -234,12 +293,17 @@ MATH_TYPE_DICT[MATH_TYPE_15] = "Addition"
 MATH_TYPE_DICT[MATH_TYPE_16] = "Multiplication"
 MATH_TYPE_DICT[MATH_TYPE_17] = "Number Lines"
 MATH_TYPE_DICT[MATH_TYPE_18] = "Multiples"
+MATH_TIP_DICT[MATH_TYPE_18] = "These questions focus on least common multiples."
 MATH_TYPE_DICT[MATH_TYPE_19] = "Prime Numbers"
 MATH_TYPE_DICT[MATH_TYPE_1A] = "Conversions"
+MATH_TIP_DICT[MATH_TYPE_1A] = "These questions involve converting fractions to decimals, decimals to percents, percents of a number, percent changes, and the reciprocals of each conversion listed."
 MATH_TYPE_DICT[MATH_TYPE_1B] = "Determining Quantities with Ratios"
 MATH_TYPE_DICT[MATH_TYPE_1C] = "Sequences"
+MATH_TIP_DICT[MATH_TYPE_1C] = "These questions focus on arithmetic, geometric, and repeating sequences."
 MATH_TYPE_DICT[MATH_TYPE_1D] = "Sets"
 MATH_TYPE_DICT[MATH_TYPE_1E] = "Counting Problems"
+MATH_TIP_DICT[MATH_TYPE_1E] = "These include fundamental counting principles, permutations, and combinations."
+
 
 MATH_TYPE_DICT[MATH_TYPE_2] = "Algebra and Functions"
 MATH_TYPE_DICT[MATH_TYPE_21] = "Solving Basic Algebra Equations"
@@ -257,6 +321,7 @@ MATH_TYPE_DICT[MATH_TYPE_2C] = "Roots"
 MATH_TYPE_DICT[MATH_TYPE_2D] = "Direct/Indirect Variation"
 MATH_TYPE_DICT[MATH_TYPE_2E] = "Solving Word Problems"
 MATH_TYPE_DICT[MATH_TYPE_2F] = "Functions"
+MATH_TIP_DICT[MATH_TYPE_2F] = "To study for this category focus on domain/range, linear functions, functions as graphs, and arbitrarily defined functions."
 
 MATH_TYPE_DICT[MATH_TYPE_3] = "Geometry and Measurement"
 MATH_TYPE_DICT[MATH_TYPE_31] = "Points on Lines"
@@ -264,10 +329,13 @@ MATH_TYPE_DICT[MATH_TYPE_32] = "Lines and Angles"
 MATH_TYPE_DICT[MATH_TYPE_33] = "Angles from Parallel and Intersecting Lines"
 MATH_TYPE_DICT[MATH_TYPE_34] = "Interior Angles in Triangles and Other Polygons"
 MATH_TYPE_DICT[MATH_TYPE_35] = "Types of Triangles based on Angles"
+MATH_TIP_DICT[MATH_TYPE_35] = "Focus on 30-60-90 and 45-45-90 triangle ratios."
 MATH_TYPE_DICT[MATH_TYPE_36] = "Types of Triangles based on Sides"
+MATH_TIP_DICT[MATH_TYPE_36] = "Focus on 3-4-5 and 5-12-13 triangle ratios."
 MATH_TYPE_DICT[MATH_TYPE_37] = "Isosceles, Scalene, and Equilateral Triangles"
 MATH_TYPE_DICT[MATH_TYPE_38] = "Congruent and Similar Triangles"
 MATH_TYPE_DICT[MATH_TYPE_39] = "Special Triangle Rules"
+MATH_TIP_DICT[MATH_TYPE_39] = "There are two main triangle rules. The sum of two sides of a triangle is larger than the third. The side across smallest angle is the smallest side and the side across from the largest angle is the largest side."
 MATH_TYPE_DICT[MATH_TYPE_3A] = "Perimeter and Area"
 MATH_TYPE_DICT[MATH_TYPE_3B] = "Volume"
 MATH_TYPE_DICT[MATH_TYPE_3C] = "Arc Lengths and Areas for Sectors"
@@ -279,6 +347,7 @@ MATH_TYPE_DICT[MATH_TYPE_3H] = "Logic"
 
 MATH_TYPE_DICT[MATH_TYPE_4] = "Data Analysis, Statistics, and Probability"
 MATH_TYPE_DICT[MATH_TYPE_41] = "Data Analysis"
+MATH_TIP_DICT[MATH_TYPE_41] = "These problems include steps analyzing tables and graphs, slopes of a plot to analyze trends, and interpretting Venn diagrams. "
 MATH_TYPE_DICT[MATH_TYPE_42] = "Average"
 MATH_TYPE_DICT[MATH_TYPE_43] = "Median"
 MATH_TYPE_DICT[MATH_TYPE_44] = "Mode"
@@ -306,19 +375,38 @@ READING_TYPE_26 = "R26"
 READING_TYPE_27 = "R27"
 
 READING_TYPE_DICT = {}
+READING_TIP_DICT = {}
 READING_TYPE_DICT[READING_TYPE_1] = "Sentence Completion"
+READING_TIP_DICT[READING_TYPE_1] = "These questions involve placing the correct word into a sentence to match the meaning."
 READING_TYPE_DICT[READING_TYPE_11] = "Context Single Word Replacement"
+READING_TIP_DICT[READING_TYPE_11] = "To answer these questions you must match the meaning of one word to the remaining portions of the sentence."
+
 READING_TYPE_DICT[READING_TYPE_12] = "Synonymous Double Word Replacement"
+READING_TIP_DICT[READING_TYPE_12] = "To answer these questions you must find the set of synonyms in the multiple choice that matches the meaning in the sentence."
+
 READING_TYPE_DICT[READING_TYPE_13] = "Inference Double Word Replacement"
+READING_TIP_DICT[READING_TYPE_13] = "To answer these questions you must match each word accordingly in it's statement or clause that makes sense in the context."
 
 READING_TYPE_DICT[READING_TYPE_2] = "Reading Comprehension"
+READING_TIP_DICT[READING_TYPE_2] = "These questions involve reading a passage and answering questions regarding the author's intent and message." 
 READING_TYPE_DICT[READING_TYPE_21] = "Main Idea"
+READING_TIP_DICT[READING_TYPE_21] = "These questions involve analyzing the main purpose of the passage." 
 READING_TYPE_DICT[READING_TYPE_22] = "Direct Comprehension"
+READING_TIP_DICT[READING_TYPE_22] = "In direct comprehension the questions ask what events take place in the passage and what is the author's or character's reaction." 
 READING_TYPE_DICT[READING_TYPE_23] = "Purpose/Rhetorical Strategy"
+READING_TIP_DICT[READING_TYPE_23] = "Based upon the main idea of the passage answer the question. These are derivatives of main idea questions." 
+
 READING_TYPE_DICT[READING_TYPE_24] = "Inference"
+READING_TIP_DICT[READING_TYPE_24] = "These involve assumptions about the author's intentions and using context to predict the future or past." 
+
 READING_TYPE_DICT[READING_TYPE_25] = "Comparison"
+READING_TIP_DICT[READING_TYPE_25] = "These questions come with two passages. They ask the relationship between the two passages and for the opinion of a demographic regarding the passage." 
+
 READING_TYPE_DICT[READING_TYPE_26] = "Tone and Style"
+READING_TIP_DICT[READING_TYPE_26] = "These questions ask what tone the author displays regarding a character or topic. What does the author's attitude possibly convey about himself/herself?" 
+
 READING_TYPE_DICT[READING_TYPE_27] = "Vocabulary in Context"
+READING_TIP_DICT[READING_TYPE_27] = "These questions provide all possible meanings of a word and ask you to pick the best definition in the given context." 
 
 #Main Type Lists
 MAIN_TYPE_SIZE_ARRAY = {}
