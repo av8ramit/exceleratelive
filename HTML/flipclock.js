@@ -2298,7 +2298,7 @@ var FlipClock;
 		 * The meridium text as string for easy access
 		 */
 		 
-		meridiumText: 'AM',
+		meridiumText: '',
 					
 		/**
 		 * Build the clock face
@@ -2343,7 +2343,7 @@ var FlipClock;
 		 */
 		 
 		getMeridium: function() {
-			return new Date().getHours() >= 12 ? 'PM' : 'AM';
+			return new Date().getHours() >= 12 ? '' : '';
 		},
 		
 		/**
