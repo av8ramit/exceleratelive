@@ -83,6 +83,15 @@ class Test(object):
 
     #This grades a given answer sheet against the test.
     def grade(self, answered_test):
+        del MISSED_QUESTIONS_LIST[:]
+        #Miss Questions Page Number List
+        del MISSED_QUESTIONS_PGNUM_LIST[:]
+        #Missed Questions Section Number
+        del MISSED_QUESTIONS_SECTION_LIST[:]
+        #Missed Question User Answer List
+        del MISSED_QUESTIONS_USRANSWER_LIST[:]
+        del MISSED_QUESTIONS_TYPE_LIST[:]
+
         report = Test_Summary(self.get_id())
         assert (answered_test.id == self.get_id())
         self.essay = answered_test.essay
@@ -100,13 +109,31 @@ class Test(object):
                 if attempt == '?':
                     report.get_summary(current_type).add_blank()
                     report.get_summary(current_type).incorrect_questions.append((answer_key.get_question(j).get_id(),attempt))
+                    #Missed Questions List
+                    MISSED_QUESTIONS_LIST.append(answer_key.get_question(j).number)
+                    #Miss Questions Page Number List
+                    MISSED_QUESTIONS_PGNUM_LIST.append(answer_key.get_question(j).page)
+                    #Missed Questions Section Number
+                    MISSED_QUESTIONS_SECTION_LIST.append(answer_key.section_number)
+                    #Missed Question User Answer List
+                    MISSED_QUESTIONS_USRANSWER_LIST.append([attempt, answer])
+                    MISSED_QUESTIONS_TYPE_LIST.append(answer_key.get_question(j).type)
                 elif attempt == answer:
                     report.get_summary(current_type).add_answered()
                 #range answer
                 elif answer_key.get_question(j).range == 'Y' and '(' not in answer and ')' not in answer: #missed grid answers are counted as blanks
                     #assert ((attempt) not in 'ABCDE')
                     report.get_summary(current_type).add_blank()
-                    report.get_summary(current_type).incorrect_questions.append((answer_key.get_question(j).get_id(),'?'))
+                    report.get_summary(current_type).incorrect_questions.append((answer_key.get_question(j).get_id(),attempt))
+                    #Missed Questions List
+                    MISSED_QUESTIONS_LIST.append(answer_key.get_question(j).number)
+                    #Miss Questions Page Number List
+                    MISSED_QUESTIONS_PGNUM_LIST.append(answer_key.get_question(j).page)
+                    #Missed Questions Section Number
+                    MISSED_QUESTIONS_SECTION_LIST.append(answer_key.section_number)
+                    #Missed Question User Answer List
+                    MISSED_QUESTIONS_USRANSWER_LIST.append([attempt, answer])
+                    MISSED_QUESTIONS_TYPE_LIST.append(answer_key.get_question(j).type)
                 elif '(' in answer and ')' in answer:
                     answer = answer.replace(' ','')
                     answer = answer.replace('(','')
@@ -119,12 +146,39 @@ class Test(object):
                             report.get_summary(current_type).add_answered()
                         else:
                             report.get_summary(current_type).add_blank()
+                            #Missed Questions List
+                            MISSED_QUESTIONS_LIST.append(answer_key.get_question(j).number)
+                            #Miss Questions Page Number List
+                            MISSED_QUESTIONS_PGNUM_LIST.append(answer_key.get_question(j).page)
+                            #Missed Questions Section Number
+                            MISSED_QUESTIONS_SECTION_LIST.append(answer_key.section_number)
+                            #Missed Question User Answer List
+                            MISSED_QUESTIONS_USRANSWER_LIST.append([attempt, answer])
+                            MISSED_QUESTIONS_TYPE_LIST.append(answer_key.get_question(j).type)
                             report.get_summary(current_type).incorrect_questions.append((answer_key.get_question(j).get_id(),attempt))
                     except:
                         report.get_summary(current_type).add_blank()
+                        #Missed Questions List
+                        MISSED_QUESTIONS_LIST.append(answer_key.get_question(j).number)
+                        #Miss Questions Page Number List
+                        MISSED_QUESTIONS_PGNUM_LIST.append(answer_key.get_question(j).page)
+                        #Missed Questions Section Number
+                        MISSED_QUESTIONS_SECTION_LIST.append(answer_key.section_number)
+                        #Missed Question User Answer List
+                        MISSED_QUESTIONS_USRANSWER_LIST.append([attempt, answer])
+                        MISSED_QUESTIONS_TYPE_LIST.append(answer_key.get_question(j).type)
                         report.get_summary(current_type).incorrect_questions.append((answer_key.get_question(j).get_id(),attempt))
                 else:
                     report.get_summary(current_type).add_miss()
+                    #Missed Questions List
+                    MISSED_QUESTIONS_LIST.append(answer_key.get_question(j).number)
+                    #Miss Questions Page Number List
+                    MISSED_QUESTIONS_PGNUM_LIST.append(answer_key.get_question(j).page)
+                    #Missed Questions Section Number
+                    MISSED_QUESTIONS_SECTION_LIST.append(answer_key.section_number)
+                    #Missed Question User Answer List
+                    MISSED_QUESTIONS_USRANSWER_LIST.append([attempt, answer])
+                    MISSED_QUESTIONS_TYPE_LIST.append(answer_key.get_question(j).type)
                     report.get_summary(current_type).incorrect_questions.append((answer_key.get_question(j).get_id(),attempt))
         #disable printing report
         #print (report)
@@ -164,7 +218,7 @@ class Section(object):
     #This returns the section id.
     def get_id(self):
         return self.test.get_id() + FIELD_SEP + str(self.section_number)
-
+        
     #This returns the size of the section.
     def size(self):
         return len(self.questions)
@@ -199,6 +253,7 @@ class Question(object):
         self.difficulty = None
         self.range = None
         self.type = None
+        self.page = None
 
     #This is the default constructor with all variables defined.
     def make_by_array(self, section, array):
@@ -213,6 +268,7 @@ class Question(object):
         self.difficulty = int(array[DIFFICULTY_INDEX])
         self.range = array[RANGE_INDEX]
         self.type = array[TYPE_INDEX]
+        self.page = array[PAGE_INDEX]
 
     #This returns the question id.
     def get_id(self):

@@ -21,6 +21,18 @@ def datetime_converter(datestring):
   datestring = datestring.split('-')
   return datestring[month] + '/' + datestring[day] + '/' + datestring[year]
 
+#Missed Questions List
+MISSED_QUESTIONS_LIST = []
+#Miss Questions Page Number List
+MISSED_QUESTIONS_PGNUM_LIST = []
+#Missed Questions Section Number
+MISSED_QUESTIONS_SECTION_LIST = []
+#Missed Question User Answer List
+MISSED_QUESTIONS_USRANSWER_LIST = []
+#Missed Question type list 
+MISSED_QUESTIONS_TYPE_LIST = []
+
+
 #Question Value
 PARSED_ARRAY_SIZE = 6
 

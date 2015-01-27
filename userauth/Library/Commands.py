@@ -169,7 +169,11 @@ def list_tests():
             #print (i)
             if "CB" in i:
                 array.append(i)
-    return ["CB1", "CB2", "CB3", "CB4", "CB5", "CB6", "CB7", "CB8", "CB9", "CB10"]
+            elif "DiagK" in i:
+                array.append(i)
+            elif "K" in i:
+                array.append(i)
+    return ["CB1", "CB2", "CB3", "CB4", "CB5", "CB6", "CB7", "CB8", "CB9", "CB10", "DiagK", "K1", "K2", "K3"]
 
 def list_users(c):
     array = []

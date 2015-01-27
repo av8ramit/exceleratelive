@@ -942,7 +942,10 @@ class User(object):
         math_scores = []
         graph_index = 1
         index = 1
-
+        Q_index = 0
+        Q_type = []
+        SQ_type = {}
+        sq_index = 0
         #calculate all scores
         for test in self.tests_taken:
             s1.append([index,test.score_summary.total_score()])
@@ -986,7 +989,7 @@ class User(object):
         lines.append('<div id="container">' + endl)
         lines.append('<div id="main">' + endl)
         lines.append('<div id="menu">' + endl)
-        lines.append('<h2 style="text-align:center;">Test Report: ' + self.name + '</h2>' + endl)
+        lines.append('<h2 style="text-align:center;">Test Review: ' + self.name + '</h2>' + endl)
         lines.append('</div>' + endl)
         lines.append('<div id="text">' + endl)
             
@@ -997,10 +1000,52 @@ class User(object):
         lines.append('<hr color="#BBBBBB" size="2" width="100%">' + endl)
         lines.append('<h1>Section Breakdown</h1>' + endl)
         lines.append(str(ts))
+        lines.append('<br>' + endl)
+        lines.append('<hr color="#BBBBBB" size="2" width="100%">' + endl)
+        lines.append('<br>' + endl)
+        lines.append('<h1>Question Review Section</h1>' + endl)
+        lines.append('<p style = "text-align: justify;color: #348cb2" >Below are a list of questions for you to review. <br> Please take the time to go back and redo/review the question <br> Reviewing missed questions is an excellent way to practice and improve your score</p>')
+        
+        for item in MISSED_QUESTIONS_TYPE_LIST:
 
 
+            del Q_type[:]
 
+            if(item[0] == 'M'):
+                for i in range (0, len(item.split(','))):
+                    temp = MATH_TYPE_DICT[item.split(',')[i]]
+                    Q_type.append(temp)
 
+            elif(item[0] == 'R'):
+                for i in range (0, len(item.split(','))):
+                    temp = READING_TYPE_DICT[item.split(',')[i]]
+                    Q_type.append(temp)
+
+            elif(item[0] == 'W'):
+                for i in range (0, len(item.split(','))):
+                    temp = WRITING_TYPE_DICT[item.split(',')[i]]
+                    Q_type.append(temp)
+
+            
+            SQ_type[sq_index] = str(Q_type) 
+            sq_index += 1
+
+        
+        
+
+        for item in MISSED_QUESTIONS_USRANSWER_LIST:
+            lines.append('<br>' + endl)
+            lines.append('<h3 style = "text-align: Left;color: #FF8C00">Section: ' + str(MISSED_QUESTIONS_SECTION_LIST[Q_index])  + '</h3>'+ endl)
+            lines.append('<h3 style = "text-align: Left;color: #348cb2">Question: ' + str(MISSED_QUESTIONS_LIST[Q_index])  + '</h3>'+ endl)
+            lines.append('<h3>Question Type Breakdown: ' + str(SQ_type[Q_index]) + ' </h3>' + endl)
+            lines.append('<h3 style = "text-align: Left;color: #FF8C00" >Your Answer: ' + str(MISSED_QUESTIONS_USRANSWER_LIST[Q_index][0])  + '</h3>'+ endl)
+            lines.append('<h3 style = "text-align: Left;color: #348cb2">Correct Answer: ' + str(MISSED_QUESTIONS_USRANSWER_LIST[Q_index][1])  + '</h3>'+ endl)
+            lines.append('<h3 style = "text-align: Left;color: #FF8C00" >Flip to page: ' + str(MISSED_QUESTIONS_PGNUM_LIST[Q_index])  + ' and redo/review the question</h3>'+ endl)
+            #add functionality to these checkboxes to keep track of review usage later on
+            lines.append('<input style = "text-align: center;color: #FF8C00" type="checkbox" id=" none" name="none" value="none">Question Review Complete</input>' + endl)
+            lines.append('<br>' + endl)
+            lines.append('<br>' + endl)
+            Q_index += 1
         #Footer
         lines.append('<br>' + endl)
         lines.append('</div>' + endl)
