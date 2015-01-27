@@ -17,7 +17,8 @@ urlpatterns = patterns('',
       	url(r'^writing_report/$', 'userauth.views.writing_report', name='writing_report'),
      	url(r'^reading_report/$', 'userauth.views.reading_report', name='reading_report'),
     	url(r'^advanced_report/$', 'userauth.views.advanced_report', name='advanced_report'),
-    	url(r'^grade_test/$', 'userauth.views.grade_save_bubblesheet', name = 'grade_bubblesheet')
+    	url(r'^grade_test/$', 'userauth.views.grade_save_bubblesheet', name = 'grade_bubblesheet'),
+		url(r'^quicktips/$', 'userauth.views.quicktips', name='quicktips')
 		# url(r'^sendregister/postregister/$', 'userauth.views.postregister', name='send_post'),
 		)
 

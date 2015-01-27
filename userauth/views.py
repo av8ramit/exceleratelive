@@ -400,3 +400,12 @@ def reading_report(request):
     else:
         console.process_commands("section_report")
         return render(request, 'web/' + request.user.username + '/reading_report.html')  
+
+
+def quicktips(request):
+    #return render(request, 'mysite/index_base.html')
+    return render(request, 'userauth/quicktips.html')
+
+
+
+
