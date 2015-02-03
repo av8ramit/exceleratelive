@@ -11,6 +11,8 @@ from operator import itemgetter
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 
+from django.core.mail import send_mail
+
 from .forms import UploadFileForm
 import csv
 
@@ -224,6 +226,30 @@ def formtest2(request):
     else:
         response = 'Something wrong with post'
         return render(request, 'userauth/userpage.html', {'response':response, 'user':user})
+
+def recover_password_page(request):
+    return render(request, 'userauth/resetpassword.html')
+
+
+def recover_password(request):
+    if request.POST:
+        emailAddr = request.POST.get('email')
+        exists = Student.objects.filter(email=emailAddr).count()
+        if exists == 1:
+            user_password = Student.objects.get(email=emailAddr).password
+            from_addr = 'exceleratetestprep@gmail.com'
+            from_password = 'letsmakeitbig' # set
+            email_message = 'Your password is "' + user_password + '"'
+            send_mail(subject="Password Recovery", message=email_message, from_email=from_addr,
+                        recipient_list=[emailAddr], auth_user=from_addr, auth_password=from_password)
+            return HttpResponse("Success")
+        elif exists == 0:
+            error_message = "Sorry, we don't have your email in our system"
+            return HttpResponse(error_message)
+        else:
+            error_message = "Unhandled Error."
+            return HttpResponse(error_message)
+
 
 
 
