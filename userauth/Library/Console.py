@@ -180,6 +180,13 @@ class Console(object):
                 self.error = ("Error: Invalid use of list tests command.")
                 return False
 
+        #Recent Test Scores
+        if cmd == "recent_scores":
+           
+            print(str(self.user.recent_scores()))
+             #self.user.recent_scores()
+           
+
         #Print Answer Sheet
         if cmd == "answer_sheet":
             if self.state != USER_STATE:

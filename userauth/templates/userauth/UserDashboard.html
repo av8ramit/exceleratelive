@@ -29,6 +29,10 @@
 		   <!-- Bootstrap Core CSS -->
     	
 		<link href="{% static 'dashboard/css/bootstrap.min.css' %}" rel="stylesheet"/>
+    
+	<!-- Quick View: My stats Percentage Loader -->
+	<script src="{% static 'dashboard/js/percentageloader.js' %}"></script>
+
     <!-- Custom CSS -->
     <link href="{% static 'dashboard/css/sb-admin.css' %}" rel="stylesheet"/>
 
@@ -39,6 +43,32 @@
     <link href="{% static 'font-awesome-4.1.0/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css"/>
 		<!--[if lte IE 9]><link rel="stylesheet" href="css/ie/v9.css" /><![endif]-->
 		<!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
+
+	<!-- Quick view percentage loader styling -->
+	<style>
+      body {
+        margin: 0px;
+        padding: 0px;
+      }
+      
+      #multiple-loader-one {
+        display: inline-block;
+      }
+      
+      #multiple-loader-two {
+        display: inline-block;
+      }
+      
+      #multiple-loader-three{
+
+        display: inline-block;
+
+      }
+
+      #animateButton {
+        width: 256px;
+      }
+    </style>
 	</head>
 	<body class="loading">
 		<div id="wrapper">
@@ -82,9 +112,73 @@
 
 					<div>
 						<nav>
-							<h1> Welcome {% block fname %}fname{% endblock fname %} {% block lname %}lname{% endblock lname %} </h1><br>
+							<h2> Welcome {% block fname %}fname{% endblock fname %} {% block lname %}lname{% endblock lname %} </h2><br>
+						
 
-							<h2 style = "color: #FF8C00" >1. Select and Take a Test</h2>
+							 <section>
+      
+				      <button id="animateButton">Click to view: My Recent Stats</button>
+				      <br>
+				      
+
+				       <div id="multiple-loader-container">
+				               
+				                <div  id="multiple-loader-one">
+				                    <h5 style = "text-align:center;color: #348cb2;">Math Score</h5>
+				                </div>
+				             
+				                <div  id="multiple-loader-two">
+				                    
+				                    <h5 style = "text-align:center;color: #348cb2;">Reading Score</h5>
+				                </div>
+				            
+				                <div id="multiple-loader-three">
+				                    
+				                    <h5 style = "text-align:center;color: #348cb2;">Writing Score</h5>
+				                </div>
+				        </div>
+
+
+				   <script>
+				        // Multiple  percentage loaders
+				  
+				  var scores = [{% for i in scores %}{{ i }}{% if forloop.last %} {%else%} , {%endif%} {% endfor %}];;
+				  $("#multiple-loader-container").children().each(function (i) {
+				      var loader = $(this).percentageLoader({width: 130, height:130});
+				      $("#animateButton").click(function () {
+				    var thisLoaderRunning = false;
+				    var totalValue = 800;
+				    var value = 0;
+				    // A function representing a single 'frame' of our animation
+				    var animateFunc = function() {
+				        value += 10;    
+				        if (value > scores[i]) {
+				      value = scores[i];  
+				        }
+				        loader.setProgress(value / totalValue);
+				        loader.setValue(value.toString() + ' Points');
+				        if (value < totalValue) {
+				      setTimeout(animateFunc, 50);
+				        } else {
+				      thisLoaderRunning = false;
+				        }
+				    }
+				    
+				    setTimeout(animateFunc, 50);
+				    return false;
+				      });
+				      
+				  });
+
+
+
+				        </script>
+
+ 						</section>
+
+
+
+							<h3 style = "color: #FF8C00" >1. Select and Take a Test</h3>
 									
 			                  <form action="{% url 'login:bubblesheet' %}" method="post">{% csrf_token %}
 			                    <div class="dropdown">
@@ -103,7 +197,7 @@
 						</nav>
 
 						<nav>
-							<h2 style = "color: #FF8C00" >2. View Reports</h2>
+							<h3 style = "color: #FF8C00" >2. View Reports</h3>
 							<ul>
 								<li style = "color: #348cb2"><a href="{% url 'login:simple_report' %}"><img src="{% static 'dashboard/css/images/SimpleReport.png' %}" alt="Simple Report" height="90" width="90" onmouseout = "this.src = '{% static 'dashboard/css/images/SimpleReport.png' %}' " onmouseover = "this.src = '{% static 'dashboard/css/images/A.png' %}'"></img></a></li>
 								<li style = "color: #348cb2"><a href="{% url 'login:math_report' %}"><img src="{% static 'dashboard/css/images/MathReport.png' %}" alt="Section Reports" height="90" width="90"onmouseout = "this.src = '{% static 'dashboard/css/images/MathReport.png' %}' " onmouseover = "this.src = '{% static 'dashboard/css/images/B.png' %}'"></img></a></li>
@@ -119,6 +213,7 @@
 
 						
 					</header>
+
 
 		        <!-- Footer -->
 		        <div id="foot">

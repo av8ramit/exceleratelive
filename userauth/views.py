@@ -183,8 +183,9 @@ def login_user(request):
                 console.process_commands("load_class web")
                 console.process_commands("load_student " + u_name)
                 test_list = console.process_commands("list_tests")
+                scores = console.user.recent_scores()
                 #test_list = ["GE29", "GE30", "GE31", "GE32"]
-                return render(request, 'userauth/userpage.html', {'user':user, 'test_list':test_list})
+                return render(request, 'userauth/userpage.html', {'user':user, 'test_list':test_list, 'scores':scores})
             else:
                 # User account has been disabled
                 error_message = "Sorry, this user has been disabled"
