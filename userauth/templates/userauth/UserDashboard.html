@@ -31,7 +31,8 @@
 		<link href="{% static 'dashboard/css/bootstrap.min.css' %}" rel="stylesheet"/>
     
 	<!-- Quick View: My stats Percentage Loader -->
-	<script src="{% static 'dashboard/js/percentageloader.js' %}"></script>
+	<script src="{% static 'dashboard/js/raphael.2.1.0.min.js' %}"></script>
+	<script src="{% static 'dashboard/js/justgage.1.0.1.js' %}"></script>
 
     <!-- Custom CSS -->
     <link href="{% static 'dashboard/css/sb-admin.css' %}" rel="stylesheet"/>
@@ -47,27 +48,36 @@
 	<!-- Quick view percentage loader styling -->
 	<style>
       body {
-        margin: 0px;
-        padding: 0px;
+      	
+        
       }
       
-      #multiple-loader-one {
+     
+
+      #g1, #g2, #g3 {
+        width:200px; height:160px;
         display: inline-block;
+        margin: 1em;
       }
       
-      #multiple-loader-two {
+      #g5, #g6, #g7, #g8 {
+        width:150px; height:120px;
         display: inline-block;
-      }
-      
-      #multiple-loader-three{
+        margin: 1em;
+      } 
 
-        display: inline-block;
-
+      #g4 {
+      width:350px; height:280px;
+      display: inline-block;
+      margin: 1em;
       }
-
-      #animateButton {
-        width: 256px;
-      }
+      #foot{
+		width:100%;
+		height:80px;
+		position:relative;
+		bottom:0;
+	  }
+    
     </style>
 	</head>
 	<body class="loading">
@@ -105,74 +115,201 @@
 			</nav>
 			<div id="bg"></div>
 			<div id="overlay"></div>
-			<div id="main">
+			<div style = "overflow: scroll" id="main">
 			
 				<!-- Header -->
 					<header id="header">
 
-					<div>
+					<div >
+						<br>
+						<br>
+						<br>
+						<br>
+						
 						<nav>
-							<h2> Welcome {% block fname %}fname{% endblock fname %} {% block lname %}lname{% endblock lname %} </h2><br>
+							<h1> Welcome {% block fname %}fname{% endblock fname %} {% block lname %}lname{% endblock lname %} </h1><br>
 						
 
 							 <section>
       
-				      <button id="animateButton">Click to view: My Recent Stats</button>
+				      
 				      <br>
 				      
 
-				       <div id="multiple-loader-container">
+
+				                <div id="g4">
+				                   
+				                </div>
+
+				       			<div>
 				               
-				                <div  id="multiple-loader-one">
-				                    <h5 style = "text-align:center;color: #348cb2;">Math Score</h5>
+				                <div  id="g1">
+				                    
 				                </div>
 				             
-				                <div  id="multiple-loader-two">
+				                <div  id="g2">
 				                    
-				                    <h5 style = "text-align:center;color: #348cb2;">Reading Score</h5>
+				                    
 				                </div>
 				            
-				                <div id="multiple-loader-three">
+				                <div id="g3">
 				                    
-				                    <h5 style = "text-align:center;color: #348cb2;">Writing Score</h5>
+				                   
 				                </div>
-				        </div>
-
+				                <br>
+				                <div id="g5">
+				                    
+				                   
+				                </div>
+				                <div id="g6">
+				                    
+				                   
+				                </div>
+				                <div id="g7">
+				                 
+				                </div>
+				                <div id="g8">
+				             
+				                </div>
+				        
+				        		
+				                </div>
 
 				   <script>
 				        // Multiple  percentage loaders
 				  
 				  var scores = [{% for i in scores %}{{ i }}{% if forloop.last %} {%else%} , {%endif%} {% endfor %}];;
-				  $("#multiple-loader-container").children().each(function (i) {
-				      var loader = $(this).percentageLoader({width: 130, height:130});
-				      $("#animateButton").click(function () {
-				    var thisLoaderRunning = false;
-				    var totalValue = 800;
-				    var value = 0;
-				    // A function representing a single 'frame' of our animation
-				    var animateFunc = function() {
-				        value += 10;    
-				        if (value > scores[i]) {
-				      value = scores[i];  
-				        }
-				        loader.setProgress(value / totalValue);
-				        loader.setValue(value.toString() + ' Points');
-				        if (value < totalValue) {
-				      setTimeout(animateFunc, 50);
-				        } else {
-				      thisLoaderRunning = false;
-				        }
-				    }
-				    
-				    setTimeout(animateFunc, 50);
-				    return false;
-				      });
-				      
-				  });
+				  var g1, g2, g3, g4, g5, g6, g7, g8;
+				  window.onload = function(){
+				  var g1 = new JustGage({
+			      id: "g1", 
+			        value: scores[0], 
+			        min: 0,
+			        max: 800,
+			        title: "Math Score",
+			        label: "Points", 
+			        levelColors: [
+          			"#ff3b3b",
+         			"#ffff27",
+          			"#62d184"
+        			],         
+			        startAnimationTime: 2000,
+			        startAnimationType: "bounce"
+			                       
+			      });
 
+				   var g2 = new JustGage({
+			      id: "g2", 
+			        value: scores[1], 
+			        min: 0,
+			        max: 800,
+			        title: "Reading Score",
+			        label: "Points", 
+			        levelColors: [
+          			"#ff3b3b",
+         			"#ffff27",
+          			"#62d184"
+        			],         
+			        startAnimationTime: 2000,
+			        startAnimationType: "bounce"
+			                       
+			      });
 
+				    var g3 = new JustGage({
+			      id: "g3", 
+			        value: scores[2], 
+			        min: 0,
+			        max: 800,
+			        title: "Writing Score",
+			        label: "Points", 
+			        levelColors: [
+          			"#ff3b3b",
+         			"#ffff27",
+          			"#62d184"
+        			],         
+			        startAnimationTime: 2000,
+			        startAnimationType: "bounce"
+			                      
+			      });
 
-				        </script>
+				    var g4 = new JustGage({
+			      id: "g4", 
+			        value: scores[3], 
+			        min: 0,
+			        max: 2400,
+			        title: "Overall Score",
+			        label: "Points", 
+			        levelColors: [
+          			"#ff3b3b",
+         			"#ffff27",
+          			"#62d184"
+        			],         
+			        startAnimationTime: 1000,
+			        startAnimationType: "bounce"
+			                       
+			      });
+
+				      var g5 = new JustGage({
+			      id: "g5", 
+			        value: scores[4], 
+			        min: 0,
+			        max: scores[4],
+			        title: "Math Improvement!",
+			        label: "Points", 
+			        levelColors: [
+          			"#62d184"
+        			],         
+			        startAnimationTime: 3000,
+			        startAnimationType: "bounce"
+			                     
+			      });
+				        var g6 = new JustGage({
+			      id: "g6", 
+			        value: scores[5], 
+			        min: 0,
+			        max: scores[5],
+			        title: "Reading Improvement!",
+			        label: "Points", 
+			        levelColors: [
+          			"#62d184"
+        			],         
+			        startAnimationTime: 3000,
+			        startAnimationType: "bounce"
+			        
+			                       
+			      });
+				          var g7 = new JustGage({
+			      id: "g7", 
+			        value: scores[6], 
+			        min: 0,
+			        max: scores[6],
+			        title: "Writing Improvement!",
+			        label: "Points", 
+			        levelColors: [
+          			"#62d184"
+        			],         
+			        startAnimationTime: 3000,
+			        startAnimationType: "bounce"
+			       
+			                      
+			      });
+				            var g8 = new JustGage({
+			      id: "g8", 
+			        value: scores[7], 
+			        min: 0,
+			        max: scores[7],
+			        title: "Overall Improvement!",
+			        label: "Points", 
+			        levelColors: [
+          			"#62d184"
+        			],         
+			        startAnimationTime: 3000,
+			        startAnimationType: "bounce"
+			                      
+			      });
+
+				}; 
+				   </script>
 
  						</section>
 
@@ -225,7 +362,7 @@
 		                <a href="http://www.exceleratetestprep.com/#!about/cgvz">About Us</a> |
 		                <a href="http://www.exceleratetestprep.com/#!support/c3vn">Contact Us</a> |
 		                <a href="http://www.exceleratetestprep.com/#!services/c1739">Services</a>
-		              <p><FONT color="#FF8C00" size="2" >Excelerate Test Prep © 2014</FONT></p>
+		              <p style = "text-align:center"><FONT color="#FF8C00" size="2" >Excelerate Test Prep © 2014</FONT></p>
 		            </center>
 		          </footer>
 		        </div><!-- end of foot -->
