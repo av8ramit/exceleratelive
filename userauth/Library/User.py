@@ -25,8 +25,7 @@ class User(object):
         self.c = c #class
         self.tests_taken = [] #array of scored tests for data analysis
         self.data = Data_Holder()
-        self.scores = []
-    
+        self.scores = []  
 
     #return 3 scores, math, reading, writing- from most recent test. 
     def recent_scores(self):
@@ -52,6 +51,14 @@ class User(object):
                 writing_score_difference = (writing_scores[-1][1]) - (writing_scores[0][1])
                 reading_score_difference = (reading_scores[-1][1]) - (reading_scores[0][1])
                 math_score_difference =  (math_scores[-1][1]) - (math_scores[0][1])
+                if(overall_score_difference < 0):
+                    overall_score_difference = 0
+                if(math_score_difference < 0):
+                    math_score_difference = 0
+                if reading_score_difference<0:
+                    reading_score_difference = 0
+                if writing_score_difference < 0:
+                    writing_score_difference = 0  
                 return math_scores[-1][1], reading_scores[-1][1], writing_scores[-1][1], s1[-1][1], math_score_difference, writing_score_difference, reading_score_difference, overall_score_difference 
             else:
                 return math_scores[0][1], reading_scores[0][1], writing_scores[0][1], s1[0][1], 0, 0, 0, 0
@@ -249,6 +256,47 @@ class User(object):
         return output
 
 
+    def make_gauge(self,numgagues, gdata, labels):
+        number_of_gauges = numgagues
+        data = gdata
+        title = labels
+        index = 0
+        lines = []
+        lines.append('<script>' + endl)
+        lines.append('var')
+        for number in range(0,number_of_gauges):
+            if(number < (number_of_gauges-1)):
+                lines.append(' g' + str(number) + ',')
+            else:
+                lines.append(' g' + str(number))
+
+        lines.append(';' + endl)
+        lines.append('window.onload= function(){' + endl)
+        for number in range(0,number_of_gauges):
+            lines.append('var g' + str(index) + '= new JustGage({' + endl)
+            lines.append('id: ' + '"' + 'g' + str(number) + '"' + ',' + endl)
+            lines.append('value: ' + str(gdata[index]) + ',' + endl)
+            lines.append('min: 0,' + endl)
+            if index == 0:
+                lines.append('max: 2400,' + endl)
+            else:
+                lines.append('max: 800,' + endl)
+            lines.append('title: '+ '"' + str(labels[index]) + '"' + ',' + endl)
+            lines.append('label: '+'"'+ 'Points' + '"' + ',' + endl)
+            lines.append('levelColors: [' + endl)
+            lines.append('"' + '#ff3b3b' + '"' + ',' + endl)
+            lines.append('"' + '#ffff27' + '"' + ',' + endl)
+            lines.append('"' + '#62d184' + '"' + ',' + endl)
+            lines.append('],' + endl)
+            lines.append('startAnimationTime: 2000,' + endl)
+            lines.append('startAnimationType: ' + '"' + 'bounce' + '"' + endl) 
+            lines.append('});' + endl)
+            index = index + 1
+
+        lines.append('};' + endl)
+        lines.append('</script>' + endl)
+        return lines    
+
     def simple_HTML(self):
         FILE = open(user_directory(self.name, self.c) + DIR_SEP + "simple_report" + ".html", "w")
         lines = []
@@ -260,8 +308,8 @@ class User(object):
 
         #calculate all scores
         for test in self.tests_taken:
-            s1.append([date_converter(test.date),test.score_summary.total_score()])
-            pointlabels.append(str(test.test_id))
+            s1.append(test.score_summary.total_score())
+            pointlabels.append(date_converter(test.date) + str(test.test_id))
             index += 1
 
         #graph js
@@ -273,6 +321,12 @@ class User(object):
         lines.append('<head>')
         lines.append('<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />' + endl)
         lines.append('{% load staticfiles %}' + endl)
+        lines.append('<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">' + endl)
+        lines.append('<link rel="stylesheet" type="text/css" href=' + '"' + "{% static 'style.css' %}" + '"' + '/>' + endl)
+        lines.append('<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>' + endl)
+        lines.append('<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>' + endl)
+        lines.append('<script src=' + '"' + "{% static 'raphael.2.1.0.min.js' %}" + '"></script>' + endl)
+        lines.append('<script src=' + '"' + "{% static 'justgage.1.0.1.js' %}" + '"></script>' + endl)
         lines.append('<link rel="stylesheet" type="text/css" href=' + '"' + "{% static 'style.css' %}" + '"' + '/>' + endl)
         lines.append('<title>Simple Score Report</title>' + endl)
         lines += g.head()
@@ -318,6 +372,17 @@ class User(object):
         lines.append('<p><b>Average Writing Score:</b><font color = "' + qualitative_color(scores[2]) + '">  ' + str(scores[2]) + '/800</font></p>' + endl)
         lines.append('<p><b>Average Reading Score:</b><font color = "' + qualitative_color(scores[1]) + '">  ' + str(scores[1]) + '/800</font></p>' + endl)
         lines.append('<p><b>Average Math Score:</b><font color = "' + qualitative_color(scores[3]) + '">  ' + str(scores[3]) + '/800</font></p>' + endl)
+    
+        lines.append('<br>' + endl)
+        lines.append('<div  id = "g0"></div>' + endl)
+        lines.append('<div  id = "g1"></div>' + endl)
+        lines.append('<div  id = "g2"></div>' + endl)
+        lines.append('<div  id = "g3"></div>' + endl)
+
+
+
+        lines += self.make_gauge(4, scores,['Average Overall Score', 'Average Writing Score', 'Average Reading Score', 'Average Math Score'])
+
         #lines.append('<p><b>Average Essay Score: </b>' + str(scores[4]) + '/12</p>' + endl)
         lines.append('<p><b>Tests Taken:</b> ' + str(len(self.tests_taken)) + '</p>' + endl)
         lines.append('<hr color="#BBBBBB" size="2" width="100%">' + endl)
@@ -372,7 +437,7 @@ class User(object):
             if best_type != type_name:
                 lines.append(paropen + "Your weakest math section is " + type_name + " as you are scoring " + cram[MATH_TYPE][1] + " in these questions.")
 
-
+      
         #Footer
         lines.append('<br>' + endl)
         lines.append('</div>' + endl)
@@ -404,8 +469,8 @@ class User(object):
         pointlabels = []
         #calculate all scores
         for test in self.tests_taken:
-            s1.append([date_converter(test.date),test.score_summary.section_scores[section_type]])
-            pointlabels.append(str(test.test_id))
+            s1.append(test.score_summary.total_score())
+            pointlabels.append(date_converter(test.date) + SPACE + str(test.test_id))
             index += 1
 
         g = Graph(section_type_name + " Score Performance", graph_index, s1, None, None, str(pointlabels))
@@ -417,8 +482,8 @@ class User(object):
             graph_index += 1
             for test in self.tests_taken:
                 if test.data.data[section_type].stats[key].t != 0:
-                    data.append([date_converter(test.date),div(test.data.data[section_type].stats[key].c, test.data.data[section_type].stats[key].t) * 100])
-                    pointlabels.append(str(test.test_id))
+                    data.append(div(test.data.data[section_type].stats[key].c, test.data.data[section_type].stats[key].t) * 100)
+                    pointlabels.append(date_converter(test.date) + SPACE + str(test.test_id))
             if len(data) > 0:
                 graphs.append(Graph(type_dict[key], graph_index, data,None, None, str(pointlabels)))
                 del pointlabels[:]
@@ -718,11 +783,11 @@ class User(object):
         pointlabels = []
         #calculate all scores
         for test in self.tests_taken:
-            s1.append([date_converter(test.date),test.score_summary.total_score()])
-            writing_scores.append([date_converter(test.date), test.score_summary.section_scores[WRITING_TYPE]])
-            reading_scores.append([date_converter(test.date), test.score_summary.section_scores[READING_TYPE]])
-            math_scores.append([date_converter(test.date), test.score_summary.section_scores[MATH_TYPE]])
-            pointlabels.append(str(test.test_id))
+            s1.append(test.score_summary.total_score())
+            writing_scores.append(test.score_summary.section_scores[WRITING_TYPE])
+            reading_scores.append(test.score_summary.section_scores[READING_TYPE])
+            math_scores.append(test.score_summary.section_scores[MATH_TYPE])
+            pointlabels.append([date_converter(test.date),str(test.test_id)])
             index += 1
 
         # calculate class averages for each of the 4 graphs Overall, M W R Sections

@@ -5,11 +5,132 @@
 #     Created on              : 08-08-2013                                                                                                         #
 #     Directory               : /Desktop/                                                                                                          #
 #     Purpose                 : This file represents a data graph.                                                                                 #
-#                                                                                                                                                  #
+#       
+#     2/6/2015 Neel - C3 is based on D3, that's why D3 is included. as of now only D3 version 3.5.0<= works 
+#     don't update either C3 or D3 without first checking version compatibility                                                                                                                                          #
 #################################################################################################################################################### 
 
 from Values import *
 from User import *
+
+# New C3 based Graph Object, http://c3js.org/ for info
+
+class Graph(object):
+    # paramaters are options passed to a Graph object in User.py
+    def __init__(self, name, index, points, averages = None, overallreport = None, pointLabels = None):
+        self.name = name
+        self.index = index
+        self.data = points
+        self.section_averages = averages
+        self.overallrep = overallreport
+        self.data_point_labels = pointLabels
+     
+    # creates lines to put in the <header> tags
+    def head(self):
+        lines = []
+        #load c3.css
+        lines.append('<link rel="stylesheet" type= "text/css"  href=' + '"' + "{% static 'c3.css' %}" +  ' "/> ' + endl)
+        #load d3.js and c3.js 
+        lines.append('<script charset="utf-8"  src=' + '"' + "{% static 'd3.min.js' %}" + '"></script>  ' + endl)
+        lines.append('<script src=' + '"' + "{% static 'c3.min.js' %}" + '"></script>  ' + endl)
+        return lines
+    # creates lines for the HTML file
+    def html(self, percent=False, space = True, SIMPLE_REP_FLAG = False):
+        lines = []
+        if space:
+            lines.append('<br>')
+        lines.append('<div id="chart' + str(self.index) + '" style="height:300px; width:490px;"></div>' + endl)
+        lines.append('<script>' + endl)
+        lines.append('var chart' + str(self.index) + ' = c3.generate({' + endl)
+        lines.append('size:{ height:300, width:490},' + endl)
+        lines.append('bindto: ' + "'" + '#chart' + str(self.index) + "'" + ',' + endl)
+        lines.append('data: {' + endl)
+        lines.append('labels: true,' + endl)
+        #lines.append('x:' + "'" + 'x' + "'" + ',' + endl)
+        if(percent):
+            self.data = map(int, self.data)
+
+        self.data.insert(0, 'Score') # insert x idenifier to data set 
+        lines.append('columns: [' + endl)
+        lines.append(str(self.data))
+        lines.append(']' + endl)
+        lines.append('},' + endl)
+        lines.append('axis: {' + endl)
+        lines.append('x:{'+ endl)
+        lines.append('type: ' + "'" + 'category' + "'" + ',' + endl)
+        lines.append('categories:' + str(self.data_point_labels) + endl)
+        lines.append('},' + endl)
+        if SIMPLE_REP_FLAG or self.overallrep == True:
+            lines.append('y: {' + endl)
+            lines.append('label: {' + endl)
+            lines.append('text: ' + "'" + 'Points' + "'" + ',' + endl)
+            lines.append('position: ' + "'" + 'outer-middle' + "'" + ',' + endl)
+            lines.append('},' + endl)
+            lines.append('max: 2400,' + endl)
+            lines.append('min: 0,' + endl)
+            lines.append('padding: {top:4, bottom:4}' + endl)
+            lines.append('}' + endl)
+        elif self.section_averages != None:
+            lines.append('y: {' + endl)
+            lines.append('label: {' + endl)
+            lines.append('text: ' + "'" + 'Points' + "'" + ',' + endl)
+            lines.append('position: ' + "'" + 'outer-middle' + "'" + ',' + endl)
+            lines.append('},' + endl)
+            lines.append('max: 800,' + endl)
+            lines.append('min: 0,' + endl)
+            lines.append('padding: {top:4, bottom:4}' + endl)
+            lines.append('}' + endl)
+        elif percent:
+            lines.append('y: {' + endl)
+            lines.append('label: {' + endl)
+            lines.append('text: ' + "'" + 'Percent Correct' + "'" + ',' + endl)
+            lines.append('position: ' + "'" + 'outer-middle' + "'" + ',' + endl)
+            lines.append('},' + endl)
+            lines.append('max: 100,' + endl)
+            lines.append('min: 0,' + endl)
+            lines.append('padding: {top:4, bottom:4}' + endl)
+            lines.append('}' + endl)
+        else:
+            lines.append('y: {' + endl)
+            lines.append('label: {' + endl)
+            lines.append('text: ' + "'" + 'Points' + "'" + ',' + endl)
+            lines.append('position: ' + "'" + 'outer-middle' + "'" + ',' + endl)
+            lines.append('},' + endl)
+            lines.append('}' + endl)
+    
+        lines.append('}' + endl)
+        lines.append('});' + endl)
+
+        lines.append('setTimeout(function () {' + endl)
+        lines.append('chart' + str(self.index) +  '.transform(' + "'"  + 'line' + "'" + ');' + endl)
+        lines.append('}, 500);' + endl)
+
+
+        lines.append('function ' +  'bar'+ str(self.index) +'(){' + endl)
+        lines.append('chart' + str(self.index) + '.transform(' + "'" + 'bar' + "'" + ');' + endl)
+        lines.append('}' + endl)
+
+        lines.append('function ' +  'line'+ str(self.index) +'(){' + endl)
+        lines.append('chart' + str(self.index) + '.transform(' + "'" + 'line' + "'" + ');' + endl)
+        lines.append('}' + endl)
+
+        lines.append('</script>' + endl)
+        lines.append('<br>')
+        
+        lines.append('<button onclick=' + ' " ' +  'bar'+ str(self.index) +'()' + '"' + ' >View as Bar Graph</button>'+endl)
+        lines.append('<button onclick=' + ' " ' +  'line'+ str(self.index) +'()' + '"' + '>View as Line Graph</button>'+endl)
+        
+        return lines
+    # Empty body since no plugins required, but for previous architecture compabality 
+
+    def body(self):
+        lines = []
+        lines.append(endl)
+
+        return lines
+
+
+"""
 class Graph(object):
 
     def __init__(self, name, index, points, averages = None, overallreport = None, pointLabels = None):
@@ -41,7 +162,7 @@ class Graph(object):
         lines.append('var line1 = ' + str(self.data) + ';' + endl)
         if SIMPLE_REP_FLAG :
             #REMOVE CLASS AVERAGE FEATURE
-            """filename = class_directory('Elite') + DIR_SEP + "average.txt"
+            filename = class_directory('Elite') + DIR_SEP + "average.txt"
             with open(filename) as f:
                 array = f.readlines()
                 l = {}
@@ -69,8 +190,8 @@ class Graph(object):
             op= []
             for entry in self.data:
                 new_entry = [entry[0], l[entry[0]]]
-                op.append(new_entry)"""
-
+                op.append(new_entry
+            # end class average feature
             #lines.append("var line2 = " + str(op) + ";" + endl)
             lines.append("var labels = ['Your Performance', 'Class Average'];" + endl)
             lines.append("var plot1 = $.jqplot('chart" + str(self.index) + "', [line1], {" + endl)
@@ -164,7 +285,7 @@ class Graph(object):
         lines.append('<script type="text/javascript" src=' + '"' + "{% static 'examples/../plugins/jqplot.dateAxisRenderer.min.js' %}" +'""> </script>' + endl)
         lines.append('<script type="text/javascript" src=' + '"' + "{% static 'examples/../plugins/jqplot.enhancedLegendRenderer.min.js' %}" +'""> </script>' + endl)
         return lines
-
+"""
 
 class C_Graph(object):
 

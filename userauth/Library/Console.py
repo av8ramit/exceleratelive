@@ -181,9 +181,9 @@ class Console(object):
                 return False
 
         #Recent Test Scores
-        if cmd == "recent_scores":
+        #if cmd == "recent_scores":
            
-            print(str(self.user.recent_scores()))
+           # print(str(self.user.recent_scores()))
              #self.user.recent_scores()
            
 
@@ -219,6 +219,22 @@ class Console(object):
                 self.error = ("Error: Invalid use of answer sheet command.")
                 return False
         '''
+        #Make OMIT HTML Bubble Sheet
+        if cmd == "bubble_sheet_omit":
+            if self.state != USER_STATE:
+                self.error = ("Error: Please load or create a user before creating answer sheets.")
+                return False
+            elif (len(cmd_vector) == 2 and not empty(cmd_vector[1])):
+                if valid_test_id(cmd_vector[1]):
+                    make_bubble_sheet_omit(self.user, cmd_vector[1])
+                    return True
+                else:
+                    self.error = ("Error: Not a valid supported test_id.")
+                    return False
+            else:
+                self.error = ("Error: Invalid use of answer sheet command.")
+                return False
+
 
         #Make HTML Bubble Sheet
         if cmd == "bubble_sheet":

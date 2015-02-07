@@ -371,7 +371,7 @@ def bubblesheet(request):
     if request.POST:
         console = Console()
         test_number = request.POST.get('test')
-        cmd = "bubble_sheet " + test_number
+        cmd = "bubble_sheet_omit " + test_number
         console.process_commands("load_class web")
         console.process_commands("load_student " + request.user.username)
         console.process_commands(cmd)
