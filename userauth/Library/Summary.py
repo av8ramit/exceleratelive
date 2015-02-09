@@ -86,7 +86,7 @@ class Score_Summary(object):
 
     #String override method.
     def __str__(self):
-        output = '<h3>' + "Test ID: " + str(self.id) + '</h3>' + endl
+        output = '<h3>' + "Test ID: " + str(TEST_LIB_DICT[self.id]) + '</h3>' + endl
         output += paropen + "Total: " + str(self.total_score()) + parclose + endl
         output += paropen + "Writing: " + str(self.section_scores[WRITING_TYPE]) + parclose + endl
         output +=  paropen + "Reading: " + str(self.section_scores[READING_TYPE]) + parclose + endl

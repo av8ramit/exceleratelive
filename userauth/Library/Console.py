@@ -180,6 +180,21 @@ class Console(object):
                 self.error = ("Error: Invalid use of list tests command.")
                 return False
 
+        #List Tests Taken
+        if cmd == "list_tests_taken":
+            if len(cmd_vector) == 1:
+                return tests_taken(self.user)
+            else:
+                self.error = ("Error: Invalid use of list tests taken command.")
+                return False
+        #List Tests Taken
+        if cmd == "test_review":
+            if len(cmd_vector) == 2:
+                t = self.user.tests_taken[int(cmd_vector[1]) - 1]
+                return self.user.grade_HTML(t.test_summary, t.score_summary, t.type, '-1')
+            else:
+                self.error = ("Error: Invalid use of test review command.")
+                return False
         #Recent Test Scores
         #if cmd == "recent_scores":
            

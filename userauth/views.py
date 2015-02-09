@@ -183,10 +183,12 @@ def login_user(request):
                 console.process_commands("load_class web")
                 console.process_commands("load_student " + u_name)
                 test_list = console.process_commands("list_tests")
+                tests = console.process_commands("list_tests_taken")
                 scores = console.user.recent_scores()
                 request.session[TEST_MODE] = FULL_TEST
+
                 #test_list = ["GE29", "GE30", "GE31", "GE32"]
-                return render(request, 'userauth/userpage.html', {'user':user, 'test_list':test_list, 'scores':scores})
+                return render(request, 'userauth/userpage.html', {'user':user, 'test_list':test_list, 'scores':scores, 'tests':tests})
             else:
                 # User account has been disabled
                 error_message = "Sorry, this user has been disabled"
@@ -460,6 +462,28 @@ def testportal(request):
         console = Console()
         request.session[TEST_SELECTED] = request.POST.get('test')
     return render(request, 'userauth/testportal_base.html', {'user':request.user, 'test':TEST_LIB_DICT[request.session[TEST_SELECTED]]})
+
+def test_review(request):
+    if request.POST:
+        console = Console()
+        console.process_commands("load_class web")
+        console.process_commands("load_student " + request.user.username)
+        #Retrieve the tag and split by index and pass index of test to console to bring up test review
+        console.process_commands('test_review ' + request.POST.get('test').split('.')[0])
+    return render(request, 'web/' + request.user.username + '/grade.html')
+
+def dashboard(request):
+        console = Console()
+        user = request.user
+        console.process_commands("load_class web")
+        console.process_commands("load_student " + request.user.username)
+        test_list = console.process_commands("list_tests")
+        tests = console.process_commands("list_tests_taken")
+        scores = console.user.recent_scores()
+        request.session[TEST_MODE] = FULL_TEST
+
+        #test_list = ["GE29", "GE30", "GE31", "GE32"]
+        return render(request, 'userauth/userpage.html', {'user':user, 'test_list':test_list, 'scores':scores, 'tests':tests})
 
 
 

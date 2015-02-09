@@ -54,7 +54,7 @@
       
      
 
-      #g1, #g2, #g3, #g5, #g6, #g7 {
+      #g1, #g2, #g3, #g5, #g6, #g7, #g4, #g8 {
         width:175px; height:140px;
         display: inline-block; 
         margin: 1em;
@@ -66,7 +66,7 @@
         margin: 1em;
       } */
 
-      #g4, #g8 {
+      #ga, #gb {
       width:325px; height:260px;
       display: inline-block;
       margin: 1em;
@@ -238,7 +238,7 @@
 			        value: scores[3], 
 			        min: 0,
 			        max: 2400,
-			        title: "Overall Score",
+			        title: "Last Overall Score",
 			        label: "Points", 
 			        levelColors: [
           			"#ff3b3b",
@@ -344,6 +344,18 @@
 								<li style = "color: #348cb2"><a href="{% url 'login:reading_report' %}"><img src="{% static 'dashboard/css/images/ReadingReport.png' %}" alt="Section Reports" height="90" width="90"onmouseout = "this.src = '{% static 'dashboard/css/images/ReadingReport.png' %}' " onmouseover = "this.src = '{% static 'dashboard/css/images/D.png' %}'"></img></a></li>
 								<li style = "color: #348cb2"><a href="{% url 'login:advanced_report' %}"><img src="{% static 'dashboard/css/images/AdvancedReport.png' %}" alt="Advanced Report" height="90" width="90"onmouseout = "this.src = '{% static 'dashboard/css/images/AdvancedReport.png' %}' " onmouseover = "this.src = '{% static 'dashboard/css/images/E.png' %}'"></img></a></li>
 							</ul>
+						</nav>
+
+						<nav>
+							<h3 style = "color: #FF8C00" >3. Test Review</h3>
+								<br>
+
+		                        {% for item in tests %}
+		                          <form action="{% url 'login:test_review' %}" method="post">{% csrf_token %}
+		                          	<button class="btn btn-small btn-info btn-cross" name="test" id="test" value="{{ item }}">{{ item }}</button></a> <br> <br>
+		                      	  </form>
+		                        {% endfor %}
+
 						</nav>
 
 					</div>

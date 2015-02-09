@@ -139,8 +139,6 @@ class User(object):
         for test in self.tests_taken:
             if test.type == str(QUICK_SECTIONS):
                 self.tests_taken.remove(test)
-        print(self.tests_taken)
-
 
 
     def stats_from_test(self, test):
@@ -340,6 +338,21 @@ class User(object):
         lines.append('<script src=' + '"' + "{% static 'raphael.2.1.0.min.js' %}" + '"></script>' + endl)
         lines.append('<script src=' + '"' + "{% static 'justgage.1.0.1.js' %}" + '"></script>' + endl)
         lines.append('<link rel="stylesheet" type="text/css" href=' + '"' + "{% static 'style.css' %}" + '"' + '/>' + endl)
+        
+        lines.append('<style>' + endl)
+        lines.append("#g0 {" + endl)
+        lines.append("width:470px; height:200px;" + endl)
+        lines.append("display: inline-block; " + endl)
+        lines.append("margin: 1em;")
+        lines.append("}" + endl)
+
+        lines.append("#g1, #g2, #g3 {" + endl)
+        lines.append("width:137px; height:100px;" + endl)
+        lines.append("display: inline-block; " + endl)
+        lines.append("margin: 1em;")
+        lines.append("}" + endl)
+
+        lines.append('</style>' + endl)
         lines.append('<title>Simple Score Report</title>' + endl)
         lines += g.head()
         lines.append('</head>' + endl)
@@ -354,7 +367,7 @@ class User(object):
         lines.append('<div id="page">' + endl)
         lines.append('<div id="header">' + endl)
         lines.append('<img src=' + '"' + "{% static 'ml.png' %}" + '" alt="Excelerate" style="float: right; width: 35%; margin-right: 35%;"/>' +
-            '<a href="javascript:history.go(-1)"> <img src=' + '"' + "{% static 'back_rev.png' %}" + '" alt="Home" style="float: left; width: 15%; margin-left: 5%;""> </a>' + endl)
+            '<a href="javascript:history.go(-1)">  <img src=' + '"' + "{% static 'back_rev.png' %}" + '" alt="Home" style="float: left; width: 15%; margin-left: 5%;""> </a>' + endl)
         lines.append('<p style="clear: both;">' + endl)
         #lines.append('<a href="javascript:history.go(-1)"> <img src=' + '"' + "{% static 'back_rev.png' %}" + '" width="20%" alt="Home"> </a>' + endl)
         #lines.append('</div>' + endl)
@@ -380,17 +393,16 @@ class User(object):
 
         #Average Results
         lines.append('<h1>Average Results</h1>' + endl)
-        lines.append('<p><b>Total Score:</b><font color = "' + overall_qualitative_color(scores[0]) + '">  ' + str(scores[0]) + '/2400</font></p>' + endl)
-        lines.append('<p><b>Average Writing Score:</b><font color = "' + qualitative_color(scores[2]) + '">  ' + str(scores[2]) + '/800</font></p>' + endl)
-        lines.append('<p><b>Average Reading Score:</b><font color = "' + qualitative_color(scores[1]) + '">  ' + str(scores[1]) + '/800</font></p>' + endl)
-        lines.append('<p><b>Average Math Score:</b><font color = "' + qualitative_color(scores[3]) + '">  ' + str(scores[3]) + '/800</font></p>' + endl)
+        #lines.append('<p><b>Total Score:</b><font color = "' + overall_qualitative_color(scores[0]) + '">  ' + str(scores[0]) + '/2400</font></p>' + endl)
+        #lines.append('<p><b>Average Writing Score:</b><font color = "' + qualitative_color(scores[2]) + '">  ' + str(scores[2]) + '/800</font></p>' + endl)
+        #lines.append('<p><b>Average Reading Score:</b><font color = "' + qualitative_color(scores[1]) + '">  ' + str(scores[1]) + '/800</font></p>' + endl)
+        #lines.append('<p><b>Average Math Score:</b><font color = "' + qualitative_color(scores[3]) + '">  ' + str(scores[3]) + '/800</font></p>' + endl)
     
         lines.append('<br>' + endl)
         lines.append('<div  id = "g0"></div>' + endl)
         lines.append('<div  id = "g1"></div>' + endl)
         lines.append('<div  id = "g2"></div>' + endl)
         lines.append('<div  id = "g3"></div>' + endl)
-
 
 
         lines += self.make_gauge(4, scores,['Average Overall Score', 'Average Writing Score', 'Average Reading Score', 'Average Math Score'])
@@ -527,7 +539,7 @@ class User(object):
         lines.append('<div id="page">' + endl)
         lines.append('<div id="header">' + endl)
         lines.append('<img src=' + '"' + "{% static 'ml.png' %}" + '" alt="Excelerate" style="float: right; width: 35%; margin-right: 35%;"/>' +
-            '<a href="javascript:history.go(-1)"> <img src=' + '"' + "{% static 'back_rev.png' %}" + '" alt="Home" style="float: left; width: 15%; margin-left: 5%;""> </a>' + endl)
+            '<a href="javascript:history.go(-1)">   <img src=' + '"' + "{% static 'back_rev.png' %}" + '" alt="Home" style="float: left; width: 15%; margin-left: 5%;""> </a>' + endl)
         lines.append('<p style="clear: both;">' + endl)
         lines.append('</div>' + endl)
         lines.append('</div>' + endl)
@@ -649,7 +661,7 @@ class User(object):
         lines.append('<div id="page">' + endl)
         lines.append('<div id="header">' + endl)
         lines.append('<img src=' + '"' + "{% static 'ml.png' %}" + '" alt="Excelerate" style="float: right; width: 35%; margin-right: 35%;"/>' +
-            '<a href="javascript:history.go(-1)"> <img src=' + '"' + "{% static 'back_rev.png' %}" + '" alt="Home" style="float: left; width: 15%; margin-left: 5%;""> </a>' + endl)
+            '<a href="javascript:history.go(-1)">   <img src=' + '"' + "{% static 'back_rev.png' %}" + '" alt="Home" style="float: left; width: 15%; margin-left: 5%;""> </a>' + endl)
         lines.append('<p style="clear: both;">' + endl)
         lines.append('</div>' + endl)
         lines.append('</div>' + endl)
@@ -880,7 +892,7 @@ class User(object):
         lines.append('<div id="page">' + endl)
         lines.append('<div id="header">' + endl)
         lines.append('<img src=' + '"' + "{% static 'ml.png' %}" + '" alt="Excelerate" style="float: right; width: 35%; margin-right: 35%;"/>' +
-            '<a href="javascript:history.go(-1)"> <img src=' + '"' + "{% static 'back_rev.png' %}" + '" alt="Home" style="float: left; width: 15%; margin-left: 5%;""> </a>' + endl)
+            '<a href="{% url ' + "'" +'login:dashboard' + "'" + '%}">  <img src=' + '"' + "{% static 'back_rev.png' %}" + '" alt="Home" style="float: left; width: 15%; margin-left: 5%;""> </a>' + endl)
         lines.append('<p style="clear: both;">' + endl)
         lines.append('</div>' + endl)
         lines.append('</div>' + endl)
@@ -1043,7 +1055,7 @@ class User(object):
         FILE.writelines(lines)
         FILE.close()
 
-    def grade_HTML(self, ts, ss, test_type):
+    def grade_HTML(self, ts, ss, test_type, reverse = '-3'):
         graphs = []
         s1 = []
         writing_scores = []
@@ -1090,7 +1102,7 @@ class User(object):
         lines.append('<div id="page">' + endl)
         lines.append('<div id="header">' + endl)
         lines.append('<img src=' + '"' + "{% static 'ml.png' %}" + '" alt="Excelerate" style="float: right; width: 35%; margin-right: 35%;"/>' +
-            '<a href="javascript:history.go(-3)"> <img src=' + '"' + "{% static 'back_rev.png' %}" + '" alt="Home" style="float: left; width: 15%; margin-left: 5%;""> </a>' + endl)
+            '<a href="{% url ' + "'" +'login:dashboard' + "'" + '%}">  <img src=' + '"' + "{% static 'back_rev.png' %}" + '" alt="Home" style="float: left; width: 15%; margin-left: 5%;""> </a>' + endl)
         lines.append('<p style="clear: both;">' + endl)
         lines.append('</div>' + endl)
         lines.append('</div>' + endl)
@@ -1116,7 +1128,25 @@ class User(object):
         lines.append('<h1>Question Review Section</h1>' + endl)
         lines.append('<p style = "text-align: justify;color: #348cb2" >Below are a list of questions for you to review. <br> Please take the time to go back and redo/review the question <br> Reviewing missed questions is an excellent way to practice and improve your score</p>')
         
-        for item in MISSED_QUESTIONS_TYPE_LIST:
+        for section_type in TYPE_ARRAY:
+            lines.append('<h2 style = "text-align: Left;color: #348cb2">' + section_name(section_type)  + '</h3>'+ endl)
+
+            for item in ts.reports[section_type].incorrect_questions:
+                if str(item[1]) == OMIT_ENTRY:
+                    continue
+
+                lines.append('<br>' + endl)
+                section = item[0].split('_')[1]
+                question = item[0].split('_')[2]
+                lines.append('<h3 style = "text-align: Left;color: #FF8C00">Section: ' + str(section)  + '</h3>'+ endl)
+                lines.append('<h3 style = "text-align: Left;color: #348cb2">Question: ' + str(question)  + '</h3>'+ endl)
+                lines.append('<h3 style = "text-align: Left;color: #FF8C00" >Your Answer: ' + str(item[1])  + '</h3>'+ endl)
+                #add functionality to these checkboxes to keep track of review usage later on
+                lines.append('<input style = "text-align: center;color: #FF8C00" type="checkbox" id=" none" name="none" value="none">Question Review Complete</input>' + endl)
+                lines.append('<br>' + endl)
+                lines.append('<br>' + endl)
+
+        """for item in MISSED_QUESTIONS_TYPE_LIST:
 
 
             del Q_type[:]
@@ -1159,6 +1189,7 @@ class User(object):
             lines.append('<br>' + endl)
             lines.append('<br>' + endl)
             Q_index += 1
+            """
         #Footer
         lines.append('<br>' + endl)
         lines.append('</div>' + endl)

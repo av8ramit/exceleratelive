@@ -270,7 +270,7 @@ def make_bubble_sheet_omit(u, test_id):
     lines.append('<div id="page">' + endl)
     lines.append('<div id="header">' + endl)
     lines.append('<img src=' + '"' + "{% static 'ml.png' %}" + '" alt="Excelerate" style="float: right; width: 35%; margin-right: 35%;"/>' +
-        '<a href="javascript:history.go(-1)"> <img src=' + '"' + "{% static 'back_rev.png' %}" + '" alt="Home" style="float: left; width: 15%; margin-left: 5%;""> </a>' + endl)
+        '<a href="javascript:history.go(-2)"> <img src=' + '"' + "{% static 'back_rev.png' %}" + '" alt="Home" style="float: left; width: 15%; margin-left: 5%;""> </a>' + endl)
     lines.append('<p style="clear: both;">' + endl)
     lines.append('</div>' + endl)
     lines.append('</div>' + endl)
@@ -705,6 +705,15 @@ def section_report(u):
     u.section_HTML(WRITING_TYPE)
     u.section_HTML(READING_TYPE)
     u.section_HTML(MATH_TYPE)
+
+def tests_taken(u):
+    array = []
+    count = 1
+    for test in u.tests_taken:
+        array.append(str(count) + ". " + TEST_LIB_DICT[test.test_id] + "   |   Date: " + test.date)
+        count += 1
+    return array
+
 
 
 #def valid_test(filename):
