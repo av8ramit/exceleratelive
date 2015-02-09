@@ -188,13 +188,14 @@ def list_users_array(c):
             array.append(i)
     return array
 
-def make_answer_sheet(u, test_id):
+def make_answer_sheet(u, test_id, test_type = FULL_TEST):
     filename = test_id
     lines = []
     label_vector = "Number:,Answer:" + endl
     lines.append(test_id + " Answer Sheet" + endl)
     lines.append("Name:," + u.name + endl)
     lines.append("Date:," + datetime_converter(str(datetime.date.today())) + endl)
+    lines.append("Type:," + test_type + endl)
     lines.append("Essay:,7" + endl)
     lines.append(label_vector)
     with open(test_directory(filename) + DIR_SEP + KEYFILE, 'rU') as f:
@@ -203,7 +204,13 @@ def make_answer_sheet(u, test_id):
             if row != KEY_VECTOR:
                 lines.append("Section " + str(row[0]) + ":" + endl)
                 for j in range(1,int(row[2]) + 1):
-                    lines.append(str(j) + ",?")
+                    if test_type == FULL_TEST:
+                        lines.append(str(j) + "," + BLANK_ENTRY)
+                    elif test_type == QUICK_SECTIONS:
+                        lines.append(str(j) + "," + OMIT_ENTRY)
+                    else:
+                        #FAILSAFE in case test_type fails
+                        assert(False)
                     lines.append(endl)
     FILE = open(user_directory(u.name, u.c) + DIR_SEP + test_id + ".csv", "w")
     FILE.writelines(lines)
@@ -330,6 +337,7 @@ def make_bubble_sheet_omit(u, test_id):
                     for i in range(1,int(row[2]) + 1):  
                         if(i <= 8): # Math MC
                             lines+= make_bubble_question_omit('Section ' +  str(row[0]) + '  Question ' + str(i), True)
+                        else:
                             lines+= make_bubble_question_omit('Section ' +  str(row[0]) + '  Question ' + str(i), False)
                         if(i == 8):
                             lines.append('<p style = "text-align: center;color: #348cb2"> <br>Math Grid-In <br>For the fill in math answer sheet when given a ratio answer leave it as a decimal and round up to at most 2 decimal places.</p>')
@@ -659,6 +667,9 @@ def parse_answers(filename):
                 test.add_date(row[1])
             elif row[0] == "Essay:":
                 test.add_essay(int(row[1]))
+            elif row[0] == "Type:":
+                test.add_type(int(row[1]))
+                print("TYPE NOW IS:" + str(test.type))
             elif row[0] == "": #blanks
                 continue
             elif not id_set:

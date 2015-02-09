@@ -184,6 +184,7 @@ def login_user(request):
                 console.process_commands("load_student " + u_name)
                 test_list = console.process_commands("list_tests")
                 scores = console.user.recent_scores()
+                request.session[TEST_MODE] = FULL_TEST
                 #test_list = ["GE29", "GE30", "GE31", "GE32"]
                 return render(request, 'userauth/userpage.html', {'user':user, 'test_list':test_list, 'scores':scores})
             else:
@@ -262,6 +263,14 @@ def handle_uploaded_file(user, f):
         for chunk in f.chunks():
             dest.write(chunk)
 
+def update_test_mode(request):
+    if request.session[TEST_MODE] == FULL_TEST:
+        request.session[TEST_MODE] = QUICK_SECTIONS
+    else:
+        request.session[TEST_MODE] = FULL_TEST
+    print(request.session[TEST_MODE])
+    return HttpResponse()
+
 def upload_file(request):
     if request.method == 'POST':
         data = {'title':"data title"}
@@ -338,6 +347,7 @@ def grade_save_bubblesheet(request):
         lines.append(filename + " Answer Sheet" + endl)
         lines.append("Name:," + request.user.username + endl)
         lines.append("Date:," + datetime_converter(str(datetime.date.today())) + endl)
+        lines.append("Type:," +  str(request.session[TEST_MODE]) + endl)
         lines.append("Essay:,"+ str(request.POST.get('Essay')) + endl)
         lines.append(label_vector)
         with open(test_directory(filename) + DIR_SEP + KEYFILE, 'rU') as f:
@@ -367,24 +377,35 @@ def grade_save_bubblesheet(request):
             k.set_contents_from_filename(user_filename(request.user.username, 'web'))
             return render(request, 'web/' + request.user.username + '/grade.html')
 
+def bubblesheet_omit(request):
+    test_number = request.session[TEST_SELECTED]
+    request.session[TEST_MODE] = QUICK_SECTIONS
+    console = Console()
+    cmd = "bubble_sheet_omit " + test_number
+    console.process_commands("load_class web")
+    console.process_commands("load_student " + request.user.username)
+    console.process_commands(cmd)
+    return render(request, 'web/' + request.user.username + '/' + str(test_number)  + '.html')
+
 def bubblesheet(request):
-    if request.POST:
-        console = Console()
-        test_number = request.POST.get('test')
-        cmd = "bubble_sheet_omit " + test_number
-        console.process_commands("load_class web")
-        console.process_commands("load_student " + request.user.username)
-        console.process_commands(cmd)
-        return render(request, 'web/' + request.user.username + '/' + str(test_number)  + '.html')
+    test_number = request.session[TEST_SELECTED]
+    request.session[TEST_MODE] = FULL_TEST
+    console = Console()
+    cmd = "bubble_sheet " + test_number
+    console.process_commands("load_class web")
+    console.process_commands("load_student " + request.user.username)
+    console.process_commands(cmd)
+    return render(request, 'web/' + request.user.username + '/' + str(test_number)  + '.html')
 
 def simple_report(request):
     console = Console()
     console.process_commands("load_class web")
     console.process_commands("load_student " + request.user.username)
-    if len(console.user.tests_taken) == 0:
+    if len(console.user.tests_taken) == 111110:
         return HttpResponse('Please take tests before opening reports. Click <a href="javascript:history.go(-1)">here</a> return to the dashboard page.')
     else:
         console.process_commands("simple_report")
+        print console.error
         return render(request, 'web/' + request.user.username + '/simple_report.html')
 
 
@@ -392,7 +413,7 @@ def advanced_report(request):
     console = Console()
     console.process_commands("load_class web")
     console.process_commands("load_student " + request.user.username)
-    if len(console.user.tests_taken) == 0:
+    if len(console.user.tests_taken) == 1110:
         return HttpResponse('Please take tests before opening reports. Click <a href="javascript:history.go(-1)">here</a> return to the dashboard page.')
     else:
         console.process_commands("advanced_report")
@@ -402,7 +423,7 @@ def math_report(request):
     console = Console()
     console.process_commands("load_class web")
     console.process_commands("load_student " + request.user.username)
-    if len(console.user.tests_taken) == 0:
+    if len(console.user.tests_taken) == 1110:
         return HttpResponse('Please take tests before opening reports. Click <a href="javascript:history.go(-1)">here</a> return to the dashboard page.')
     else:
         console.process_commands("section_report")
@@ -412,7 +433,7 @@ def writing_report(request):
     console = Console()
     console.process_commands("load_class web")
     console.process_commands("load_student " + request.user.username)
-    if len(console.user.tests_taken) == 0:
+    if len(console.user.tests_taken) == 1110:
         return HttpResponse('Please take tests before opening reports. Click <a href="javascript:history.go(-1)">here</a> return to the dashboard page.')
     else:
         console.process_commands("section_report")
@@ -422,7 +443,7 @@ def reading_report(request):
     console = Console()
     console.process_commands("load_class web")
     console.process_commands("load_student " + request.user.username)
-    if len(console.user.tests_taken) == 0:
+    if len(console.user.tests_taken) == 1110:
         return HttpResponse('Please take tests before opening reports. Click <a href="javascript:history.go(-1)">here</a> return to the dashboard page.')
     else:
         console.process_commands("section_report")
@@ -432,6 +453,13 @@ def reading_report(request):
 def quicktips(request):
     #return render(request, 'mysite/index_base.html')
     return render(request, 'userauth/quicktips.html')
+
+def testportal(request):
+    #return render(request, 'mysite/index_base.html')
+    if request.POST:
+        console = Console()
+        request.session[TEST_SELECTED] = request.POST.get('test')
+    return render(request, 'userauth/testportal_base.html', {'user':request.user, 'test':TEST_LIB_DICT[request.session[TEST_SELECTED]]})
 
 
 

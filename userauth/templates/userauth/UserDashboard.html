@@ -318,10 +318,11 @@
 
 							<h3 style = "color: #FF8C00" >1. Select and Take a Test</h3>
 									
-			                  <form action="{% url 'login:bubblesheet' %}" method="post">{% csrf_token %}
+							  <br>
+			                  <form action="{% url 'login:testportal' %}" method="post">{% csrf_token %}
 			                    <div class="dropdown">
 			                      <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
-			                        Answer Sheets
+			                        Practice Test and Questions
 			                        <span class="caret"></span>
 			                      </button>
 			                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
@@ -331,11 +332,11 @@
 			                        </ul>
 			                    </div>
 			                  </form>
-
 						</nav>
 
 						<nav>
 							<h3 style = "color: #FF8C00" >2. View Reports</h3>
+
 							<ul>
 								<li style = "color: #348cb2"><a href="{% url 'login:simple_report' %}"><img src="{% static 'dashboard/css/images/SimpleReport.png' %}" alt="Simple Report" height="90" width="90" onmouseout = "this.src = '{% static 'dashboard/css/images/SimpleReport.png' %}' " onmouseover = "this.src = '{% static 'dashboard/css/images/A.png' %}'"></img></a></li>
 								<li style = "color: #348cb2"><a href="{% url 'login:math_report' %}"><img src="{% static 'dashboard/css/images/MathReport.png' %}" alt="Section Reports" height="90" width="90"onmouseout = "this.src = '{% static 'dashboard/css/images/MathReport.png' %}' " onmouseover = "this.src = '{% static 'dashboard/css/images/B.png' %}'"></img></a></li>
@@ -357,7 +358,7 @@
 		        <div id="foot">
 		           <footer>
 		            <center>
-		              <p><FONT size="3" color="#FF8C00">Score reports and Analysis Provided by <a href="http://www.exceleratetestprep.com/">Excelerate Test Prep &copy;</a>.</p>
+		              <p><FONT size="3" color="#FF8C00">Score reports and Analysis Provided by <a href="http://www.exceleratetestprep.com/">Excelerate Test Prep &copy;</a>.</FONT></p>
 		              	<a href="http://www.tinyurl.com/exceleratelivesurvey">Feedback</a> |
 		                <a href="{% url 'howitworks' %}">Directions</a> |
 		                <a href="http://www.exceleratetestprep.com/#!about/cgvz">About Us</a> |

@@ -30,6 +30,7 @@ class Scored_Test(object):
         self.qtypedict = {}
         self.essay = 7
         self.date = ''
+        self.type = FULL_TEST
 
     #This sets the test summary upon creation and recreation.
     def set_summary(self, s):
@@ -63,10 +64,10 @@ class Scored_Test(object):
                 current_section = self.sections[section_index]          
 
             #fill section summary
-            if attempt == "?":
+            if attempt == BLANK_ENTRY:
                 self.missed_questions_index[section_index][index] = attempt
                 self.test_summary.reports[section_type].add_blank()
-                current_section.add_blank()             
+                current_section.add_blank()
             else:
                 self.missed_questions_index[section_index][index] = attempt         
                 self.test_summary.reports[section_type].add_miss()
@@ -135,6 +136,7 @@ class Scored_Test(object):
     def __str__(self):
         output = endl + "TEST_ID: " + self.test_id + endl
         output += endl
+        output += ("TYPE: " + str(self.type) + endl)
         output += ("DATE: " + self.date + endl)
         output += ("ESSAY: " + str(self.essay) + endl)              
         output += "WRITING:" + endl

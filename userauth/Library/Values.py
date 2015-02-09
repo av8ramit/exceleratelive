@@ -33,6 +33,24 @@ MISSED_QUESTIONS_USRANSWER_LIST = []
 MISSED_QUESTIONS_TYPE_LIST = []
 
 
+#TEST LIBRARY
+TEST_LIB_DICT = {}
+
+TEST_LIB_DICT['CB1'] = "CollegeBoard Book Practice Test 1"
+TEST_LIB_DICT['CB2'] = "CollegeBoard Book Practice Test 2"
+TEST_LIB_DICT['CB3'] = "CollegeBoard Book Practice Test 3"
+TEST_LIB_DICT['CB4'] = "CollegeBoard Book Practice Test 4"
+TEST_LIB_DICT['CB5'] = "CollegeBoard Book Practice Test 5"
+TEST_LIB_DICT['CB6'] = "CollegeBoard Book Practice Test 6"
+TEST_LIB_DICT['CB7'] = "CollegeBoard Book Practice Test 7"
+TEST_LIB_DICT['CB8'] = "CollegeBoard Book Practice Test 8"
+TEST_LIB_DICT['CB9'] = "CollegeBoard Book Practice Test 9"
+TEST_LIB_DICT['CB10'] = "CollegeBoard Book Practice Test 10"
+TEST_LIB_DICT['K1'] = "Kaplan Book Practice Test 1"
+TEST_LIB_DICT['K2'] = "Kaplan Book Practice Test 2"
+TEST_LIB_DICT['K3'] = "Kaplan Book Practice Test 3"
+TEST_LIB_DICT['DiagK'] = "Kaplan Book Practice Diagnostic Test"
+
 #Question Value
 PARSED_ARRAY_SIZE = 6
 
@@ -92,6 +110,17 @@ KEY_TYPE = 1
 KEY_SIZE = 2
 ANSWER_VECTOR = ['Number:', 'Answer:']
 SCORE_VECTOR = ['Raw Score:', 'Writing', 'Math', 'Reading']
+BLANK_ENTRY = '?'
+OMIT_ENTRY = 'O'
+
+#TEST_TYPES
+QUICK_SECTIONS = 0
+FULL_TEST = 1
+TEST_MODE = "test_mode"
+TEST_SELECTED = "test_selected"
+
+#DJANGO VARIABLES
+
 
 #CHARACTER VALUES
 SPACE = ' '

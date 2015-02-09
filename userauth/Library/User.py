@@ -81,14 +81,16 @@ class User(object):
         sections[MATH_TYPE] = ts.reports[MATH_TYPE].incorrect_questions
         sections[READING_TYPE] = ts.reports[READING_TYPE].incorrect_questions
         st = Scored_Test(answers.id)
+        #pass Scored Test the Answer Test Date,Essay,Type
         st.recreate(sections)
         st.date = answers.date
         st.essay = answers.essay
+        st.type = answers.type
         #put the scored test in the history page after it has been graded
         self.tests_taken.append(st)
         #add this new test to data sections
         self.stats_from_test(st)
-        self.grade_HTML(ts, ss)
+        self.grade_HTML(ts, ss, st.type)
 
 
     def save_user(self):
@@ -113,6 +115,8 @@ class User(object):
                     test_id = line.split(' ')[1]
                     sections = {}
                     current_test = Scored_Test(test_id)
+                elif 'TYPE' in line:
+                    current_test.type = line.split(' ')[1]
                 elif 'ESSAY' in line:
                     current_test.essay = int(line.split(' ')[1])
                 elif 'DATE' in line:
@@ -132,6 +136,10 @@ class User(object):
                     self.tests_taken.append(current_test)
         for test in self.tests_taken:
             self.stats_from_test(test)
+        for test in self.tests_taken:
+            if test.type == str(QUICK_SECTIONS):
+                self.tests_taken.remove(test)
+        print(self.tests_taken)
 
 
 
@@ -165,7 +173,7 @@ class User(object):
                 type_list += main_type_list
                 if index_exists(test.missed_questions_index, index) and index_exists(test.missed_questions_index[index], number):
                     attempt = test.missed_questions_index[index][number]
-                    if attempt == '?':
+                    if attempt == BLANK_ENTRY:
                         for qtype in type_list:
                             self.data.data[section_type].stats["L" + str(difficulty)].add_blank()
                             self.data.data[section_type].stats[qtype].add_blank()
@@ -173,6 +181,8 @@ class User(object):
                             test.data.data[section_type].stats[qtype].add_blank()
                         #complete data processing
                         #add the level and type blanks
+                    elif attempt == OMIT_ENTRY:
+                        continue                
                     else:
                         for qtype in type_list:
                             self.data.data[section_type].stats["L" + str(difficulty)].add_miss()
@@ -189,6 +199,8 @@ class User(object):
         ifile.close()
 
     def average_scores(self):
+        if len(self.tests_taken) == 0:
+            return [0,0,0,0,0]
         writing_score = 0
         reading_score = 0
         math_score = 0
@@ -409,7 +421,7 @@ class User(object):
         positivecram = self.positivecram()
         lines.append('<h1>Quick Advice</h1>' + endl)
         #if a 2400 is scored
-        if(cram[READING_TYPE][0] == None and cram[WRITING_TYPE][0] == None and cram[MATH_TYPE][0] == None):
+        if(len(self.tests_taken) != 0 and cram[READING_TYPE][0] == None and cram[WRITING_TYPE][0] == None and cram[MATH_TYPE][0] == None):
             lines.append("<h2 style = " + ' " ' + "color: #348cb2" + ' " ' + "><i>Congratulations for getting a perfect multiple choice score on your most recent test!</i></h2>" + endl)
             lines.append("<h3><i>Check in every once in a while and practice to maintain your amazing: " + str(self.tests_taken[-1].score_summary.total_score()) + "!</i></h3>" + endl)
 
@@ -1031,7 +1043,7 @@ class User(object):
         FILE.writelines(lines)
         FILE.close()
 
-    def grade_HTML(self, ts, ss):
+    def grade_HTML(self, ts, ss, test_type):
         graphs = []
         s1 = []
         writing_scores = []
@@ -1092,14 +1104,15 @@ class User(object):
             
 
         #Average Results
-        lines.append('<h1>Graded Test Report</h1>' + endl)
-        lines.append(str(ss))
-        lines.append('<hr color="#BBBBBB" size="2" width="100%">' + endl)
-        lines.append('<h1>Section Breakdown</h1>' + endl)
-        lines.append(str(ts))
-        lines.append('<br>' + endl)
-        lines.append('<hr color="#BBBBBB" size="2" width="100%">' + endl)
-        lines.append('<br>' + endl)
+        if str(test_type) == str(FULL_TEST):
+            lines.append('<h1>Graded Test Report</h1>' + endl)
+            lines.append(str(ss))
+            lines.append('<hr color="#BBBBBB" size="2" width="100%">' + endl)
+            lines.append('<h1>Section Breakdown</h1>' + endl)
+            lines.append(str(ts))
+            lines.append('<br>' + endl)
+            lines.append('<hr color="#BBBBBB" size="2" width="100%">' + endl)
+            lines.append('<br>' + endl)
         lines.append('<h1>Question Review Section</h1>' + endl)
         lines.append('<p style = "text-align: justify;color: #348cb2" >Below are a list of questions for you to review. <br> Please take the time to go back and redo/review the question <br> Reviewing missed questions is an excellent way to practice and improve your score</p>')
         
@@ -1131,6 +1144,9 @@ class User(object):
         
 
         for item in MISSED_QUESTIONS_USRANSWER_LIST:
+            if str(MISSED_QUESTIONS_USRANSWER_LIST[Q_index][0]) == OMIT_ENTRY:
+                Q_index += 1
+                continue
             lines.append('<br>' + endl)
             lines.append('<h3 style = "text-align: Left;color: #FF8C00">Section: ' + str(MISSED_QUESTIONS_SECTION_LIST[Q_index])  + '</h3>'+ endl)
             lines.append('<h3 style = "text-align: Left;color: #348cb2">Question: ' + str(MISSED_QUESTIONS_LIST[Q_index])  + '</h3>'+ endl)

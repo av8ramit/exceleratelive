@@ -279,9 +279,9 @@ class Console(object):
             if self.state == LAUNCH_STATE:
                 self.error = ("Error: Please load or create a user before grading tests.")
                 return False
-            elif self.user.tests_taken == []:
-                self.error = ("Error: Please take tests and grade them before printing reports.")
-                return False
+            #elif self.user.tests_taken == []:
+            #    self.error = ("Error: Please take tests and grade them before printing reports.")
+            #    return False
             elif self.state == USER_STATE and self.user != None:
                  simple_report(self.user)
                  return True
@@ -294,9 +294,9 @@ class Console(object):
             if self.state == LAUNCH_STATE:
                 self.error = ("Error: Please load or create a user before grading tests.")
                 return False
-            elif self.user.tests_taken == []:
-                self.error = ("Error: Please take tests and grade them before printing reports.")
-                return False
+            #elif self.user.tests_taken == []:
+            #    self.error = ("Error: Please take tests and grade them before printing reports.")
+            #    return False
             elif self.state == USER_STATE and self.user != None:
                  advanced_report(self.user)
                  return True
@@ -324,9 +324,9 @@ class Console(object):
             if self.state == LAUNCH_STATE:
                 self.error = ("Error: Please load or create a user before grading tests.")
                 return False
-            elif self.user.tests_taken == []:
-                self.error = ("Error: Please take tests and grade them before printing reports.")
-                return False
+            #elif self.user.tests_taken == []:
+            #    self.error = ("Error: Please take tests and grade them before printing reports.")
+            #    return False
             elif self.state == USER_STATE and self.user != None:
                  section_report(self.user)
                  return True
