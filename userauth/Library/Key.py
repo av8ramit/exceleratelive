@@ -83,15 +83,6 @@ class Test(object):
 
     #This grades a given answer sheet against the test.
     def grade(self, answered_test):
-        del MISSED_QUESTIONS_LIST[:]
-        #Miss Questions Page Number List
-        del MISSED_QUESTIONS_PGNUM_LIST[:]
-        #Missed Questions Section Number
-        del MISSED_QUESTIONS_SECTION_LIST[:]
-        #Missed Question User Answer List
-        del MISSED_QUESTIONS_USRANSWER_LIST[:]
-        del MISSED_QUESTIONS_TYPE_LIST[:]
-
         report = Test_Summary(self.get_id())
         assert (answered_test.id == self.get_id())
         self.essay = answered_test.essay
@@ -109,15 +100,7 @@ class Test(object):
                 if attempt == '?':
                     report.get_summary(current_type).add_blank()
                     report.get_summary(current_type).incorrect_questions.append((answer_key.get_question(j).get_id(),attempt))
-                    #Missed Questions List
-                    MISSED_QUESTIONS_LIST.append(answer_key.get_question(j).number)
-                    #Miss Questions Page Number List
-                    MISSED_QUESTIONS_PGNUM_LIST.append(answer_key.get_question(j).page)
-                    #Missed Questions Section Number
-                    MISSED_QUESTIONS_SECTION_LIST.append(answer_key.section_number)
-                    #Missed Question User Answer List
-                    MISSED_QUESTIONS_USRANSWER_LIST.append([attempt, answer])
-                    MISSED_QUESTIONS_TYPE_LIST.append(answer_key.get_question(j).type)
+
                 elif attempt == answer:
                     report.get_summary(current_type).add_answered()
                 #range answer
@@ -125,15 +108,7 @@ class Test(object):
                     #assert ((attempt) not in 'ABCDE')
                     report.get_summary(current_type).add_blank()
                     report.get_summary(current_type).incorrect_questions.append((answer_key.get_question(j).get_id(),attempt))
-                    #Missed Questions List
-                    MISSED_QUESTIONS_LIST.append(answer_key.get_question(j).number)
-                    #Miss Questions Page Number List
-                    MISSED_QUESTIONS_PGNUM_LIST.append(answer_key.get_question(j).page)
-                    #Missed Questions Section Number
-                    MISSED_QUESTIONS_SECTION_LIST.append(answer_key.section_number)
-                    #Missed Question User Answer List
-                    MISSED_QUESTIONS_USRANSWER_LIST.append([attempt, answer])
-                    MISSED_QUESTIONS_TYPE_LIST.append(answer_key.get_question(j).type)
+
                 elif '(' in answer and ')' in answer:
                     answer = answer.replace(' ','')
                     answer = answer.replace('(','')
@@ -146,39 +121,12 @@ class Test(object):
                             report.get_summary(current_type).add_answered()
                         else:
                             report.get_summary(current_type).add_blank()
-                            #Missed Questions List
-                            MISSED_QUESTIONS_LIST.append(answer_key.get_question(j).number)
-                            #Miss Questions Page Number List
-                            MISSED_QUESTIONS_PGNUM_LIST.append(answer_key.get_question(j).page)
-                            #Missed Questions Section Number
-                            MISSED_QUESTIONS_SECTION_LIST.append(answer_key.section_number)
-                            #Missed Question User Answer List
-                            MISSED_QUESTIONS_USRANSWER_LIST.append([attempt, answer])
-                            MISSED_QUESTIONS_TYPE_LIST.append(answer_key.get_question(j).type)
                             report.get_summary(current_type).incorrect_questions.append((answer_key.get_question(j).get_id(),attempt))
                     except:
                         report.get_summary(current_type).add_blank()
-                        #Missed Questions List
-                        MISSED_QUESTIONS_LIST.append(answer_key.get_question(j).number)
-                        #Miss Questions Page Number List
-                        MISSED_QUESTIONS_PGNUM_LIST.append(answer_key.get_question(j).page)
-                        #Missed Questions Section Number
-                        MISSED_QUESTIONS_SECTION_LIST.append(answer_key.section_number)
-                        #Missed Question User Answer List
-                        MISSED_QUESTIONS_USRANSWER_LIST.append([attempt, answer])
-                        MISSED_QUESTIONS_TYPE_LIST.append(answer_key.get_question(j).type)
                         report.get_summary(current_type).incorrect_questions.append((answer_key.get_question(j).get_id(),attempt))
                 else:
                     report.get_summary(current_type).add_miss()
-                    #Missed Questions List
-                    MISSED_QUESTIONS_LIST.append(answer_key.get_question(j).number)
-                    #Miss Questions Page Number List
-                    MISSED_QUESTIONS_PGNUM_LIST.append(answer_key.get_question(j).page)
-                    #Missed Questions Section Number
-                    MISSED_QUESTIONS_SECTION_LIST.append(answer_key.section_number)
-                    #Missed Question User Answer List
-                    MISSED_QUESTIONS_USRANSWER_LIST.append([attempt, answer])
-                    MISSED_QUESTIONS_TYPE_LIST.append(answer_key.get_question(j).type)
                     report.get_summary(current_type).incorrect_questions.append((answer_key.get_question(j).get_id(),attempt))
         #disable printing report
         #print (report)
