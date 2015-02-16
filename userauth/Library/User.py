@@ -367,7 +367,7 @@ class User(object):
         lines.append('<div id="page">' + endl)
         lines.append('<div id="header">' + endl)
         lines.append('<img src=' + '"' + "{% static 'ml.png' %}" + '" alt="Excelerate" style="float: right; width: 35%; margin-right: 35%;"/>' +
-            '<a href="javascript:history.go(-1)">  <img src=' + '"' + "{% static 'back_rev.png' %}" + '" alt="Home" style="float: left; width: 15%; margin-left: 5%;""> </a>' + endl)
+            '<a href="javascript:history.go(-1)">  <img src=' + '"' + "{% static 'back_rev.png' %}" + '" alt="Home" style="float: left; width: 15%; margin-left: 5%;"> </a>' + endl)
         lines.append('<p style="clear: both;">' + endl)
         #lines.append('<a href="javascript:history.go(-1)"> <img src=' + '"' + "{% static 'back_rev.png' %}" + '" width="20%" alt="Home"> </a>' + endl)
         #lines.append('</div>' + endl)
@@ -539,7 +539,7 @@ class User(object):
         lines.append('<div id="page">' + endl)
         lines.append('<div id="header">' + endl)
         lines.append('<img src=' + '"' + "{% static 'ml.png' %}" + '" alt="Excelerate" style="float: right; width: 35%; margin-right: 35%;"/>' +
-            '<a href="javascript:history.go(-1)">   <img src=' + '"' + "{% static 'back_rev.png' %}" + '" alt="Home" style="float: left; width: 15%; margin-left: 5%;""> </a>' + endl)
+            '<a href="javascript:history.go(-1)">   <img src=' + '"' + "{% static 'back_rev.png' %}" + '" alt="Home" style="float: left; width: 15%; margin-left: 5%;"> </a>' + endl)
         lines.append('<p style="clear: both;">' + endl)
         lines.append('</div>' + endl)
         lines.append('</div>' + endl)
@@ -661,7 +661,7 @@ class User(object):
         lines.append('<div id="page">' + endl)
         lines.append('<div id="header">' + endl)
         lines.append('<img src=' + '"' + "{% static 'ml.png' %}" + '" alt="Excelerate" style="float: right; width: 35%; margin-right: 35%;"/>' +
-            '<a href="javascript:history.go(-1)">   <img src=' + '"' + "{% static 'back_rev.png' %}" + '" alt="Home" style="float: left; width: 15%; margin-left: 5%;""> </a>' + endl)
+            '<a href="javascript:history.go(-1)">   <img src=' + '"' + "{% static 'back_rev.png' %}" + '" alt="Home" style="float: left; width: 15%; margin-left: 5%;"> </a>' + endl)
         lines.append('<p style="clear: both;">' + endl)
         lines.append('</div>' + endl)
         lines.append('</div>' + endl)
@@ -693,6 +693,7 @@ class User(object):
         lines.append(endl)
         lines.append("<h1>Writing Performance Analysis</h1>" + endl)
         lines.append('<p><font color = "#093175">Type: Total Questions | Questions Correct | Questions Missed | Questions Blank</font></p><br>' + endl)
+
         lines.append(endl)
 
         #Writing Analytics
@@ -706,6 +707,7 @@ class User(object):
             for subtype in SUB_TYPE_LIST[main_type]:
                 if self.data.data[WRITING_TYPE].stats[subtype].t != 0:
                     lines.append('<p><b><font color = "' + self.data.data[WRITING_TYPE].stats[subtype].color() +'">' + WRITING_TYPE_DICT[subtype] + '</b> ' + str(self.data.data[WRITING_TYPE].stats[subtype]) + '</p>')
+                    lines.append('<p><a ' + "href=" + '"{% static ' + "'" + lesson_filename(subtype) + "'"  + ' %}"' + ' target="_blank"><img src="' + "{% static 'book.png' %}" +'" width="8%" alt="Excelerate" ' +  '/></a></p>' + endl)                    
                     if subtype in WRITING_TIP_DICT.keys():
                         lines.append('<div data-role="collapsible">')
                         lines.append("<h2>" + '<font color = "#093175">' + "<i>Quick Tips</i></font></h2>" + endl)
@@ -732,6 +734,7 @@ class User(object):
             for subtype in SUB_TYPE_LIST[main_type]:
                 if self.data.data[READING_TYPE].stats[subtype].t != 0:
                     lines.append('<p><b><font color = "' + self.data.data[READING_TYPE].stats[subtype].color() +'">' + READING_TYPE_DICT[subtype] + '</b> ' + str(self.data.data[READING_TYPE].stats[subtype]) + '</p>')
+                    lines.append('<p><a ' + "href=" + '"{% static ' + "'" + lesson_filename(subtype) + "'"  + ' %}"' + ' target="_blank"><img src="' + "{% static 'book.png' %}" +'" width="8%" alt="Excelerate" ' +  '/></a></p>' + endl)
                     if subtype in READING_TIP_DICT.keys():
                         lines.append('<div data-role="collapsible">')
                         lines.append("<h2>" + '<font color = "#093175">' + "<i>Quick Tips</i></font></h2>" + endl)
@@ -760,6 +763,7 @@ class User(object):
             for subtype in SUB_TYPE_LIST[main_type]:
                 if self.data.data[MATH_TYPE].stats[subtype].t != 0:
                     lines.append('<p><b><font color = "' + self.data.data[MATH_TYPE].stats[subtype].color() +'">' + MATH_TYPE_DICT[subtype] + '</b> ' + str(self.data.data[MATH_TYPE].stats[subtype]) + '</p>')
+                    lines.append('<p><a ' + "href=" + '"{% static ' + "'" + lesson_filename(subtype) + "'"  + ' %}"' + ' target="_blank"><img src="' + "{% static 'book.png' %}" +'" width="8%" alt="Excelerate" ' +  '/></a></p>' + endl)                    
                     if subtype in MATH_TIP_DICT.keys():
                         lines.append('<div data-role="collapsible">')
                         lines.append("<h2>" + '<font color = "#093175">' + "<i>Quick Tips</i></font></h2>" + endl)
@@ -892,7 +896,7 @@ class User(object):
         lines.append('<div id="page">' + endl)
         lines.append('<div id="header">' + endl)
         lines.append('<img src=' + '"' + "{% static 'ml.png' %}" + '" alt="Excelerate" style="float: right; width: 35%; margin-right: 35%;"/>' +
-            '<a href="{% url ' + "'" +'login:dashboard' + "'" + '%}">  <img src=' + '"' + "{% static 'back_rev.png' %}" + '" alt="Home" style="float: left; width: 15%; margin-left: 5%;""> </a>' + endl)
+            '<a href="{% url ' + "'" +'login:dashboard' + "'" + '%}">  <img src=' + '"' + "{% static 'back_rev.png' %}" + '" alt="Home" style="float: left; width: 15%; margin-left: 5%;"> </a>' + endl)
         lines.append('<p style="clear: both;">' + endl)
         lines.append('</div>' + endl)
         lines.append('</div>' + endl)
@@ -1102,7 +1106,7 @@ class User(object):
         lines.append('<div id="page">' + endl)
         lines.append('<div id="header">' + endl)
         lines.append('<img src=' + '"' + "{% static 'ml.png' %}" + '" alt="Excelerate" style="float: right; width: 35%; margin-right: 35%;"/>' +
-            '<a href="{% url ' + "'" +'login:dashboard' + "'" + '%}">  <img src=' + '"' + "{% static 'back_rev.png' %}" + '" alt="Home" style="float: left; width: 15%; margin-left: 5%;""> </a>' + endl)
+            '<a href="{% url ' + "'" +'login:dashboard' + "'" + '%}">  <img src=' + '"' + "{% static 'back_rev.png' %}" + '" alt="Home" style="float: left; width: 15%; margin-left: 5%;"> </a>' + endl)
         lines.append('<p style="clear: both;">' + endl)
         lines.append('</div>' + endl)
         lines.append('</div>' + endl)

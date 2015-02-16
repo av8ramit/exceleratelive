@@ -663,6 +663,9 @@ def test_directory(test_id):
 def user_filename(name, c):
   return "Users" + DIR_SEP + c + DIR_SEP + name + DIR_SEP + name + TXT
 
+def lesson_filename(type2):
+	return type2[:-1] + DIR_SEP + type2 + DIR_SEP + type2 + ".pdf"
+
 def valid_test_id(test_id):
   if test_id[0] == '.':
     return False
