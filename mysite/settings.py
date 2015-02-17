@@ -43,6 +43,8 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "Graphs"),
     os.path.join(BASE_DIR, "HomePage"),
     os.path.join(BASE_DIR, "Dashboard"),
+    os.path.join(BASE_DIR, "LessonPlan"),
+
 )
 
 """
