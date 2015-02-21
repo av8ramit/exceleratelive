@@ -27,6 +27,7 @@ class Console(object):
         if empty(user_input):
             return
         return user_input.split(SPACE)
+        #return user_input.split(' ')
 
     def process_commands(self, user_input):
         self.error = None
@@ -170,6 +171,19 @@ class Console(object):
                     return False
             else:
                 self.error = ("Error: Invalid use of delete student command.")
+                return False
+
+        #store data(test date and score)
+        if cmd == "store":
+            if len(cmd_vector) == 4:
+                date = cmd_vector[1]
+                score = cmd_vector[2]
+                u_name = cmd_vector[3]
+                #print cmd_vector
+                save_info(date, score, u_name)
+                return True
+            else:
+                self.error = ("Error: Invalid use of list tests command.")
                 return False
 
         #List Tests

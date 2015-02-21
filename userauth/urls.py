@@ -25,6 +25,7 @@ urlpatterns = patterns('',
     	url(r'^grade_test/$', 'userauth.views.grade_save_bubblesheet', name = 'grade_bubblesheet'),
 		url(r'^test_review/$', 'userauth.views.test_review', name='test_review'),
 		url(r'^dashboard/$', 'userauth.views.dashboard', name='dashboard'),
+		url(r'^save/$', 'userauth.views.save_info', name='save'),
 		url(r'^quicktips/$', 'userauth.views.quicktips', name='quicktips')
 		# url(r'^sendregister/postregister/$', 'userauth.views.postregister', name='send_post'),
 		)

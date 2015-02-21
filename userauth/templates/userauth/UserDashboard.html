@@ -358,9 +358,63 @@
 
 						</nav>
 
+						<nav>
+							<h3 style = "color: #FF8C00" >4. Target Score and Test Dates</h3>
+								<br>
+								<style type="text/css">
+								    .btn-toolbar{
+								    	margin: 20px;
+								    }
+								</style>
+								<form action="{% url 'login:save' %}" method="post">{% csrf_token %}
+									<div class="btn-toolbar-center">
+									    <div class="btn-group">
+									        <button type="button" class="btn btn-info">Test Date</button>
+									        <button type="button" data-toggle="dropdown" class="btn btn-info dropdown-toggle"><span class="caret"></span></button>
+									        <ul class="dropdown-menu">
+									        	<select name="date_" multiple class="form-control">
+									        	  <option>Undecided</option>
+												  <option>01/24/15</option>
+												  <option>03/14/15</option>
+												  <option>05/02/15</option>
+												  <option>06/06/15</option>
+												</select>
+												
+								            </ul>
+									    </div>
+									    <div class="btn-group">
+									        <button type="button" class="btn btn-info">Goal Score</button>
+									        <button type="button" data-toggle="dropdown" class="btn btn-info dropdown-toggle"><span class="caret"></span></button>
+									        <ul class="dropdown-menu">	
+									        	<select name="score_" multiple class="form-control">
+									        	  <option>Undecided</option>
+												  <option>1200</option>
+												  <option>1400</option>
+												  <option>1600</option>
+												  <option>1800</option>
+												  <option>2000</option>
+												  <option>2200</option>
+												  <option>2400</option>
+												</select>
+												
+									        </ul>
+									    </div>
+									    <br>
+									    <br>
+									    <div>
+									    	<button class="btn btn-sm btn-info" name="set_btn" id="set_btn" value="{{user_name}}">Set</button>
+									    </div>
+
+
+									</div>
+								</form>
+
+						</nav>
+
 					</div>
 					<br>
 					<br>
+
 
 						
 					</header>

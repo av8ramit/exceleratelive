@@ -175,6 +175,37 @@ def list_tests():
                 array.append(i)
     return ["CB1", "CB2", "CB3", "CB4", "CB5", "CB6", "CB7", "CB8", "CB9", "CB10", "DiagK", "K1", "K2", "K3"]
 
+def save_info(date, score, u_name):
+    directory = os.path.dirname(os.path.dirname(test_directory('')))
+    user_dir = os.path.join(directory, 'Users/web/' + u_name + '/' + u_name + '.txt')
+    tmp = os.path.join(directory, 'Users/web/' + u_name + '/' + 'tmp.txt')
+    
+    #copies file, inserts new data, deletes tmp file
+    f = open(user_dir, 'r')
+    f1 = open(tmp, 'w')
+    for line in f:
+        if "Intended_Date" in line:
+            f1.write("Intended_Date: " + date + '\n')
+            continue
+        if "Intended_Score" in line:
+            f1.write("Intended_Score: " + score + '\n')
+            continue
+        f1.write(line)
+    f.close()
+    f1.close()
+    f2 = open(user_dir, 'w')
+    f3 = open(tmp, 'r')
+    for line in f3:
+        f2.write(line)
+    f2.close()
+    f3.close()
+    #os.remove(tmp)
+
+def cram():
+    a = os.listdir(test_directory(''))
+    print(str(a))
+
+
 def list_users(c):
     array = []
     a = os.listdir(class_directory(c))

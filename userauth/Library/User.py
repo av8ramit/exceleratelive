@@ -97,6 +97,8 @@ class User(object):
         FILE = open(user_filename(self.name, self.c), "w")
         lines = []
         lines.append("Name:" + self.name + endl + endl)
+        lines.append("Intended_Date: None" + endl)
+        lines.append("Intended_Score: None" + endl)
         for test in self.tests_taken:
             lines.append(str(test))
         FILE.writelines(lines)          

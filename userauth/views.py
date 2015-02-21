@@ -188,7 +188,7 @@ def login_user(request):
                 request.session[TEST_MODE] = FULL_TEST
 
                 #test_list = ["GE29", "GE30", "GE31", "GE32"]
-                return render(request, 'userauth/userpage.html', {'user':user, 'test_list':test_list, 'scores':scores, 'tests':tests})
+                return render(request, 'userauth/userpage.html', {'user':user, 'test_list':test_list, 'scores':scores, 'tests':tests, 'user_name':u_name})
             else:
                 # User account has been disabled
                 error_message = "Sorry, this user has been disabled"
@@ -462,6 +462,18 @@ def testportal(request):
         console = Console()
         request.session[TEST_SELECTED] = request.POST.get('test')
     return render(request, 'userauth/testportal_base.html', {'user':request.user, 'test':TEST_LIB_DICT[request.session[TEST_SELECTED]]})
+
+def save_info(request):
+    if request.POST:
+        console = Console()
+        u_name = request.POST.get('set_btn')
+        date = request.POST.get('date_')
+        score = request.POST.get('score_')
+        console.process_commands("store " + str(date) + ' ' + str(score) + ' ' + str(u_name))
+        return HttpResponse('Saved! Click <a href="javascript:history.go(-1)">here</a> return to the dashboard page.')
+        #return HttpResponseRedirect('javascript:history.go(-1)')
+        
+
 
 def test_review(request):
     if request.POST:
