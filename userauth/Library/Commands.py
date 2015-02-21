@@ -199,7 +199,7 @@ def save_info(date, score, u_name):
         f2.write(line)
     f2.close()
     f3.close()
-    #os.remove(tmp)
+    os.remove(tmp)
 
 def cram():
     a = os.listdir(test_directory(''))
