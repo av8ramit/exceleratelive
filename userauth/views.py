@@ -466,15 +466,19 @@ def testportal(request):
 def save_info(request):
     if request.POST:
         console = Console()
-        u_name = request.POST.get('set_btn')
+        console.process_commands("load_class web")
+        console.process_commands("load_student " + request.user.username)
         date = request.POST.get('date_')
         score = request.POST.get('score_')
-        console.process_commands("store " + str(date) + ' ' + str(score) + ' ' + str(u_name))
+        console.process_commands('update_score ' + score)
+        console.process_commands('update_date ' + date)
+        console.process_commands('save')
+        bucket = call_bucket()
+        k = get_key(bucket, request.user.username)
+        k.set_contents_from_filename(user_filename(request.user.username, 'web'))
         return HttpResponse('Saved! Click <a href="javascript:history.go(-1)">here</a> return to the dashboard page.')
         #return HttpResponseRedirect('javascript:history.go(-1)')
         
-
-
 def test_review(request):
     if request.POST:
         console = Console()

@@ -183,7 +183,25 @@ class Console(object):
                 save_info(date, score, u_name)
                 return True
             else:
-                self.error = ("Error: Invalid use of list tests command.")
+                self.error = ("Error: Invalid use of store command.")
+                return False
+
+        if cmd == "update_score":
+            if len(cmd_vector) == 2:
+                score = cmd_vector[1]
+                self.user.update_intended_score(score)
+                return True
+            else:
+                self.error = ("Error: Invalid use of update score command.")
+                return False
+
+        if cmd == "update_date":
+            if len(cmd_vector) == 2:
+                date = cmd_vector[1]
+                self.user.update_intended_date(date)
+                return True
+            else:
+                self.error = ("Error: Invalid use of update score command.")
                 return False
 
         #List Tests

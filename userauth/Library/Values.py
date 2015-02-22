@@ -8,6 +8,13 @@ USER_LIMIT = 25
 EXPIRATION_DATE = '2015/12/15'
 date_of_expiration = '12/15/2015'
 
+
+#INTENDED DEFAULTS
+sat_dates = ['03/14/2015', '05/02/2015', '06/06/2015']
+default_intended_score = 2400
+default_intended_date = sat_dates[0]
+
+
 def date_converter(datestring):
   datestring = datestring.split('/')
   if len(datestring[2]) == 2:

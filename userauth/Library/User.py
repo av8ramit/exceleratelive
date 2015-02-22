@@ -26,6 +26,8 @@ class User(object):
         self.tests_taken = [] #array of scored tests for data analysis
         self.data = Data_Holder()
         self.scores = []  
+        self.intended_date = default_intended_date #stored as string MM/DD/YYYY
+        self.intended_score = default_intended_score #stored as integer from 0-2400
 
     #return 3 scores, math, reading, writing- from most recent test. 
     def recent_scores(self):
@@ -97,6 +99,8 @@ class User(object):
         FILE = open(user_filename(self.name, self.c), "w")
         lines = []
         lines.append("Name:" + self.name + endl + endl)
+        lines.append("Intended_Date: " + self.intended_date + endl)
+        lines.append("Intended_Score: " + str(self.intended_score) + endl)
         for test in self.tests_taken:
             lines.append(str(test))
         FILE.writelines(lines)          
@@ -111,6 +115,10 @@ class User(object):
                 line = line.strip()
                 if line == '':
                     continue
+                elif 'Intended_Date:' in line:
+                    self.intended_date = line.split(' ')[1]
+                elif 'Intended_Score:' in line:
+                    self.intended_score = int(line.split(' ')[1])
                 elif 'TEST_ID' in line:
                     test_id = line.split(' ')[1]
                     sections = {}
@@ -1560,5 +1568,9 @@ class User(object):
         FILE.close()
 
 
+    def update_intended_score(self, score):
+        self.intended_score = int(score)
 
+    def update_intended_date(self, date):
+        self.intended_date = date
 
