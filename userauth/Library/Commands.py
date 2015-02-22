@@ -16,6 +16,7 @@ from User import *
 from Class import *
 from Scored import *
 import datetime
+from random import randrange
 
 def clear(n):
     for i in range(0,n):
@@ -177,8 +178,45 @@ def list_tests():
 
 
 def cram():
-    a = os.listdir(test_directory(''))
-    print(str(a))
+    #directory = os.path.dirname(__file__)
+    test_dir = os.listdir(test_directory(''))
+    avoid = ['key.csv', 'math.csv', 'reading.csv', 'writing.csv']
+    tests = ["CB1", "CB2", "CB3", "CB4", "CB5", "CB6", "CB7", "CB8", "CB9", "CB10", "DiagK", "K1", "K2", "K3"]
+    #taken = []
+    pool = []
+    result = []
+    num_mtypes = len(missed_types)
+
+    #extra code for excluding tests that the user took already
+
+    #gets which tests the user haven't taken yet
+    #user_txt = os.path.join(directory, u_name + '.txt')
+    #f = open(user_txt, 'r')
+    #for line in f:
+    #   if "TEST_ID:" in line:
+    #       taken.append(line[9:].strip("\n"))
+    #f.close()
+
+    #removes taken tests from pool of viable tests
+    #for tt in taken:
+    #   tests.remove(tt)
+
+    for x in tests:
+        folder = os.path.join(test_dir, x)
+        avail = os.listdir(folder)
+        for y in avoid:
+            avail.remove(y)
+        for z in avail:
+            section = os.path.join(folder, z)
+            with open(section, 'rU') as f:
+                reader = csv.reader(f)
+                for row in reader:
+                    if row[4] in missed_types:
+                        pool.append([x + '_' + z.strip('Section ').strip('.csv') + '_' + row[0], row[5]])
+    for i in range(10):
+        rand = randrange(0,len(pool))
+        result.append(pool[rand])
+    return result
 
 
 def list_users(c):
