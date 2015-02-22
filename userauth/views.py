@@ -476,7 +476,7 @@ def save_info(request):
         bucket = call_bucket()
         k = get_key(bucket, request.user.username)
         k.set_contents_from_filename(user_filename(request.user.username, 'web'))
-        return HttpResponse('Saved! Click <a href="javascript:history.go(-1)">here</a> return to the dashboard page.')
+        #return HttpResponse('Saved! Click <a href="javascript:history.go(-1)">here</a> return to the dashboard page.')
         #return HttpResponseRedirect('javascript:history.go(-1)')
         
 def test_review(request):
