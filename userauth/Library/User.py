@@ -97,8 +97,6 @@ class User(object):
         FILE = open(user_filename(self.name, self.c), "w")
         lines = []
         lines.append("Name:" + self.name + endl + endl)
-        lines.append("Intended_Date: None" + endl)
-        lines.append("Intended_Score: None" + endl)
         for test in self.tests_taken:
             lines.append(str(test))
         FILE.writelines(lines)          
@@ -321,7 +319,7 @@ class User(object):
         #calculate all scores
         for test in self.tests_taken:
             s1.append(test.score_summary.total_score())
-            pointlabels.append(date_converter(test.date) + str(test.test_id))
+            pointlabels.append(date_converter(test.date) +  SPACE + str(test.test_id))
             index += 1
 
         #graph js
@@ -495,7 +493,7 @@ class User(object):
         pointlabels = []
         #calculate all scores
         for test in self.tests_taken:
-            s1.append(test.score_summary.total_score())
+            s1.append(test.score_summary.section_scores[section_type])
             pointlabels.append(date_converter(test.date) + SPACE + str(test.test_id))
             index += 1
 
@@ -570,11 +568,31 @@ class User(object):
         #Print the type analysis as well
         i = 1
         for graph in graphs:
+            graph_index += 1
             main_type = section_type_name[0] + str(i)
             TYPE_DICT = section_type_dict(section_type)
             lines.append('<h1>'+ TYPE_DICT[main_type] + ' Analytics</h1>' + endl)
             lines.append('<hr color="#BBBBBB" size="2" width="100%">' + endl)
             lines += graph.html(True, True, False)
+            lines.append('<div id="chart' + str(graph_index) + '" style="height:400px; width:490px;"></div>' + endl)
+            lines.append('<script>' + endl)
+            lines.append('var chart' + str(graph_index) + ' = c3.generate({' + endl)
+            lines.append('size:{ height:400, width:490},' + endl)
+            lines.append('bindto: ' + "'" + '#chart' + str(graph_index) + "'" + ',' + endl)
+            lines.append('data: {' + endl)
+            lines.append('labels: true,' + endl)
+            lines.append('columns: [' + endl)
+            lines.append('[' + "'" + 'Correct' +"'," + str(self.data.data[section_type].stats[section_type_name[0]+ str(i)].c) + "]," +  "['" + 'Missed' +"'," + str(self.data.data[section_type].stats[section_type_name[0]+ str(i)].m) + "]," + "['" + 'Blank' +"'," + str(self.data.data[section_type].stats[section_type_name[0]+ str(i)].b) + "]"+ endl)
+            lines.append('],' + endl)
+            lines.append('type:' + "'" + 'donut' + "'" + endl)
+            lines.append('},' + endl)
+            lines.append('color:{ pattern: [' + "'" + '#66FF66' + "'," + "'" + '#FF3300' + "'," + "'" + '#e5e544' + "']" + endl)
+            lines.append('},')
+            lines.append('donut: {' + endl)
+            lines.append('title:' + "'" + str(type_dict[section_type_name[0]+ str(i)]) + "'" + endl)
+            lines.append('} });' + endl)
+            lines.append('</script>' + endl)
+            lines.append(endl)
             lines.append('<p><b><font color = "' + self.data.data[section_type].stats[section_type_name[0] + str(i)].color() +'">' + type_dict[section_type_name[0] + str(i)] + "</b> " + str(self.data.data[section_type].stats[section_type_name[0]+str(i)]) + '</p>')
             #lines.append("<h3>" + '<font color = "#000000">' + "<i>" + 'Category Subtype' + " Analytics:</i></h3>" + endl + endl)
             lines.append('<div data-role="collapsible"> <h3><font color = "#093175">' + TYPE_DICT[main_type] + ' In-Depth Analytics</font></h3>')
@@ -582,7 +600,8 @@ class User(object):
             for subtype in SUB_TYPE_LIST[main_type]:
                 if self.data.data[section_type].stats[subtype].t != 0:
                     lines.append('<p><b><font color = "' + self.data.data[section_type].stats[subtype].color() +'">' + TYPE_DICT[subtype] + '</b> ' + str(self.data.data[section_type].stats[subtype]) + '</p>')
-                    lines.append(endl)
+                    lines.append('<hr color="#4169EF" size="1" width="100%">' + endl)
+                    lines.append('<br>')
             lines.append('</div>' + endl)
             lines.append('<hr color="#4169EF" size="1" width="90%">' + endl)
             lines.append("<br>" + endl)     
@@ -612,7 +631,7 @@ class User(object):
     def advanced_HTML(self):
 
         FILE = open(user_directory(self.name, self.c) + DIR_SEP + "advanced_report" + ".html", "w")
-
+        scores = self.average_scores()
         s1 = []
         writing_scores = []
         reading_scores = []
@@ -621,6 +640,8 @@ class User(object):
         writing_score_difference = 0
         reading_score_difference = 0
         math_score_difference = 0
+        graph_index = 0
+
         if len(self.tests_taken) > 1:
 
             for test in self.tests_taken:
@@ -650,10 +671,31 @@ class User(object):
         lines.append('{% load staticfiles %}' + endl)
         lines.append('<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">' + endl)
         lines.append('<link rel="stylesheet" type="text/css" href=' + '"' + "{% static 'style.css' %}" + '"' + '/>' + endl)
+        lines.append('<script src=' + '"' + "{% static 'raphael.2.1.0.min.js' %}" + '"></script>' + endl)
+        lines.append('<script src=' + '"' + "{% static 'justgage.1.0.1.js' %}" + '"></script>' + endl)
+          #load c3.css
+        lines.append('<link rel="stylesheet" type= "text/css"  href=' + '"' + "{% static 'c3.css' %}" +  ' "/> ' + endl)
+        #load d3.js and c3.js 
+        lines.append('<script charset="utf-8"  src=' + '"' + "{% static 'd3.min.js' %}" + '"></script>  ' + endl)
+        lines.append('<script src=' + '"' + "{% static 'c3.min.js' %}" + '"></script>  ' + endl)
         lines.append('<title>Advanced Score Report</title>' + endl)
         lines.append('</head>' + endl)
         lines.append('<body>' + endl)
         lines.append('<style>' + endl)
+
+        lines.append("#g0 {" + endl)
+        lines.append("width:470px; height:200px;" + endl)
+        lines.append("display: inline-block; " + endl)
+        lines.append("margin: 1em;")
+        lines.append("}" + endl)
+
+        lines.append("#g1, #g2, #g3 {" + endl)
+        lines.append("width:137px; height:100px;" + endl)
+        lines.append("display: inline-block; " + endl)
+        lines.append("margin: 1em;")
+        lines.append("}" + endl)
+
+    
         lines.append('html,' + endl)
         lines.append('body {' + endl)
         lines.append('background-image: url("{% static' +  " 'mysite/css/images/overlay.svg' " +  '%}");')
@@ -677,11 +719,19 @@ class User(object):
             
 
         #Average Results
-        lines.append('<h1>Average Results</h1>' + endl)
-        lines.append('<p><b>Total Score:</b><font color = "' + overall_qualitative_color(scores[0]) + '">  ' + str(scores[0]) + '/2400</font></p>' + endl)
-        lines.append('<p><b>Average Writing Score:</b><font color = "' + qualitative_color(scores[2]) + '">  ' + str(scores[2]) + '/800</font></p>' + endl)
-        lines.append('<p><b>Average Reading Score:</b><font color = "' + qualitative_color(scores[1]) + '">  ' + str(scores[1]) + '/800</font></p>' + endl)
-        lines.append('<p><b>Average Math Score:</b><font color = "' + qualitative_color(scores[3]) + '">  ' + str(scores[3]) + '/800</font></p>' + endl)
+        #lines.append('<h1>Average Results</h1>' + endl)
+        #lines.append('<p><b>Total Score:</b><font color = "' + overall_qualitative_color(scores[0]) + '">  ' + str(scores[0]) + '/2400</font></p>' + endl)
+        #lines.append('<p><b>Average Writing Score:</b><font color = "' + qualitative_color(scores[2]) + '">  ' + str(scores[2]) + '/800</font></p>' + endl)
+        #lines.append('<p><b>Average Reading Score:</b><font color = "' + qualitative_color(scores[1]) + '">  ' + str(scores[1]) + '/800</font></p>' + endl)
+        #lines.append('<p><b>Average Math Score:</b><font color = "' + qualitative_color(scores[3]) + '">  ' + str(scores[3]) + '/800</font></p>' + endl)
+        lines.append('<div  id = "g0"></div>' + endl)
+        lines.append('<div  id = "g1"></div>' + endl)
+        lines.append('<div  id = "g2"></div>' + endl)
+        lines.append('<div  id = "g3"></div>' + endl)
+
+
+        lines += self.make_gauge(4, scores,['Average Overall Score', 'Average Writing Score', 'Average Reading Score', 'Average Math Score'])
+
         #lines.append('<p><b>Average Essay Score: </b>' + str(scores[4]) + '/12</p>' + endl)
         lines.append('<p><b>Tests Taken:</b> ' + str(len(self.tests_taken)) + '</p>' + endl)
         if overall_score_difference > 0:
@@ -698,25 +748,58 @@ class User(object):
 
         lines.append(endl)
 
+        #3 weakest tier two subjects per section
+        missed_qs_writing = []
+        missed_qs_reading = []
+        missed_qs_math = []
+
         #Writing Analytics
         if writing_score_difference > 0:
             lines.append('You have gone from '+ str(writing_scores[0][1]) + ' points since your first practice test to ' + str(writing_scores[-1][1]) + ' points on your most recent test and improved your writing score by ' + str(writing_score_difference) + ' points' + endl)
         for i in range(1, WRITING_TYPES + 1):
             main_type = 'W' + str(i)
+            for subtype in SUB_TYPE_LIST[main_type]:
+                missed_qs_writing.append([self.data.data[WRITING_TYPE].stats[subtype], subtype])
+            missed_qs_writing = sorted(missed_qs_writing, key = lambda missed: missed[:][0].m, reverse = True)
             lines.append('<div data-role="collapsible">')
             lines.append("<h2>" + '<font color = "#093175">' + "<i>" + WRITING_TYPE_DICT[main_type] + " Analytics</i></font></h2>" + endl + endl)
             lines.append(endl)
-            for subtype in SUB_TYPE_LIST[main_type]:
-                if self.data.data[WRITING_TYPE].stats[subtype].t != 0:
-                    lines.append('<p><b><font color = "' + self.data.data[WRITING_TYPE].stats[subtype].color() +'">' + WRITING_TYPE_DICT[subtype] + '</b> ' + str(self.data.data[WRITING_TYPE].stats[subtype]) + '</p>')
-                    lines.append('<p><a ' + "href=" + '"{% static ' + "'" + lesson_filename(subtype) + "'"  + ' %}"' + ' target="_blank"><img src="' + "{% static 'book.png' %}" +'" width="8%" alt="Excelerate" ' +  '/></a></p>' + endl)                    
-                    if subtype in WRITING_TIP_DICT.keys():
+            index = 0 #index for top 3 worst categories 
+            for question in missed_qs_writing:
+                if self.data.data[WRITING_TYPE].stats[str(question[1])].t != 0 and index <=2:
+
+                    lines.append('<div id="chart' + str(graph_index) + '" style="height:400px; width:490px;"></div>' + endl)
+                    lines.append('<script>' + endl)
+                    lines.append('var chart' + str(graph_index) + ' = c3.generate({' + endl)
+                    lines.append('size:{ height:400, width:490},' + endl)
+                    lines.append('bindto: ' + "'" + '#chart' + str(graph_index) + "'" + ',' + endl)
+                    lines.append('data: {' + endl)
+                    lines.append('labels: true,' + endl)
+                    lines.append('columns: [' + endl)
+                    lines.append('[' + "'" + 'Correct' +"'," + str(self.data.data[WRITING_TYPE].stats[question[1]].c) + "]," +  "['" + 'Missed' +"'," + str(self.data.data[WRITING_TYPE].stats[question[1]].m) + "]," + "['" + 'Blank' +"'," + str(self.data.data[WRITING_TYPE].stats[question[1]].b) + "]"+ endl)
+                    lines.append('],' + endl)
+                    lines.append('type:' + "'" + 'donut' + "'" + endl)
+                    lines.append('},' + endl)
+                    lines.append('color:{ pattern: [' + "'" + '#66FF66' + "'," + "'" + '#FF3300' + "'," + "'" + '#e5e544' + "']" + endl)
+                    lines.append('},')
+                    lines.append('donut: {' + endl)
+                    lines.append('title:' + "'" + 'Question Stats' + "'" + endl)
+                    lines.append('} });' + endl)
+                    lines.append('</script>' + endl)
+                    lines.append(endl)
+                    graph_index += 1
+                    index += 1
+                    lines.append('<p><b><font color = "' + self.data.data[WRITING_TYPE].stats[str(question[1])].color() +'">' + WRITING_TYPE_DICT[str(question[1])] + '</b> ' + str(self.data.data[WRITING_TYPE].stats[str(question[1])]) + '</p>')
+                    lines.append('<p><a ' + "href=" + '"{% static ' + "'" + lesson_filename(str(question[1])) + "'"  + ' %}"' + ' target="_blank"><img src="' + "{% static 'book.png' %}" +'" width="8%" alt="Excelerate" ' +  '/></a></p>' + endl)                    
+                    if str(question[1]) in WRITING_TIP_DICT.keys():
                         lines.append('<div data-role="collapsible">')
                         lines.append("<h2>" + '<font color = "#093175">' + "<i>Quick Tips</i></font></h2>" + endl)
-                        lines.append('<p><b>' + WRITING_TYPE_DICT[subtype] + ":</b> " + WRITING_TIP_DICT[subtype] + '</p>')
+                        lines.append('<p><b>' + WRITING_TYPE_DICT[str(question[1])] + ":</b> " + WRITING_TIP_DICT[str(question[1])] + '</p>')
                         lines.append('</div>')
                         lines.append(endl)
-            lines.append('<hr color="#4169EF" size="1" width="90%">' + endl)
+                    lines.append('<hr color="#4169EF" size="1" width="100%">' + endl)
+            del missed_qs_writing[:]
+            #lines.append('<hr color="#4169EF" size="1" width="90%">' + endl)
             lines.append('</div>' + endl)
         lines.append("<br>" + endl)     
 
@@ -730,20 +813,47 @@ class User(object):
             lines.append('You have gone from '+ str(reading_scores[0][1]) + ' points on your first practice test to ' + str(reading_scores[-1][1]) + ' points on your most recent test and improved your reading score by ' + str(reading_score_difference) + ' points' + endl)
         for i in range(1, READING_TYPES + 1):
             main_type = 'R' + str(i)
+            for subtype in SUB_TYPE_LIST[main_type]:
+                missed_qs_reading.append([self.data.data[READING_TYPE].stats[subtype], subtype])
+            missed_qs_reading = sorted(missed_qs_reading, key = lambda missed: missed[:][0].m, reverse = True)
             lines.append('<div data-role="collapsible">')
             lines.append("<h2>" + '<font color = "#093175">' + "<i>" + READING_TYPE_DICT[main_type] + " Analytics</i></h2>" + endl + endl)
             lines.append(endl)
-            for subtype in SUB_TYPE_LIST[main_type]:
-                if self.data.data[READING_TYPE].stats[subtype].t != 0:
-                    lines.append('<p><b><font color = "' + self.data.data[READING_TYPE].stats[subtype].color() +'">' + READING_TYPE_DICT[subtype] + '</b> ' + str(self.data.data[READING_TYPE].stats[subtype]) + '</p>')
-                    lines.append('<p><a ' + "href=" + '"{% static ' + "'" + lesson_filename(subtype) + "'"  + ' %}"' + ' target="_blank"><img src="' + "{% static 'book.png' %}" +'" width="8%" alt="Excelerate" ' +  '/></a></p>' + endl)
-                    if subtype in READING_TIP_DICT.keys():
+            index = 0 #index for top 3 worst categories
+            for question in missed_qs_reading:
+                if self.data.data[READING_TYPE].stats[str(question[1])].t != 0 and index <=2:
+                    lines.append('<div id="chart' + str(graph_index) + '" style="height:400px; width:490px;"></div>' + endl)
+                    lines.append('<script>' + endl)
+                    lines.append('var chart' + str(graph_index) + ' = c3.generate({' + endl)
+                    lines.append('size:{ height:400, width:490},' + endl)
+                    lines.append('bindto: ' + "'" + '#chart' + str(graph_index) + "'" + ',' + endl)
+                    lines.append('data: {' + endl)
+                    lines.append('labels: true,' + endl)
+                    lines.append('columns: [' + endl)
+                    lines.append('[' + "'" + 'Correct' +"'," + str(self.data.data[READING_TYPE].stats[question[1]].c) + "]," +  "['" + 'Missed' +"'," + str(self.data.data[READING_TYPE].stats[question[1]].m) + "]," + "['" + 'Blank' +"'," + str(self.data.data[READING_TYPE].stats[question[1]].b) + "]"+ endl)
+                    lines.append('],' + endl)
+                    lines.append('type:' + "'" + 'donut' + "'" + endl)
+                    lines.append('},' + endl)
+                    lines.append('color:{ pattern: [' + "'" + '#66FF66' + "'," + "'" + '#FF3300' + "'," + "'" + '#e5e544' + "']" + endl)
+                    lines.append('},')
+                    lines.append('donut: {' + endl)
+                    lines.append('title:' + "'" + 'Question Stats' + "'" + endl)
+                    lines.append('} });' + endl)
+                    lines.append('</script>' + endl)
+                    lines.append(endl)
+                    graph_index += 1
+                    index += 1
+                    lines.append('<p><b><font color = "' + self.data.data[READING_TYPE].stats[str(question[1])].color() +'">' + READING_TYPE_DICT[str(question[1])] + '</b> ' + str(self.data.data[READING_TYPE].stats[subtype]) + '</p>')
+                    lines.append('<p><a ' + "href=" + '"{% static ' + "'" + lesson_filename(str(question[1])) + "'"  + ' %}"' + ' target="_blank"><img src="' + "{% static 'book.png' %}" +'" width="8%" alt="Excelerate" ' +  '/></a></p>' + endl)
+                    if str(question[1]) in READING_TIP_DICT.keys():
                         lines.append('<div data-role="collapsible">')
                         lines.append("<h2>" + '<font color = "#093175">' + "<i>Quick Tips</i></font></h2>" + endl)
-                        lines.append('<p><b>' + READING_TYPE_DICT[subtype] + ":</b> " + READING_TIP_DICT[subtype] + '</p>')
+                        lines.append('<p><b>' + READING_TYPE_DICT[str(question[1])] + ":</b> " + READING_TIP_DICT[str(question[1])] + '</p>')
                         lines.append('</div>')
                         lines.append(endl)
-            lines.append('<hr color="#4169EF" size="1" width="90%">' + endl)
+                    lines.append('<hr color="#4169EF" size="1" width="100%">' + endl)
+            del missed_qs_reading[:]
+            #lines.append('<hr color="#4169EF" size="1" width="90%">' + endl)
             lines.append('</div>' + endl)
         lines.append("<br>" + endl)
 
@@ -759,20 +869,47 @@ class User(object):
             lines.append('You have gone from '+ str(math_scores[0][1]) + ' points on your first practice test to ' + str(math_scores[-1][1]) + ' points on your most recent test and improved your math score by ' + str(math_score_difference) + ' points' + endl)
         for i in range(1, MATH_TYPES + 1):
             main_type = 'M' + str(i)
+            for subtype in SUB_TYPE_LIST[main_type]:
+                missed_qs_math.append([self.data.data[MATH_TYPE].stats[subtype], subtype])
+            missed_qs_math = sorted(missed_qs_math, key = lambda missed: missed[:][0].m, reverse = True)
             lines.append('<div data-role="collapsible">')
             lines.append("<h2>" + '<font color = "#093175">' + "<i>" + MATH_TYPE_DICT[main_type] + " Analytics</i></h2>" + endl + endl)
             lines.append(endl)
-            for subtype in SUB_TYPE_LIST[main_type]:
-                if self.data.data[MATH_TYPE].stats[subtype].t != 0:
-                    lines.append('<p><b><font color = "' + self.data.data[MATH_TYPE].stats[subtype].color() +'">' + MATH_TYPE_DICT[subtype] + '</b> ' + str(self.data.data[MATH_TYPE].stats[subtype]) + '</p>')
-                    lines.append('<p><a ' + "href=" + '"{% static ' + "'" + lesson_filename(subtype) + "'"  + ' %}"' + ' target="_blank"><img src="' + "{% static 'book.png' %}" +'" width="8%" alt="Excelerate" ' +  '/></a></p>' + endl)                    
-                    if subtype in MATH_TIP_DICT.keys():
+            index = 0 #index for top 3 worst categories
+            for question in missed_qs_math:
+                if self.data.data[MATH_TYPE].stats[str(question[1])].t != 0 and index <=2:
+                    lines.append('<div id="chart' + str(graph_index) + '" style="height:400px; width:490px;"></div>' + endl)
+                    lines.append('<script>' + endl)
+                    lines.append('var chart' + str(graph_index) + ' = c3.generate({' + endl)
+                    lines.append('size:{ height:400, width:490},' + endl)
+                    lines.append('bindto: ' + "'" + '#chart' + str(graph_index) + "'" + ',' + endl)
+                    lines.append('data: {' + endl)
+                    lines.append('labels: true,' + endl)
+                    lines.append('columns: [' + endl)
+                    lines.append('[' + "'" + 'Correct' +"'," + str(self.data.data[MATH_TYPE].stats[question[1]].c) + "]," +  "['" + 'Missed' +"'," + str(self.data.data[MATH_TYPE].stats[question[1]].m) + "]," + "['" + 'Blank' +"'," + str(self.data.data[MATH_TYPE].stats[question[1]].b) + "]"+ endl)
+                    lines.append('],' + endl)
+                    lines.append('type:' + "'" + 'donut' + "'" + endl)
+                    lines.append('},' + endl)
+                    lines.append('color:{ pattern: [' + "'" + '#66FF66' + "'," + "'" + '#FF3300' + "'," + "'" + '#e5e544' + "']" + endl)
+                    lines.append('},')
+                    lines.append('donut: {' + endl)
+                    lines.append('title:' + "'" + 'Question Stats' + "'" + endl)
+                    lines.append('} });' + endl)
+                    lines.append('</script>' + endl)
+                    lines.append(endl)
+                    graph_index += 1
+                    index += 1
+                    lines.append('<p><b><font color = "' + self.data.data[MATH_TYPE].stats[str(question[1])].color() +'">' + MATH_TYPE_DICT[str(question[1])] + '</b> ' + str(self.data.data[MATH_TYPE].stats[str(question[1])]) + '</p>')
+                    lines.append('<p><a ' + "href=" + '"{% static ' + "'" + lesson_filename(str(question[1])) + "'"  + ' %}"' + ' target="_blank"><img src="' + "{% static 'book.png' %}" +'" width="8%" alt="Excelerate" ' +  '/></a></p>' + endl)                    
+                    if str(question[1]) in MATH_TIP_DICT.keys():
                         lines.append('<div data-role="collapsible">')
                         lines.append("<h2>" + '<font color = "#093175">' + "<i>Quick Tips</i></font></h2>" + endl)
-                        lines.append('<p><b>' + MATH_TYPE_DICT[subtype] + ":</b> " + MATH_TIP_DICT[subtype] + '</p>')
+                        lines.append('<p><b>' + MATH_TYPE_DICT[str(question[1])] + ":</b> " + MATH_TIP_DICT[str(question[1])] + '</p>')
                         lines.append('</div>')
                         lines.append(endl)
-            lines.append('<hr color="#4169EF" size="1" width="90%">' + endl)
+                    lines.append('<hr color="#4169EF" size="1" width="100%">' + endl)
+            del missed_qs_math[:]
+            #lines.append('<hr color="#4169EF" size="1" width="90%">' + endl)
             lines.append('</div>' + endl)
         lines.append("<br>" + endl) 
         lines.append('<hr color="#BBBBBB" size="2" width="100%">' + endl)
@@ -1095,6 +1232,28 @@ class User(object):
         lines.append('<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />' + endl)
         lines.append('{% load staticfiles %}' + endl)
         lines.append('<link rel="stylesheet" type="text/css" href=' + '"' + "{% static 'style.css' %}" + '"' + '/>' + endl)
+        lines.append('<script src=' + '"' + "{% static 'raphael.2.1.0.min.js' %}" + '"></script>' + endl)
+        lines.append('<script src=' + '"' + "{% static 'justgage.1.0.1.js' %}" + '"></script>' + endl)
+        #load c3.css
+        lines.append('<link rel="stylesheet" type= "text/css"  href=' + '"' + "{% static 'c3.css' %}" +  ' "/> ' + endl)
+        #load d3.js and c3.js 
+        lines.append('<script charset="utf-8"  src=' + '"' + "{% static 'd3.min.js' %}" + '"></script>  ' + endl)
+        lines.append('<script src=' + '"' + "{% static 'c3.min.js' %}" + '"></script>  ' + endl)
+
+        lines.append('<style>' + endl)
+        lines.append("#g0 {" + endl)
+        lines.append("width:470px; height:200px;" + endl)
+        lines.append("display: inline-block; " + endl)
+        lines.append("margin: 1em;")
+        lines.append("}" + endl)
+
+        lines.append("#g1, #g2, #g3 {" + endl)
+        lines.append("width:137px; height:100px;" + endl)
+        lines.append("display: inline-block; " + endl)
+        lines.append("margin: 1em;")
+        lines.append("}" + endl)
+        lines.append('</style>' + endl)
+
         lines.append('<title>Test Report</title>' + endl)
         lines.append('</head>' + endl)
         lines.append('<body>' + endl)
@@ -1124,10 +1283,81 @@ class User(object):
         #Average Results
         if str(test_type) == str(FULL_TEST):
             lines.append('<h1>Graded Test Report</h1>' + endl)
-            lines.append(str(ss))
+            #lines.append(str(ss))
+            lines.append('<br>' + endl)
+            lines.append('<div  id = "g0"></div>' + endl)
+            lines.append('<div  id = "g1"></div>' + endl)
+            lines.append('<div  id = "g2"></div>' + endl)
+            lines.append('<div  id = "g3"></div>' + endl)
+            lines += self.make_gauge(4, ss.get_donut_data() ,['Overall Score', 'Writing Score', 'Reading Score', 'Math Score'])
             lines.append('<hr color="#BBBBBB" size="2" width="100%">' + endl)
             lines.append('<h1>Section Breakdown</h1>' + endl)
-            lines.append(str(ts))
+            lines.append('<div id="chart1' + '" style="height:400px; width:490px;"></div>' + endl)
+            lines.append('<script>' + endl)
+            lines.append('var chart1' + ' = c3.generate({' + endl)
+            lines.append('size:{ height:400, width:490},' + endl)
+            lines.append('bindto: ' + "'" + '#chart1' + "'" + ',' + endl)
+            lines.append('data: {' + endl)
+            lines.append('labels: true,' + endl)
+            lines.append('columns: [' + endl)
+            lines.append('[' + "'" + 'Correct' +"'," + str(ts.get_summary(WRITING_TYPE).qa) + "]," +  "['" + 'Missed' +"'," + str(ts.get_summary(WRITING_TYPE).qm) + "]," + "['" + 'Blank' +"'," + str(ts.get_summary(WRITING_TYPE).qb) + "]"+ endl)
+            lines.append('],' + endl)
+            lines.append('type:' + "'" + 'donut' + "'" + endl)
+            lines.append('},' + endl)
+            lines.append('color:{ pattern: [' + "'" + '#66FF66' + "'," + "'" + '#FF3300' + "'," + "'" + '#e5e544' + "']" + endl)
+            lines.append('},')
+            lines.append('donut: {' + endl)
+            lines.append('title:' + "'" + 'Writing' + "'" + endl)
+            lines.append('} });' + endl)
+            lines.append('</script>' + endl)
+            lines.append(endl)
+            lines.append(str(ts.get_summary(WRITING_TYPE)) + endl)
+            lines.append('<br>' + endl)
+            lines.append('<hr color="#BBBBBB" size="2" width="100%">' + endl)
+            lines.append('<br>' + endl)
+            lines.append('<div id="chart2' + '" style="height:400px; width:490px;"></div>' + endl)
+            lines.append('<script>' + endl)
+            lines.append('var chart2' + ' = c3.generate({' + endl)
+            lines.append('size:{ height:400, width:490},' + endl)
+            lines.append('bindto: ' + "'" + '#chart2' + "'" + ',' + endl)
+            lines.append('data: {' + endl)
+            lines.append('labels: true,' + endl)
+            lines.append('columns: [' + endl)
+            lines.append('[' + "'" + 'Correct' +"'," + str(ts.get_summary(READING_TYPE).qa) + "]," +  "['" + 'Missed' +"'," + str(ts.get_summary(READING_TYPE).qm) + "]," + "['" + 'Blank' +"'," + str(ts.get_summary(READING_TYPE).qb) + "]"+ endl)
+            lines.append('],' + endl)
+            lines.append('type:' + "'" + 'donut' + "'" + endl)
+            lines.append('},' + endl)
+            lines.append('color:{ pattern: [' + "'" + '#66FF66' + "'," + "'" + '#FF3300' + "'," + "'" + '#e5e544' + "']" + endl)
+            lines.append('},')
+            lines.append('donut: {' + endl)
+            lines.append('title:' + "'" + 'Reading' + "'" + endl)
+            lines.append('} });' + endl)
+            lines.append('</script>' + endl)
+            lines.append(endl)
+            lines.append(str(ts.get_summary(READING_TYPE)) + endl)
+            lines.append('<br>' + endl)
+            lines.append('<hr color="#BBBBBB" size="2" width="100%">' + endl)
+            lines.append('<br>' + endl)
+            lines.append('<div id="chart3' + '" style="height:400px; width:490px;"></div>' + endl)
+            lines.append('<script>' + endl)
+            lines.append('var chart3'+ ' = c3.generate({' + endl)
+            lines.append('size:{ height:400, width:490},' + endl)
+            lines.append('bindto: ' + "'" + '#chart3' + "'" + ',' + endl)
+            lines.append('data: {' + endl)
+            lines.append('labels: true,' + endl)
+            lines.append('columns: [' + endl)
+            lines.append('[' + "'" + 'Correct' +"'," + str(ts.get_summary(MATH_TYPE).qa) + "]," +  "['" + 'Missed' +"'," + str(ts.get_summary(MATH_TYPE).qm) + "]," + "['" + 'Blank' +"'," + str(ts.get_summary(MATH_TYPE).qb) + "]"+ endl)
+            lines.append('],' + endl)
+            lines.append('type:' + "'" + 'donut' + "'" + endl)
+            lines.append('},' + endl)
+            lines.append('color:{ pattern: [' + "'" + '#66FF66' + "'," + "'" + '#FF3300' + "'," + "'" + '#e5e544' + "']" + endl)
+            lines.append('},')
+            lines.append('donut: {' + endl)
+            lines.append('title:' + "'" + 'Math' + "'" + endl)
+            lines.append('} });' + endl)
+            lines.append('</script>' + endl)
+            lines.append(endl)
+            lines.append(str(ts.get_summary(MATH_TYPE)) + endl)
             lines.append('<br>' + endl)
             lines.append('<hr color="#BBBBBB" size="2" width="100%">' + endl)
             lines.append('<br>' + endl)
@@ -1147,6 +1377,7 @@ class User(object):
                 lines.append('<h3 style = "text-align: Left;color: #FF8C00">Section: ' + str(section)  + '</h3>'+ endl)
                 lines.append('<h3 style = "text-align: Left;color: #348cb2">Question: ' + str(question)  + '</h3>'+ endl)
                 lines.append('<h3 style = "text-align: Left;color: #FF8C00" >Your Answer: ' + str(item[1])  + '</h3>'+ endl)
+
                 #add functionality to these checkboxes to keep track of review usage later on
                 lines.append('<input style = "text-align: center;color: #FF8C00" type="checkbox" id=" none" name="none" value="none">Question Review Complete</input>' + endl)
                 lines.append('<br>' + endl)

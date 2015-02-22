@@ -22,7 +22,7 @@ class Score_Summary(object):
         self.reading_score = test_summary.reports[READING_TYPE].raw_score()
         self.math_score = test_summary.reports[MATH_TYPE].raw_score()
         self.lookup_score(self.writing_score, self.reading_score, self.math_score, test_summary.essay)
-
+        self.scores =[]
     #Calculates total score.
     def total_score(self):
         score = 0
@@ -82,6 +82,12 @@ class Score_Summary(object):
                         scores[WRITING_TYPE] = int(row[es])
                         break
         self.section_scores = scores
+
+    #function to return Total, Math, Reading, and Writing scores - used in grade.html ~ 'Test Review' to make guages
+    def get_donut_data(self):
+        return [str(self.total_score()), (str(self.section_scores[WRITING_TYPE])),(str(self.section_scores[READING_TYPE])),(str(self.section_scores[MATH_TYPE]))]
+        
+    
 
 
     #String override method.
@@ -151,9 +157,9 @@ class Section_Summary(object):
         self.qa += 1
 
     def __str__(self):
-        output = (paropen + '<font color = ' + GREEN + ">Questions Answered Correctly: " + str(self.qa) + '</font>' + parclose + endl)
-        output += (paropen + '<font color = ' + RED + ">Questions Missed: " + str(self.qm) + '</font>' + parclose + endl)
-        output += (paropen + '<font color = ' + YELLOW + ">Questions Blank: " + str(self.qb) + '</font>' + parclose + endl)
+        output = (paropen + '<font color = ' + GREEN + ">Questions Answered Correctly: " + str(self.qa) + '</font>' + parclose)
+        output += (paropen + '<font color = ' + RED + ">Questions Missed: " + str(self.qm) + '</font>' + parclose)
+        output += (paropen + '<font color = ' + YELLOW + ">Questions Blank: " + str(self.qb) + '</font>' + parclose)
         output += (paropen + "Raw Score: " + str(self.raw_score()) + parclose + endl)
         #output += (paropen + "Missed Questions:" + str(self.incorrect_questions) + parclose + endl)
         return output

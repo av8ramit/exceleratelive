@@ -68,7 +68,7 @@ class Graph(object):
             lines.append('},' + endl)
             lines.append('max: 2400,' + endl)
             lines.append('min: 0,' + endl)
-            lines.append('padding: {top:4, bottom:4}' + endl)
+            lines.append('padding: {top:16, bottom:4}' + endl)
             lines.append('}' + endl)
         elif self.section_averages != None:
             lines.append('y: {' + endl)
@@ -78,7 +78,7 @@ class Graph(object):
             lines.append('},' + endl)
             lines.append('max: 800,' + endl)
             lines.append('min: 0,' + endl)
-            lines.append('padding: {top:4, bottom:4}' + endl)
+            lines.append('padding: {top:16, bottom:4}' + endl)
             lines.append('}' + endl)
         elif percent:
             lines.append('y: {' + endl)
@@ -88,7 +88,7 @@ class Graph(object):
             lines.append('},' + endl)
             lines.append('max: 100,' + endl)
             lines.append('min: 0,' + endl)
-            lines.append('padding: {top:4, bottom:4}' + endl)
+            lines.append('padding: {top:16, bottom:4}' + endl)
             lines.append('}' + endl)
         else:
             lines.append('y: {' + endl)
