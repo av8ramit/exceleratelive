@@ -10,7 +10,7 @@ date_of_expiration = '12/15/2015'
 
 
 #INTENDED DEFAULTS
-sat_dates = ['03/14/2015', '05/02/2015', '06/06/2015']
+sat_dates = ['3/14/2015', '5/02/2015', '6/06/2015']
 default_intended_score = 2400
 default_intended_date = sat_dates[0]
 

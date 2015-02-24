@@ -206,8 +206,8 @@ class Console(object):
 
         #List Tests
         if cmd == "list_tests":
-            if len(cmd_vector) == 1:
-                return list_tests()
+            if len(cmd_vector) == 2:
+                return list_tests(cmd_vector[1])
             else:
                 self.error = ("Error: Invalid use of list tests command.")
                 return False

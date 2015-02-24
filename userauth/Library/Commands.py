@@ -161,7 +161,9 @@ def list_classes(): # function that returns an array of class names - used in GU
             array.append(i)                    # add to array 
     return array                     #return array of class names 
 
-def list_tests():
+def list_tests(book):
+    if book == 'k':
+        return ["DiagK", "K1", "K2", "K3"]
     #a = os.listdir(test_directory(''))
     #array = []
     #print ("Here are the available test_ids:")
@@ -174,10 +176,11 @@ def list_tests():
     #            array.append(i)
     #        elif "K" in i:
     #            array.append(i)
-    return ["CB1", "CB2", "CB3", "CB4", "CB5", "CB6", "CB7", "CB8", "CB9", "CB10", "DiagK", "K1", "K2", "K3"]
+    if book == 'c':
+        return ["CB1", "CB2", "CB3", "CB4", "CB5", "CB6", "CB7", "CB8", "CB9", "CB10"]
 
 
-def cram():
+def cram(missed_types):
     #directory = os.path.dirname(__file__)
     test_dir = os.listdir(test_directory(''))
     avoid = ['key.csv', 'math.csv', 'reading.csv', 'writing.csv']

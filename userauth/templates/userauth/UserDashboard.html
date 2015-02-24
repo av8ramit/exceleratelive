@@ -51,10 +51,17 @@
       	
         
       }
-      
-     
 
-      #g1, #g2, #g3, #g5, #g6, #g7, #g4, #g8 {
+    	#inline{
+    		display: inline-block;
+    		text-align: left;
+    		float: left;
+
+
+    	}
+
+
+      #g0, #g1, #g2, #g3, #g5, #g6, #g7, #g4, #g8 {
         width:175px; height:140px;
         display: inline-block; 
         margin: 1em;
@@ -126,9 +133,72 @@
 						<br>
 						<br>
 						
+
+					
 						<nav>
 							<h1> Welcome {% block fname %}fname{% endblock fname %} {% block lname %}lname{% endblock lname %} </h1><br>
 						
+
+							<h3 style = "color: #348cb2" >Official Test Date Countdown and Goal Score</h3>
+
+
+						
+								<style>
+								  .hide { position:absolute; top:-1px; left:-1px; width:1px; height:1px; }
+								</style>
+								<nav>
+								<h2  style = "color: #FF8C00">{% block date %}{{date}}{% endblock date %}</h2>  
+
+							 
+								<h4>Days Left Until Test Day!</h4>
+
+								<div id="g0">
+								 </div>
+								
+				                 </nav>
+				               
+								<iframe name="hiddenFrame" class="hide"></iframe>
+
+								<form action="{% url 'login:save' %}" method="post" target="hiddenFrame">{% csrf_token %}
+									<div class="btn-toolbar-center">
+									    <div class="btn-group">
+									        <button type="button" class="btn btn-info">Official Test Date</button>
+									        <button type="button" data-toggle="dropdown" class="btn btn-info dropdown-toggle"><span class="caret"></span></button>
+									        <ul class="dropdown-menu">
+									        	<select name="date_" multiple class="form-control">
+												  <option>3/14/15</option>
+												  <option>5/02/15</option>
+												  <option>6/06/15</option>
+												</select>
+												
+								            </ul>
+									    </div>
+								
+									    <div class="btn-group">
+									        <button type="button" class="btn btn-info">My Goal Score</button>
+									        <button type="button" data-toggle="dropdown" class="btn btn-info dropdown-toggle"><span class="caret"></span></button>
+									        <ul class="dropdown-menu">	
+									        	<select name="score_" multiple class="form-control">
+												  <option>1200</option>
+												  <option>1400</option>
+												  <option>1600</option>
+												  <option>1800</option>
+												  <option>2000</option>
+												  <option>2200</option>
+												  <option>2400</option>
+												</select>
+												
+									        </ul>
+									    </div>
+									    <input type="submit" class="btn btn-info" value="Save">
+									</div>
+								</form>
+
+						</nav>
+
+
+
+						<nav>
 
 							 <section>
       
@@ -178,23 +248,44 @@
 
 				   <script>
 				        // Multiple  percentage loaders
-				  
+				 
+
 				  var scores = [{% for i in scores %}{{ i }}{% if forloop.last %} {%else%} , {%endif%} {% endfor %}];;
-				  var g1, g2, g3, g4, g5, g6, g7, g8;
+				  var goal_score = {% block goal %}{{goal}}{% endblock goal %};
+				  var g0, g1, g2, g3, g4, g5, g6, g7, g8;
 				  window.onload = function(){
-				  var g1 = new JustGage({
-			      id: "g1", 
-			        value: scores[0], 
+
+				  var g0 = new JustGage({
+			      id: "g0", 
+			        value: scores[3], 
 			        min: 0,
-			        max: 800,
-			        title: "Math Score",
+			        max: goal_score,
+			        title: "Goal Score Progress!",
 			        label: "Points", 
 			        levelColors: [
           			"#ff3b3b",
          			"#ffff27",
           			"#62d184"
         			],         
-			        startAnimationTime: 2000,
+			        startAnimationTime: 1000,
+			        startAnimationType: "bounce"
+			                       
+			      });
+
+				  	
+				  var g1 = new JustGage({
+			      id: "g1", 
+			        value: scores[0], 
+			        min: 0,
+			        max: 800,
+			        title: "Latest Math Score",
+			        label: "Points", 
+			        levelColors: [
+          			"#ff3b3b",
+         			"#ffff27",
+          			"#62d184"
+        			],         
+			        startAnimationTime: 2300,
 			        startAnimationType: "bounce"
 			                       
 			      });
@@ -204,14 +295,14 @@
 			        value: scores[1], 
 			        min: 0,
 			        max: 800,
-			        title: "Reading Score",
+			        title: "Latest Reading Score",
 			        label: "Points", 
 			        levelColors: [
           			"#ff3b3b",
          			"#ffff27",
           			"#62d184"
         			],         
-			        startAnimationTime: 2000,
+			        startAnimationTime: 2300,
 			        startAnimationType: "bounce"
 			                       
 			      });
@@ -221,14 +312,14 @@
 			        value: scores[2], 
 			        min: 0,
 			        max: 800,
-			        title: "Writing Score",
+			        title: "Latest Writing Score",
 			        label: "Points", 
 			        levelColors: [
           			"#ff3b3b",
          			"#ffff27",
           			"#62d184"
         			],         
-			        startAnimationTime: 2000,
+			        startAnimationTime: 2300,
 			        startAnimationType: "bounce"
 			                      
 			      });
@@ -238,14 +329,14 @@
 			        value: scores[3], 
 			        min: 0,
 			        max: 2400,
-			        title: "Last Overall Score",
+			        title: "Latest Overall Score",
 			        label: "Points", 
 			        levelColors: [
           			"#ff3b3b",
          			"#ffff27",
           			"#62d184"
         			],         
-			        startAnimationTime: 1000,
+			        startAnimationTime: 1800,
 			        startAnimationType: "bounce"
 			                       
 			      });
@@ -260,7 +351,7 @@
 			        levelColors: [
           			"#62d184"
         			],         
-			        startAnimationTime: 3000,
+			        startAnimationTime: 3300,
 			        startAnimationType: "bounce"
 			                     
 			      });
@@ -274,7 +365,7 @@
 			        levelColors: [
           			"#62d184"
         			],         
-			        startAnimationTime: 3000,
+			        startAnimationTime: 3300,
 			        startAnimationType: "bounce"
 			        
 			                       
@@ -289,7 +380,7 @@
 			        levelColors: [
           			"#62d184"
         			],         
-			        startAnimationTime: 3000,
+			        startAnimationTime: 3300,
 			        startAnimationType: "bounce"
 			       
 			                      
@@ -304,7 +395,7 @@
 			        levelColors: [
           			"#62d184"
         			],         
-			        startAnimationTime: 3000,
+			        startAnimationTime: 3300,
 			        startAnimationType: "bounce"
 			                      
 			      });
@@ -318,36 +409,62 @@
 
 							<h3 style = "color: #FF8C00" >1. Select and Take a Test</h3>
 									
-							  <br>
-			                  <form action="{% url 'login:testportal' %}" method="post">{% csrf_token %}
-			                    <div class="dropdown">
-			                      <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
-			                        Practice Test and Questions
+
+							 
+							  <nav>
+							  <ul id = "inline">
+							  	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+							  <li>
+			                  <form  action="{% url 'login:testportal' %}" method="post">{% csrf_token %}
+			                    <div class="btn-group" id = "inline">
+			                    	
+			                      <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"><img height="100px" src="{% static 'mysite/css/images/book.png'  %}" ></img>
+			                       Practice Test Questions
 			                        <span class="caret"></span>
 			                      </button>
+
 			                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-			                        {% for item in test_list %}
-			                          <li roll="presentation"><button class="btn btn-lg btn-block" role="menuitem" name="test" id="test" value="{{ item }}">{{ item }}</button></li>
+			                        {% for item in test_list_c %}
+			                          <li style ="margin-top:-20px;margin-bottom:-20px;margin-right:-10px;"roll="presentation"><button class="btn btn-md" role="menuitem" name="test" id="test" value="{{ item }}">{{ item }}</button></li>
 			                        {% endfor %}
 			                        </ul>
 			                    </div>
 			                  </form>
+
+			              </li>
+			              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			                  <li>
+			                  <form action="{% url 'login:testportal' %}" method="post">{% csrf_token %}
+			                    <div class="btn-group" id = "inline">
+			                      <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"><img height="100px" src="{% static 'mysite/css/images/kaplan.png'  %}" ></img>
+			                       Practice Test Questions
+			                        <span class="caret"></span>
+			                      </button>
+			                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+			                        {% for item in test_list_k %}
+			                          <li style ="margin-top:-20px;margin-bottom:-20px;margin-right:-20px;margin-right:10px;" roll="presentation"><button class="btn btn-md" role="menuitem" name="test" id="test" value="{{ item }}">{{ item }}</button></li>
+			                        {% endfor %}
+			                        </ul>
+			                    </div>
+			                  </form>
+			              </li>
+			              </ul>
+			              </nav>
+			              <br>
+			              
 						</nav>
+						<br>
+			              <br>
+			              <br>
+			              <br>
+			              <br>
+			              <br>
+			              <br>
+
 
 						<nav>
-							<h3 style = "color: #FF8C00" >2. View Reports</h3>
-
-							<ul>
-								<li style = "color: #348cb2"><a href="{% url 'login:simple_report' %}"><img src="{% static 'dashboard/css/images/SimpleReport.png' %}" alt="Simple Report" height="90" width="90" onmouseout = "this.src = '{% static 'dashboard/css/images/SimpleReport.png' %}' " onmouseover = "this.src = '{% static 'dashboard/css/images/A.png' %}'"></img></a></li>
-								<li style = "color: #348cb2"><a href="{% url 'login:math_report' %}"><img src="{% static 'dashboard/css/images/MathReport.png' %}" alt="Section Reports" height="90" width="90"onmouseout = "this.src = '{% static 'dashboard/css/images/MathReport.png' %}' " onmouseover = "this.src = '{% static 'dashboard/css/images/B.png' %}'"></img></a></li>
-								<li style = "color: #348cb2"><a href="{% url 'login:writing_report' %}"><img src="{% static 'dashboard/css/images/WritingReport.png' %}" alt="Section Reports" height="90" width="90"onmouseout = "this.src = '{% static 'dashboard/css/images/WritingReport.png' %}' " onmouseover = "this.src = '{% static 'dashboard/css/images/C.png' %}'"></img></a></li>
-								<li style = "color: #348cb2"><a href="{% url 'login:reading_report' %}"><img src="{% static 'dashboard/css/images/ReadingReport.png' %}" alt="Section Reports" height="90" width="90"onmouseout = "this.src = '{% static 'dashboard/css/images/ReadingReport.png' %}' " onmouseover = "this.src = '{% static 'dashboard/css/images/D.png' %}'"></img></a></li>
-								<li style = "color: #348cb2"><a href="{% url 'login:advanced_report' %}"><img src="{% static 'dashboard/css/images/AdvancedReport.png' %}" alt="Advanced Report" height="90" width="90"onmouseout = "this.src = '{% static 'dashboard/css/images/AdvancedReport.png' %}' " onmouseover = "this.src = '{% static 'dashboard/css/images/E.png' %}'"></img></a></li>
-							</ul>
-						</nav>
-
-						<nav>
-							<h3 style = "color: #FF8C00" >3. Test Review</h3>
+							<h3 style = "color: #FF8C00" >2. Review Test</h3>
 								<br>
 
 		                        {% for item in tests %}
@@ -358,52 +475,17 @@
 
 						</nav>
 
+						
 						<nav>
-							<h3 style = "color: #FF8C00" >4. Target Score and Test Dates</h3>
-								<br>
-								<style>
-								  .hide { position:absolute; top:-1px; left:-1px; width:1px; height:1px; }
-								</style>
+							<h3 style = "color: #FF8C00" >3. View Reports</h3>
 
-								<iframe name="hiddenFrame" class="hide"></iframe>
-
-								<form action="{% url 'login:save' %}" method="post" target="hiddenFrame">{% csrf_token %}
-									<div class="btn-toolbar-center">
-									    <div class="btn-group">
-									        <button type="button" class="btn btn-info">Test Date</button>
-									        <button type="button" data-toggle="dropdown" class="btn btn-info dropdown-toggle"><span class="caret"></span></button>
-									        <ul class="dropdown-menu">
-									        	<select name="date_" multiple class="form-control">
-												  <option>01/24/15</option>
-												  <option>03/14/15</option>
-												  <option>05/02/15</option>
-												  <option>06/06/15</option>
-												</select>
-												
-								            </ul>
-									    </div>
-									    <div class="btn-group">
-									        <button type="button" class="btn btn-info">Goal Score</button>
-									        <button type="button" data-toggle="dropdown" class="btn btn-info dropdown-toggle"><span class="caret"></span></button>
-									        <ul class="dropdown-menu">	
-									        	<select name="score_" multiple class="form-control">
-												  <option>1200</option>
-												  <option>1400</option>
-												  <option>1600</option>
-												  <option>1800</option>
-												  <option>2000</option>
-												  <option>2200</option>
-												  <option>2400</option>
-												</select>
-												
-									        </ul>
-									    </div>
-									    <br>
-									    <br>
-									    <input type="submit" class="btn btn-info" value="Save">
-									</div>
-								</form>
-
+							<ul>
+								<li style = "color: #348cb2"><a href="{% url 'login:simple_report' %}"><img src="{% static 'dashboard/css/images/SimpleReport.png' %}" alt="Simple Report" height="90" width="90" onmouseout = "this.src = '{% static 'dashboard/css/images/SimpleReport.png' %}' " onmouseover = "this.src = '{% static 'dashboard/css/images/A.png' %}'"></img></a></li>
+								<li style = "color: #348cb2"><a href="{% url 'login:math_report' %}"><img src="{% static 'dashboard/css/images/MathReport.png' %}" alt="Section Reports" height="90" width="90"onmouseout = "this.src = '{% static 'dashboard/css/images/MathReport.png' %}' " onmouseover = "this.src = '{% static 'dashboard/css/images/B.png' %}'"></img></a></li>
+								<li style = "color: #348cb2"><a href="{% url 'login:writing_report' %}"><img src="{% static 'dashboard/css/images/WritingReport.png' %}" alt="Section Reports" height="90" width="90"onmouseout = "this.src = '{% static 'dashboard/css/images/WritingReport.png' %}' " onmouseover = "this.src = '{% static 'dashboard/css/images/C.png' %}'"></img></a></li>
+								<li style = "color: #348cb2"><a href="{% url 'login:reading_report' %}"><img src="{% static 'dashboard/css/images/ReadingReport.png' %}" alt="Section Reports" height="90" width="90"onmouseout = "this.src = '{% static 'dashboard/css/images/ReadingReport.png' %}' " onmouseover = "this.src = '{% static 'dashboard/css/images/D.png' %}'"></img></a></li>
+								<li style = "color: #348cb2"><a href="{% url 'login:advanced_report' %}"><img src="{% static 'dashboard/css/images/AdvancedReport.png' %}" alt="Advanced Report" height="90" width="90"onmouseout = "this.src = '{% static 'dashboard/css/images/AdvancedReport.png' %}' " onmouseover = "this.src = '{% static 'dashboard/css/images/E.png' %}'"></img></a></li>
+							</ul>
 						</nav>
 
 					</div>

@@ -15,6 +15,7 @@ from Summary import *
 from Data import *
 from Graph import *
 import csv
+from datetime import date
 
 #Base User Class
 class User(object):
@@ -28,6 +29,16 @@ class User(object):
         self.scores = []  
         self.intended_date = default_intended_date #stored as string MM/DD/YYYY
         self.intended_score = default_intended_score #stored as integer from 0-2400
+
+
+    def get_intended_date(self):
+        today = date.today()
+        datestring = self.intended_date.split('/')
+        if len(datestring[2]) == 2:
+            datestring[2] = '20' + datestring[2]
+        test_date = date(int(datestring[2]), int(datestring[0]), int(datestring[1]))
+        diff = abs(test_date - today)
+        return diff.days
 
     #return 3 scores, math, reading, writing- from most recent test. 
     def recent_scores(self):
@@ -582,10 +593,10 @@ class User(object):
             lines.append('<h1>'+ TYPE_DICT[main_type] + ' Analytics</h1>' + endl)
             lines.append('<hr color="#BBBBBB" size="2" width="100%">' + endl)
             lines += graph.html(True, True, False)
-            lines.append('<div id="chart' + str(graph_index) + '" style="height:400px; width:490px;"></div>' + endl)
+            lines.append('<div id="chart' + str(graph_index) + '" style="height:245px; width:245px;"></div>' + endl)
             lines.append('<script>' + endl)
             lines.append('var chart' + str(graph_index) + ' = c3.generate({' + endl)
-            lines.append('size:{ height:400, width:490},' + endl)
+            lines.append('size:{ height:245, width:245},' + endl)
             lines.append('bindto: ' + "'" + '#chart' + str(graph_index) + "'" + ',' + endl)
             lines.append('data: {' + endl)
             lines.append('labels: true,' + endl)
@@ -597,7 +608,7 @@ class User(object):
             lines.append('color:{ pattern: [' + "'" + '#66FF66' + "'," + "'" + '#FF3300' + "'," + "'" + '#e5e544' + "']" + endl)
             lines.append('},')
             lines.append('donut: {' + endl)
-            lines.append('title:' + "'" + str(type_dict[section_type_name[0]+ str(i)]) + "'" + endl)
+            #lines.append('title:' + "'" + str(type_dict[section_type_name[0]+ str(i)]) + "'" + endl)
             lines.append('} });' + endl)
             lines.append('</script>' + endl)
             lines.append(endl)
@@ -776,10 +787,10 @@ class User(object):
             for question in missed_qs_writing:
                 if self.data.data[WRITING_TYPE].stats[str(question[1])].t != 0 and index <=2:
 
-                    lines.append('<div id="chart' + str(graph_index) + '" style="height:400px; width:490px;"></div>' + endl)
+                    lines.append('<div id="chart' + str(graph_index) + '" style="height:245px; width:245px;"></div>' + endl)
                     lines.append('<script>' + endl)
                     lines.append('var chart' + str(graph_index) + ' = c3.generate({' + endl)
-                    lines.append('size:{ height:400, width:490},' + endl)
+                    lines.append('size:{ height:245, width:245},' + endl)
                     lines.append('bindto: ' + "'" + '#chart' + str(graph_index) + "'" + ',' + endl)
                     lines.append('data: {' + endl)
                     lines.append('labels: true,' + endl)
@@ -791,7 +802,7 @@ class User(object):
                     lines.append('color:{ pattern: [' + "'" + '#66FF66' + "'," + "'" + '#FF3300' + "'," + "'" + '#e5e544' + "']" + endl)
                     lines.append('},')
                     lines.append('donut: {' + endl)
-                    lines.append('title:' + "'" + 'Question Stats' + "'" + endl)
+                    #lines.append('title:' + "'" + 'Question Stats' + "'" + endl)
                     lines.append('} });' + endl)
                     lines.append('</script>' + endl)
                     lines.append(endl)
@@ -830,10 +841,10 @@ class User(object):
             index = 0 #index for top 3 worst categories
             for question in missed_qs_reading:
                 if self.data.data[READING_TYPE].stats[str(question[1])].t != 0 and index <=2:
-                    lines.append('<div id="chart' + str(graph_index) + '" style="height:400px; width:490px;"></div>' + endl)
+                    lines.append('<div id="chart' + str(graph_index) + '" style="height:245px; width:245px;"></div>' + endl)
                     lines.append('<script>' + endl)
                     lines.append('var chart' + str(graph_index) + ' = c3.generate({' + endl)
-                    lines.append('size:{ height:400, width:490},' + endl)
+                    lines.append('size:{ height:245, width:245},' + endl)
                     lines.append('bindto: ' + "'" + '#chart' + str(graph_index) + "'" + ',' + endl)
                     lines.append('data: {' + endl)
                     lines.append('labels: true,' + endl)
@@ -845,7 +856,7 @@ class User(object):
                     lines.append('color:{ pattern: [' + "'" + '#66FF66' + "'," + "'" + '#FF3300' + "'," + "'" + '#e5e544' + "']" + endl)
                     lines.append('},')
                     lines.append('donut: {' + endl)
-                    lines.append('title:' + "'" + 'Question Stats' + "'" + endl)
+                    #lines.append('title:' + "'" + 'Question Stats' + "'" + endl)
                     lines.append('} });' + endl)
                     lines.append('</script>' + endl)
                     lines.append(endl)
@@ -886,10 +897,10 @@ class User(object):
             index = 0 #index for top 3 worst categories
             for question in missed_qs_math:
                 if self.data.data[MATH_TYPE].stats[str(question[1])].t != 0 and index <=2:
-                    lines.append('<div id="chart' + str(graph_index) + '" style="height:400px; width:490px;"></div>' + endl)
+                    lines.append('<div id="chart' + str(graph_index) + '" style="height:245px; width:245px;"></div>' + endl)
                     lines.append('<script>' + endl)
                     lines.append('var chart' + str(graph_index) + ' = c3.generate({' + endl)
-                    lines.append('size:{ height:400, width:490},' + endl)
+                    lines.append('size:{ height:245, width:245},' + endl)
                     lines.append('bindto: ' + "'" + '#chart' + str(graph_index) + "'" + ',' + endl)
                     lines.append('data: {' + endl)
                     lines.append('labels: true,' + endl)
@@ -901,7 +912,7 @@ class User(object):
                     lines.append('color:{ pattern: [' + "'" + '#66FF66' + "'," + "'" + '#FF3300' + "'," + "'" + '#e5e544' + "']" + endl)
                     lines.append('},')
                     lines.append('donut: {' + endl)
-                    lines.append('title:' + "'" + 'Question Stats' + "'" + endl)
+                    #lines.append('title:' + "'" + 'Question Stats' + "'" + endl)
                     lines.append('} });' + endl)
                     lines.append('</script>' + endl)
                     lines.append(endl)
@@ -1300,10 +1311,10 @@ class User(object):
             lines += self.make_gauge(4, ss.get_donut_data() ,['Overall Score', 'Writing Score', 'Reading Score', 'Math Score'])
             lines.append('<hr color="#BBBBBB" size="2" width="100%">' + endl)
             lines.append('<h1>Section Breakdown</h1>' + endl)
-            lines.append('<div id="chart1' + '" style="height:400px; width:490px;"></div>' + endl)
+            lines.append('<div id="chart1' + '" style="height:245px; width:245px;"></div>' + endl)
             lines.append('<script>' + endl)
             lines.append('var chart1' + ' = c3.generate({' + endl)
-            lines.append('size:{ height:400, width:490},' + endl)
+            lines.append('size:{ height:245, width:245},' + endl)
             lines.append('bindto: ' + "'" + '#chart1' + "'" + ',' + endl)
             lines.append('data: {' + endl)
             lines.append('labels: true,' + endl)
@@ -1315,7 +1326,7 @@ class User(object):
             lines.append('color:{ pattern: [' + "'" + '#66FF66' + "'," + "'" + '#FF3300' + "'," + "'" + '#e5e544' + "']" + endl)
             lines.append('},')
             lines.append('donut: {' + endl)
-            lines.append('title:' + "'" + 'Writing' + "'" + endl)
+            #lines.append('title:' + "'" + 'Writing' + "'" + endl)
             lines.append('} });' + endl)
             lines.append('</script>' + endl)
             lines.append(endl)
@@ -1323,10 +1334,10 @@ class User(object):
             lines.append('<br>' + endl)
             lines.append('<hr color="#BBBBBB" size="2" width="100%">' + endl)
             lines.append('<br>' + endl)
-            lines.append('<div id="chart2' + '" style="height:400px; width:490px;"></div>' + endl)
+            lines.append('<div id="chart2' + '" style="height:245px; width:245px;"></div>' + endl)
             lines.append('<script>' + endl)
             lines.append('var chart2' + ' = c3.generate({' + endl)
-            lines.append('size:{ height:400, width:490},' + endl)
+            lines.append('size:{ height:245, width:245},' + endl)
             lines.append('bindto: ' + "'" + '#chart2' + "'" + ',' + endl)
             lines.append('data: {' + endl)
             lines.append('labels: true,' + endl)
@@ -1338,7 +1349,7 @@ class User(object):
             lines.append('color:{ pattern: [' + "'" + '#66FF66' + "'," + "'" + '#FF3300' + "'," + "'" + '#e5e544' + "']" + endl)
             lines.append('},')
             lines.append('donut: {' + endl)
-            lines.append('title:' + "'" + 'Reading' + "'" + endl)
+            #lines.append('title:' + "'" + 'Reading' + "'" + endl)
             lines.append('} });' + endl)
             lines.append('</script>' + endl)
             lines.append(endl)
@@ -1346,10 +1357,10 @@ class User(object):
             lines.append('<br>' + endl)
             lines.append('<hr color="#BBBBBB" size="2" width="100%">' + endl)
             lines.append('<br>' + endl)
-            lines.append('<div id="chart3' + '" style="height:400px; width:490px;"></div>' + endl)
+            lines.append('<div id="chart3' + '" style="height:245px; width:245px;"></div>' + endl)
             lines.append('<script>' + endl)
             lines.append('var chart3'+ ' = c3.generate({' + endl)
-            lines.append('size:{ height:400, width:490},' + endl)
+            lines.append('size:{ height:245, width:245},' + endl)
             lines.append('bindto: ' + "'" + '#chart3' + "'" + ',' + endl)
             lines.append('data: {' + endl)
             lines.append('labels: true,' + endl)
@@ -1361,7 +1372,7 @@ class User(object):
             lines.append('color:{ pattern: [' + "'" + '#66FF66' + "'," + "'" + '#FF3300' + "'," + "'" + '#e5e544' + "']" + endl)
             lines.append('},')
             lines.append('donut: {' + endl)
-            lines.append('title:' + "'" + 'Math' + "'" + endl)
+            #lines.append('title:' + "'" + 'Math' + "'" + endl)
             lines.append('} });' + endl)
             lines.append('</script>' + endl)
             lines.append(endl)
