@@ -159,11 +159,10 @@
 				               
 								<iframe name="hiddenFrame" class="hide"></iframe>
 
-								<form action="{% url 'login:save' %}" method="post" target="hiddenFrame">{% csrf_token %}
+								<form action="{% url 'login:save' %}" method="post">{% csrf_token %}
 									<div class="btn-toolbar-center">
 									    <div class="btn-group">
-									        <button type="button" class="btn btn-info">Official Test Date</button>
-									        <button type="button" data-toggle="dropdown" class="btn btn-info dropdown-toggle"><span class="caret"></span></button>
+									        <button type="button" data-toggle="dropdown" class="btn btn-info dropdown-toggle">Official Test Date&nbsp;<span class="caret"></span></button>
 									        <ul class="dropdown-menu">
 									        	<select name="date_" multiple class="form-control">
 												  <option>3/14/15</option>
@@ -175,8 +174,7 @@
 									    </div>
 								
 									    <div class="btn-group">
-									        <button type="button" class="btn btn-info">My Goal Score</button>
-									        <button type="button" data-toggle="dropdown" class="btn btn-info dropdown-toggle"><span class="caret"></span></button>
+									        <button type="button" data-toggle="dropdown" class="btn btn-info dropdown-toggle">My Goal Score&nbsp;<span class="caret"></span></button>
 									        <ul class="dropdown-menu">	
 									        	<select name="score_" multiple class="form-control">
 												  <option>1200</option>
@@ -193,7 +191,6 @@
 									    <input type="submit" class="btn btn-info" value="Save">
 									</div>
 								</form>
-
 						</nav>
 
 
@@ -469,7 +466,7 @@
 
 		                        {% for item in tests %}
 		                          <form action="{% url 'login:test_review' %}" method="post">{% csrf_token %}
-		                          	<button class="btn btn-small btn-info btn-cross" name="test" id="test" value="{{ item }}">{{ item }}</button></a> <br> <br>
+		                          	<button class="btn btn-small btn-info btn-cross" name="test" id="test" value="{{ item }}">{{ item }}</button> <br> <br>
 		                      	  </form>
 		                        {% endfor %}
 

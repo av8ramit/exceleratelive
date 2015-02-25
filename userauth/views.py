@@ -470,19 +470,30 @@ def testportal(request):
 def save_info(request):
     if request.POST:
         console = Console()
+        u_name = request.user.username
         console.process_commands("load_class web")
-        console.process_commands("load_student " + request.user.username)
+        console.process_commands("load_student " + u_name)
+        test_list_c = console.process_commands("list_tests c")
+        test_list_k = console.process_commands("list_tests k")
+        tests = console.process_commands("list_tests_taken")
+        scores = console.user.recent_scores()
+        request.session[TEST_MODE] = FULL_TEST
         date = request.POST.get('date_')
         score = request.POST.get('score_')
-        console.process_commands('update_score ' + score)
-        console.process_commands('update_date ' + date)
+        if score != None:
+            console.process_commands('update_score ' + score)
+        if date != None:
+            console.process_commands('update_date ' + date)
         console.process_commands('save')
+        date = console.user.get_intended_date()
+        goal = console.user.intended_score
         bucket = call_bucket()
         k = get_key(bucket, request.user.username)
         k.set_contents_from_filename(user_filename(request.user.username, 'web'))
         #return HttpResponse('Saved! Click <a href="javascript:history.go(-1)">here</a> return to the dashboard page.')
         #return HttpResponseRedirect('javascript:history.go(-1)')
-        
+        return render(request, 'userauth/userpage.html', {'user':request.user, 'test_list_k':test_list_k,  'test_list_c':test_list_c, 'scores':scores, 'date':date, 'goal':goal ,'tests':tests, 'user_name':u_name})
+
 def test_review(request):
     if request.POST:
         console = Console()
