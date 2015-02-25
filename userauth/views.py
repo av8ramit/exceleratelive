@@ -504,17 +504,22 @@ def test_review(request):
     return render(request, 'web/' + request.user.username + '/grade.html')
 
 def dashboard(request):
-        console = Console()
-        user = request.user
-        console.process_commands("load_class web")
-        console.process_commands("load_student " + request.user.username)
-        test_list = console.process_commands("list_tests")
-        tests = console.process_commands("list_tests_taken")
-        scores = console.user.recent_scores()
-        request.session[TEST_MODE] = FULL_TEST
+    user = request.user
+    u_name = user.username
+    console = Console()
+    console.process_commands("load_class web")
+    console.process_commands("load_student " + u_name)
+    test_list_c = console.process_commands("list_tests c")
+    test_list_k = console.process_commands("list_tests k")
+    tests = console.process_commands("list_tests_taken")
+    scores = console.user.recent_scores()
+    request.session[TEST_MODE] = FULL_TEST
+    date = console.user.get_intended_date()
+    goal = console.user.intended_score
 
-        #test_list = ["GE29", "GE30", "GE31", "GE32"]
-        return render(request, 'userauth/userpage.html', {'user':user, 'test_list':test_list, 'scores':scores, 'tests':tests})
+
+    #test_list = ["GE29", "GE30", "GE31", "GE32"]
+    return render(request, 'userauth/userpage.html', {'user':user, 'test_list_k':test_list_k,  'test_list_c':test_list_c, 'scores':scores, 'date':date, 'goal':goal ,'tests':tests, 'user_name':u_name})
 
 
 
