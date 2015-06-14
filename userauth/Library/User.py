@@ -1585,3 +1585,51 @@ class User(object):
     def update_intended_date(self, date):
         self.intended_date = date
 
+    def delete_test(self, test_index, test_id_2_remove, test_date_2_remove, filepath):
+        data = []
+        with open(filepath) as f:
+            lines = f.readlines()
+            assert(self.name in lines[0]) #verifies name
+            flag = False
+            begin_flag = False
+            done = False
+            count = int(test_index) - 1
+
+            #brings you past the beginning information
+            for x in range(len(lines)):
+                line = lines[x]
+                if (begin_flag == False):
+                    if ("Intended_Score" in line):
+                        begin_flag = True
+                    data.append(line)
+
+                else:
+                    if (done):
+                        data.append(line)
+                        continue
+
+                    #getting to the correct index
+                    if (count != 0):
+                        if (line.strip() == SECTION_SEP):
+                            count -= 1
+                        data.append(line)
+
+                    #verifying section and then deleting
+                    else:
+                        if (flag == True) and (line.strip() != SECTION_SEP):
+                            continue
+                        if (flag == True) and (line.strip() == SECTION_SEP):
+                            flag = False
+                            done = True
+                            continue
+                        if 'TEST_ID' in line:
+                            test_id = line.split(' ')[1].strip()
+                            if (test_id == test_id_2_remove) and (lines[x+3].strip() == test_date_2_remove):
+                                flag = True
+                                continue
+                        data.append(line)
+
+        with open(filepath, "wb") as nf:
+            for newlines in data:
+                nf.write(newlines)
+

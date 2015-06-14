@@ -407,27 +407,45 @@
 							<h3 style = "color: #FF8C00" >1. Select and Take a Test</h3>
 									
 
-							 
+							  						 
 							  <nav>
 							  <ul id = "inline">
-							  	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							  	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
 							  <li>
-			                  <form  action="{% url 'login:testportal' %}" method="post">{% csrf_token %}
+			       
+			                    <form  action="{% url 'login:testportal' %}" method="post" id="form1">{% csrf_token %}
 			                    <div class="btn-group" id = "inline">
 			                    	
 			                      <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"><img height="100px" src="{% static 'mysite/css/images/book.png'  %}" ></img>
 			                       Practice Test Questions
 			                        <span class="caret"></span>
 			                      </button>
+			                      	<!-- cb1 - cb10 -->
+			                      	<ul class="dropdown-menu">
+							        	<select name="test" id="test" multiple class="form-control" style="width: 260px;" onchange="this.form.submit()">
+											<option>CB1</option>
+											<option>CB2</option>
+											<option>CB3</option>
+											<option>CB4</option>
+											<option>CB5</option>
+											<option>CB6</option>
+											<option>CB7</option>
+											<option>CB8</option>
+											<option>CB9</option>
+											<option>CB10</option>
+										</select>
+										
+						            </ul>
 
-			                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+			                        <!-- <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
 			                        {% for item in test_list_c %}
 			                          <li style ="margin-top:-20px;margin-bottom:-20px;margin-right:-10px;"roll="presentation"><button class="btn btn-md" role="menuitem" name="test" id="test" value="{{ item }}">{{ item }}</button></li>
 			                        {% endfor %}
-			                        </ul>
+			                        </ul> -->
 			                    </div>
-			                  </form>
+			                    
+			                    </form>
 
 			              </li>
 			              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -438,20 +456,23 @@
 			                       Practice Test Questions
 			                        <span class="caret"></span>
 			                      </button>
-			                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-			                        {% for item in test_list_k %}
-			                          <li style ="margin-top:-20px;margin-bottom:-20px;margin-right:-20px;margin-right:10px;" roll="presentation"><button class="btn btn-md" role="menuitem" name="test" id="test" value="{{ item }}">{{ item }}</button></li>
-			                        {% endfor %}
-			                        </ul>
+			                      <!-- DiagK, K1 - K3 -->
+
+			                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
+							        	<select name="test" id="test" multiple class="form-control" style="width: 260px;" onchange="this.form.submit()">
+											<option>DiagK</option>
+											<option>K1</option>
+											<option>K2</option>
+											<option>K3</option>
+										</select>
+						            </ul>
+
 			                    </div>
 			                  </form>
 			              </li>
 			              </ul>
 			              </nav>
 			              <br>
-			              
-						</nav>
-						<br>
 			              <br>
 			              <br>
 			              <br>
@@ -463,16 +484,48 @@
 						<nav>
 							<h3 style = "color: #FF8C00" >2. Review Test</h3>
 								<br>
+								<ul id = "inline">
+							  	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+							  	<li>
 
 		                        {% for item in tests %}
 		                          <form action="{% url 'login:test_review' %}" method="post">{% csrf_token %}
-		                          	<button class="btn btn-small btn-info btn-cross" name="test" id="test" value="{{ item }}">{{ item }}</button> <br> <br>
+		                          	<div class="btn-group" id = "inline">
+			                          	<button class="btn btn-small btn-info btn-cross" name="test" id="test" value="{{ item }}">{{ item }}</button> 
+			                          	<hr style="height:10pt; visibility:hidden;" />
+
+			                        </div>
 		                      	  </form>
 		                        {% endfor %}
 
+		                        </li>
+					              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					            <li>
+
+		                        {% for item in tests %}
+		                          <form action="deleted" method="post">{% csrf_token %}
+		                          	<div class="btn-group" id = "inline">
+		                          	<button class="btn btn-danger btn-small" name="delete" id="delete" value="{{ item }}">Delete Test</button>
+		                          	<hr style="height:10pt; visibility:hidden;" />
+		                          	
+		                          	</div>
+		                      	  </form>
+		                        {% endfor %}
+
+		                    </li>
+
 						</nav>
 
-						
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
 						<nav>
 							<h3 style = "color: #FF8C00" >3. View Reports</h3>
 

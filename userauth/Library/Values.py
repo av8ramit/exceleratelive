@@ -48,6 +48,24 @@ TEST_LIB_DICT['K2'] = "Kaplan Book Practice Test 2"
 TEST_LIB_DICT['K3'] = "Kaplan Book Practice Test 3"
 TEST_LIB_DICT['DiagK'] = "Kaplan Book Practice Diagnostic Test"
 
+#TEST LIBRARY REVERSED
+TEST_LIB_DICT_R = {}
+
+TEST_LIB_DICT_R['CollegeBoard Book Practice Test 1'] = "CB1"
+TEST_LIB_DICT_R['CollegeBoard Book Practice Test 2'] = "CB2"
+TEST_LIB_DICT_R['CollegeBoard Book Practice Test 3'] = "CB3"
+TEST_LIB_DICT_R['CollegeBoard Book Practice Test 4'] = "CB4"
+TEST_LIB_DICT_R['CollegeBoard Book Practice Test 5'] = "CB5"
+TEST_LIB_DICT_R['CollegeBoard Book Practice Test 6'] = "CB6"
+TEST_LIB_DICT_R['CollegeBoard Book Practice Test 7'] = "CB7"
+TEST_LIB_DICT_R['CollegeBoard Book Practice Test 8'] = "CB8"
+TEST_LIB_DICT_R['CollegeBoard Book Practice Test 9'] = "CB9"
+TEST_LIB_DICT_R['CollegeBoard Book Practice Test 10'] = "CB10"
+TEST_LIB_DICT_R['Kaplan Book Practice Test 1'] = "K1"
+TEST_LIB_DICT_R['Kaplan Book Practice Test 2'] = "K2"
+TEST_LIB_DICT_R['Kaplan Book Practice Test 3'] = "K3"
+TEST_LIB_DICT_R['Kaplan Book Practice Diagnostic Test'] = "DiagK"
+
 #Question Value
 PARSED_ARRAY_SIZE = 6
 

@@ -172,7 +172,24 @@ class Console(object):
             else:
                 self.error = ("Error: Invalid use of delete student command.")
                 return False
-
+        #Delete Test
+        if cmd == "delete_test":
+            if (len(cmd_vector) == 3 and not empty(cmd_vector[1])):
+                name = cmd_vector[1]
+                test_data = cmd_vector[2]
+                data = test_data.split(",")
+                test_to_delete = data[0]
+                test_to_detele_date = "DATE: " + data[1]
+                test_index = data[2]
+                #filepath = cmd_vector[3]
+                filepath = user_filename(name, self.c.name)
+                #t = self.user.tests_taken[int(cmd_vector[2]) - 1]
+                self.user.delete_test(test_index, test_to_delete, test_to_detele_date, filepath)
+                #self.state = LAUNCH_STATE
+                return True
+            else:
+                self.error = ("Error: Invalid use of the delete test command.")
+                return False
         #store data(test date and score)
         if cmd == "store":
             if len(cmd_vector) == 4:

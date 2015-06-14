@@ -499,9 +499,27 @@ def test_review(request):
         console = Console()
         console.process_commands("load_class web")
         console.process_commands("load_student " + request.user.username)
-        #Retrieve the tag and split by index and pass index of test to console to bring up test review
         console.process_commands('test_review ' + request.POST.get('test').split('.')[0])
-    return render(request, 'web/' + request.user.username + '/grade.html')
+        return render(request, 'web/' + request.user.username + '/grade.html')
+
+def delete_test(request):
+    if request.POST:
+        console = Console()
+        console.process_commands("load_class web")
+        console.process_commands("load_student " + request.user.username)
+        if (request.POST.get('delete') != None):
+            #delete the test here
+            test_to_delete = request.POST.get('delete')
+            data = test_to_delete.split('.')[1].split("|")
+            cleaned_test_to_delete = data[0][1:].rstrip()
+            test_to_delete_date = data[1][9:].rstrip()
+            test_to_delete_id = TEST_LIB_DICT_R[cleaned_test_to_delete]
+            test_data = test_to_delete_id + "," + test_to_delete_date + "," + request.POST.get('delete').split('.')[0]
+            console.process_commands("delete_test " + request.user.username + " " + test_data)
+            bucket = call_bucket()
+            k = get_key(bucket, request.user.username)
+            k.set_contents_from_filename(user_filename(request.user.username, 'web'))
+            return HttpResponseRedirect('/login/dashboard/')
 
 def dashboard(request):
     user = request.user
