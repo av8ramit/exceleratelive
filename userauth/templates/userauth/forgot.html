@@ -1,23 +1,121 @@
-{% extends "userauth/base.html" %}
-{% block title %}
-        <title>Forgot</title>
-{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% load staticfiles %}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-{% block body %}
-        <center>
+    <title>ExcelerateLive Score Report Login</title>
+    <link rel="icon" type="image/ico" href="{% static 'favicon.ico' %}"/>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'dashboard/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="http://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <style> 
+
+      html,
+      body {
+        margin:0;
+        padding:0;
+        height:100%;
+        color: #000;
+        background-image: url("{% static 'mysite/css/images/overlay-pattern.png' %}"), url("{% static 'mysite/css/images/overlay.svg' %}");
+        background-position: top left, center center;
+        background-repeat: repeat, no-repeat;
+        background-size: auto, cover;
+      }
+      #wrapper {
+        min-height:100%;
+        position:relative;
+      }
+      #head {
+        padding-top: 30px;
+        padding-left:10px;
+        padding-right:10px;
+        text-align: center;
+      }
+      #formarea {
+        padding-top: 100px;
+        padding-left:10px;
+        padding-right:10px;
+        padding-bottom:100px;   /* Height of the footer element */
+      }
+      #foot {
+        width:100%;
+        height:100px;
+        position:absolute;
+        bottom:0;
+        left:0;
+        text-align: center;
+      }
+
+
+    </style>
+
+
+
+      <div id="wrapper">
+
+        <div id="head">
+          <!-- empty for now -->
+        </div> <!-- end of head -->
+
+        <div id="formarea" class="inner cover">
+          <center>
             <h1>Change your Password</h1>
 
             <form id="forgot_form" method="post" action="/forgot/">
                 {% csrf_token %}
                 Username: <input type="text" name="username" value="" size="50" />
                 <br>
+                <br>
                 Email: <input type="email" name="email" value="" size="50" />
+                <br>
                 <br>
                 New Password: <input type="password" name="npassword" value="" size="50" />
                 <br>
+                <br>
                 Confirm New Password: <input type="password" name="cnpassword" value="" size="50" />
                 <br>
-                <input type="submit" name="submit" class="btn" value="Login"/>
+                <br>
+                <input type="submit" name="submit" class="btn" value="Submit"/>
             </form>
         </center>
-{% endblock %}
+        </div> <!-- end of formarea -->
+        <br>
+
+        <div id="foot">
+           <footer>
+            <center>
+              <p><FONT size="3" color="#000">Score reports and Analysis Provided by <a href="http://www.exceleratetestprep.com/">Excelerate Test Prep &copy;</a>.</p>
+                <a href="http://www.exceleratetestprep.com/#!about/cgvz">About Us</a> |
+                <a href="http://www.exceleratetestprep.com/#!support/c3vn">Contact Us</a> |
+                <a href="http://www.exceleratetestprep.com/#!services/c1739">Services</a>
+              <p><FONT color="#000" size="2" >Excelerate Test Prep © 2014</FONT></p>
+            </center>
+          </footer>
+        </div><!-- end of foot -->
+
+      </div> <!-- end of wrapper -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+  </body>
+</html>
