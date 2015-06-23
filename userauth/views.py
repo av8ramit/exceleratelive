@@ -202,6 +202,26 @@ def login_user(request):
             error_message = "Incorrect username or password"
             return render(request, 'userauth/login.html', {'errormsg':error_message})
 
+def forgot(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        np = request.POST.get('npassword')
+        cnp = request.POST.get('cnpassword')
+        u = Student.objects.get(username=username)
+        if u != None:
+            if u.email == email:
+                if np == cnp:
+                    u.set_password(np)
+                    u.save()
+                    context = {"message" : "Successfully Changed Password!", "rurl" : "/"}
+                    return render(request, 'userauth/forgot_response.html', context)
+        context = {"message" : "Something went wrong!", "rurl" : "/forgot/"}
+        return HttpResponse("Something went wrong!", context)
+
+    else:
+        return render(request, 'userauth/forgot.html', {})
+
 def formtest2(request):
     """
     Successfully using the form to input commands as if they were entered through the shell
@@ -490,9 +510,8 @@ def save_info(request):
         bucket = call_bucket()
         k = get_key(bucket, request.user.username)
         k.set_contents_from_filename(user_filename(request.user.username, 'web'))
-        #return HttpResponse('Saved! Click <a href="javascript:history.go(-1)">here</a> return to the dashboard page.')
-        #return HttpResponseRedirect('javascript:history.go(-1)')
-        return render(request, 'userauth/userpage.html', {'user':request.user, 'test_list_k':test_list_k,  'test_list_c':test_list_c, 'scores':scores, 'date':date, 'goal':goal ,'tests':tests, 'user_name':u_name})
+        #return render(request, 'userauth/userpage.html', {'user':request.user, 'test_list_k':test_list_k,  'test_list_c':test_list_c, 'scores':scores, 'date':date, 'goal':goal ,'tests':tests, 'user_name':u_name})
+        return HttpResponseRedirect('/login/dashboard/')
 
 def test_review(request):
     if request.POST:

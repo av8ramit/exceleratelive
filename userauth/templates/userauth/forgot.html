@@ -1,0 +1,23 @@
+{% extends "userauth/base.html" %}
+{% block title %}
+        <title>Forgot</title>
+{% endblock %}
+
+{% block body %}
+        <center>
+            <h1>Change your Password</h1>
+
+            <form id="forgot_form" method="post" action="/forgot/">
+                {% csrf_token %}
+                Username: <input type="text" name="username" value="" size="50" />
+                <br>
+                Email: <input type="email" name="email" value="" size="50" />
+                <br>
+                New Password: <input type="password" name="npassword" value="" size="50" />
+                <br>
+                Confirm New Password: <input type="password" name="cnpassword" value="" size="50" />
+                <br>
+                <input type="submit" name="submit" class="btn" value="Login"/>
+            </form>
+        </center>
+{% endblock %}
