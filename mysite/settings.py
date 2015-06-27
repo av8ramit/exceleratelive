@@ -30,7 +30,7 @@ if os.environ.get('DATABASE_URL'):
 SECRET_KEY = '6bpzesblxmghaycf(544_s56d@t7hujz3jz66ev4soi5z1masa'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 TEMPLATE_DEBUG = False
 

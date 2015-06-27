@@ -498,20 +498,22 @@ def save_info(request):
         tests = console.process_commands("list_tests_taken")
         scores = console.user.recent_scores()
         request.session[TEST_MODE] = FULL_TEST
-        date = request.POST.get('date_')
-        score = request.POST.get('score_')
-        if score != None:
-            console.process_commands('update_score ' + score)
-        if date != None:
-            console.process_commands('update_date ' + date)
-        console.process_commands('save')
-        date = console.user.get_intended_date()
-        goal = console.user.intended_score
-        bucket = call_bucket()
-        k = get_key(bucket, request.user.username)
-        k.set_contents_from_filename(user_filename(request.user.username, 'web'))
-        #return render(request, 'userauth/userpage.html', {'user':request.user, 'test_list_k':test_list_k,  'test_list_c':test_list_c, 'scores':scores, 'date':date, 'goal':goal ,'tests':tests, 'user_name':u_name})
-        return HttpResponseRedirect('/login/dashboard/')
+        try:
+            date = request.POST.get('date_')
+            score = request.POST.get('score_')
+            if score != None:
+                console.process_commands('update_score ' + score)
+            if date != None:
+                console.process_commands('update_date ' + date)
+            console.process_commands('save')
+            date = console.user.get_intended_date()
+            goal = console.user.intended_score
+            bucket = call_bucket()
+            k = get_key(bucket, request.user.username)
+            k.set_contents_from_filename(user_filename(request.user.username, 'web'))
+        except:
+            pass
+    return HttpResponseRedirect('/login/dashboard/')
 
 def test_review(request):
     if request.POST:
