@@ -464,10 +464,10 @@
 
 			                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
 							        	<select name="test" id="test" multiple class="form-control" style="width: 260px;" onchange="this.form.submit()">
-											<option>DiagK</option>
-											<option>K1</option>
-											<option>K2</option>
-											<option>K3</option>
+											<option value="DiagK">Kaplan Diagnostic Test</option>
+											<option value="K1">Kaplan Test 1</option>
+											<option value="K2">Kaplan Test 2</option>
+											<option value="K3">Kaplan Test 3</option>
 										</select>
 						            </ul>
 
@@ -525,13 +525,14 @@
 						</nav>
 
 						<br>
+						{% for item in tests %}
+							<br>
+							<br>
+						{% endfor %}
+
 						<br>
 						<br>
-						<br>
-						<br>
-						<br>
-						<br>
-						<br>
+
 						<nav>
 							<h3 style = "color: #FF8C00" >3. View Reports</h3>
 
