@@ -5,8 +5,8 @@ import random
 #License Information
 USER_LIMIT = 25
 #Year/Month/Day
-EXPIRATION_DATE = '2015/12/15'
-date_of_expiration = '12/15/2015'
+EXPIRATION_DATE = '2017/12/15'
+date_of_expiration = '12/15/2017'
 
 
 #INTENDED DEFAULTS
